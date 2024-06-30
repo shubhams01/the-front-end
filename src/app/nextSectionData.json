@@ -1,0 +1,63 @@
+{
+  "id": 1,
+  "title": "Next Digital Revolution: Navigating the Tech Landscape",
+  "category": "Technology",
+  "sections": [
+    {
+      "imageUrl": "https://cdn.midjourney.com/ebd741e2-bbf9-4357-a66d-58809e4227fd/0_1.webp",
+      "description": "Next Next Section 1 description for Digital Revolution in Technology Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown."
+    },
+    {
+      "imageUrl": "https://cdn.midjourney.com/83f125b1-b00f-4883-a06a-85dfa4aea9ea/0_3.jpeg",
+      "description": "Next Next Section 2 description for Digital Revolution in Technology.",
+      "nestedSections": [
+        {
+          "imageUrl": "https://cdn.midjourney.com/ebd741e2-bbf9-4357-a66d-58809e4227fd/0_1.webp",
+          "description": "Next Section 2 Nested Next Section 1 Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown"
+        },
+        {
+          "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+          "description": "Next Section 2 Nested Next Section 2 Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown"
+        },
+        {
+          "imageUrl": "https://cdn.midjourney.com/cca86dda-481d-4b3b-900c-f95912cfce39/0_3.webp",
+          "description": "Next Section 2 Nested Next Section 3 Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown"
+        }
+      ]
+    },
+    {
+      "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+      "description": "Next Section 3 description for Digital Revolution in Technology Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown."
+    },
+    {
+      "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+      "description": "Next Section 4 description for Digital Revolution in Technology Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown."
+    },
+    {
+      "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+      "description": "Next Section 5 description for Digital Revolution in Technology.",
+      "nestedSections": [
+        {
+          "imageUrl": "https://cdn.midjourney.com/ebd741e2-bbf9-4357-a66d-58809e4227fd/0_1.webp",
+          "description": "Next Section 5 Nested Next Section 1 Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown"
+        },
+        {
+          "imageUrl": "https://cdn.midjourney.com/83f125b1-b00f-4883-a06a-85dfa4aea9ea/0_3.jpeg",
+          "description": "Next Section 5 Nested Next Section 2 Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown"
+        },
+        {
+          "imageUrl": "https://cdn.midjourney.com/cca86dda-481d-4b3b-900c-f95912cfce39/0_3.webp",
+          "description": "Next Section 5 Nested Next Section 3 Alexander reached the Hyphasis River, the edge of the known world for his army. Here, his weary soldiers, longing for home after years of relentless campaigns, finally mutinied. Despite Alexander's impassioned pleas and promises of greater glories, his men refused to march further into the unknown"
+        }
+      ]
+    },
+    {
+      "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+      "description": "Next Section 6 description for Digital Revolution in Technology."
+    },
+    {
+      "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+      "description": "Next Section 7 description for Digital Revolution in Technology."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+      "title": "Digital Revolution: Navigating the Tech Landscape",
+      "category": "Technology"
+    },
+    {
+      "id": 2,
+      "imageUrl": "https://cdn.midjourney.com/cca86dda-481d-4b3b-900c-f95912cfce39/0_3.webp",
+      "title": "Exploring China's Cultural Mosaic: A Journey Through Time",
+      "category": "Culture"
+    },
+    {
+      "id": 3,
+      "imageUrl": "https://cdn.midjourney.com/ebd741e2-bbf9-4357-a66d-58809e4227fd/0_1.webp",
+      "title": "Canvas Chronicles: Stories Told Through Paint and Passion",
+      "category": "Art"
+    },
+    {
+      "id": 4,
+      "imageUrl": "https://cdn.midjourney.com/15608ebc-422c-44c1-bdcc-69e50def6bf2/0_2.webp",
+      "title": "Digital Revolution: Navigating the Tech Landscape",
+      "category": "Business"
+    },
+    {
+      "id": 5,
+      "imageUrl": "https://cdn.midjourney.com/cca86dda-481d-4b3b-900c-f95912cfce39/0_3.webp",
+      "title": "Exploring China's Cultural Mosaic: A Journey Through Time",
+      "category": "Health"
+    },
+    {
+      "id": 6,
+      "imageUrl": "https://cdn.midjourney.com/ebd741e2-bbf9-4357-a66d-58809e4227fd/0_1.webp",
+      "title": "Canvas Chronicles: Stories Told Through Paint and Passion",
+      "category": "Travel"
+    }
+  ]
+  
