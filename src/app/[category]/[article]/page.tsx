@@ -1,24 +1,28 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   useAnimation,
   useScroll,
   useMotionValueEvent,
-  AnimatePresence,
   useDragControls,
 } from "framer-motion";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { ChevronUpIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronUpIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/solid";
 import cardDetails from "../../../app/cardDetails.json";
-import nextSectionData from "../../../app/nextSectionData.json"; // Import the next section data
+import nextSectionData from "../../../app/nextSectionData.json";
 
-const DetailsPage = ({ params }: { params: { category: string } }) => {
+const DetailsPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { category } = params;
+  const { id } = params;
 
   const controls = useAnimation();
   const overlayControls = useAnimation();
@@ -26,19 +30,28 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
 
   const { scrollYProgress } = useScroll();
 
-  const id = pathname.split("/")[2];
+  //const id = pathname.split("/")[2];
 
-  const initialDetails = cardDetails.find((card) => card.id == id);
+  //const initialDetails = cardDetails.find((card) => card.id == id);
 
-  const [details, setDetails] = useState(initialDetails);
+  const [details, setDetails] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
   const [currentNestedPage, setCurrentNestedPage] = useState(0);
   const [isFetchingNextSection, setIsFetchingNextSection] = useState(false);
-  const detailsRef = useRef(details?.sections.map(() => React.createRef()));
+  const [nextSections, setNextSections] = useState([]);
+  const [nextSectionIndex, setNextSectionIndex] = useState(0);
+
+  // const cardId = searchParams.get("");
+  // const _id = searchParams;
+
+  const segments = pathname.split("-");
+  const _id = segments[segments.length - 1];
+  const [articleId, setArticleId] = useState(_id);
 
   useEffect(() => {
-    console.log("cardDetails ", pathname, id, details);
-  }, [pathname, id, details]);
+    // setArticleId(id);
+    console.log("cardDetails ", pathname, articleId);
+  }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     console.log("ScrollY ", latest);
@@ -71,8 +84,10 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
   const handleDrag = async (event, info) => {
     if (info.offset.y < -100 && currentPage < details?.sections.length - 1) {
       setCurrentPage(currentPage + 1);
+      setCurrentNestedPage(0);
     } else if (info.offset.y > 100 && currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setCurrentNestedPage(0);
     } else if (
       info.offset.y < -100 &&
       currentPage === details?.sections.length - 1
@@ -91,9 +106,23 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
   const handleScroll = async (event) => {
     const direction = event.deltaY > 0 ? "down" : "up";
     if (direction === "down" && currentPage < details.sections.length - 1) {
+      setCurrentNestedPage(0);
       setCurrentPage(currentPage + 1);
+      controls.start({
+        transition: {
+          bounceStiffness: 500,
+          bounceDamping: 25,
+        },
+      });
     } else if (direction === "up" && currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setCurrentNestedPage(0);
+      controls.start({
+        transition: {
+          bounceStiffness: 500,
+          bounceDamping: 25,
+        },
+      });
     } else if (
       direction === "down" &&
       currentPage === details.sections.length - 1
@@ -102,31 +131,136 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchNextSectionData = async () => {
+      try {
+        const response = await fetch("http://localhost:1337/api/explore");
+        if (!response.ok) {
+          throw new Error("Failed to fetch next section");
+        }
+        const responseData = await response.json();
+        setNextSections(responseData);
+        console.log("Next Sections:", nextSections);
+      } catch (error) {
+        console.error("Error fetching next section:", error);
+      }
+    };
+    fetchNextSectionData();
+  }, []);
+
   const fetchNextSection = async () => {
-    setIsFetchingNextSection(true);
+    // setIsFetchingNextSection(true);
     await overlayControls.start({ y: 0 });
 
-    // Use the imported next section data
-    const nextSection = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(nextSectionData);
-      }, 1000);
+    setCurrentPage(0);
+
+    const sections = nextSections[nextSectionIndex]?.sections.map((section) => {
+      const sectionObject = {
+        imageUrl: `http://localhost:1337${section.SectionImage.formats.large.url}`,
+        description: section.SectionDescription,
+        nestedSections: section.NestedSections
+          ? section.NestedSections.map((nested) => ({
+              imageUrl: `http://localhost:1337${nested.NestedSectionImage.formats.large.url}`,
+              description: nested.NestedSectionDescription,
+            }))
+          : [],
+      };
+      return sectionObject;
     });
 
-    setDetails((prevDetails) => ({
-      ...prevDetails,
-      sections: [...nextSection.sections],
-    }));
+    setDetails((prevDetails) => {
+      const updatedDetails = {
+        id: nextSections[nextSectionIndex].id,
+        title: nextSections[nextSectionIndex].Title,
+        slug: nextSections[nextSectionIndex].Slug,
+        sections: sections,
+      };
+      console.log(
+        "Updated Details inside state update function:",
+        updatedDetails
+      );
+      return updatedDetails;
+    });
 
-    detailsRef.current = [
-      ...detailsRef.current,
-      ...nextSection.sections.map(() => React.createRef()),
-    ];
-    setCurrentPage(0);
-    console.log("nextSection ", currentPage);
+    if (nextSectionIndex < nextSections.length - 1) {
+      setNextSectionIndex(nextSectionIndex + 1);
+      console.log(
+        "nextSectionIndex ",
+        nextSectionIndex,
+        nextSections[nextSectionIndex]
+      );
+      // router.replace(`science/${nextSections[nextSectionIndex].Slug}-${nextSections[nextSectionIndex].id}`);
+    }
+
     await overlayControls.start({ y: "-100%" });
-    setIsFetchingNextSection(false);
+    // setIsFetchingNextSection(false);
   };
+
+  useEffect(() => {
+    setDetails(details);
+    console.log("Updated Details: ", details);
+  }, [details]);
+
+  const handleArrowUpClick = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      setCurrentNestedPage(0);
+    }
+  };
+
+  const handleArrowDownClick = () => {
+    if (currentPage < details.sections.length - 1) {
+      setCurrentPage(currentPage + 1);
+      setCurrentNestedPage(0);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:1337/api/article/${articleId}`,
+          {
+            headers: {
+              Authorization: `Bearer f4da5bebc8dd837c1df99461784738662f5d9ee1505673fb922b0f547870eb17ba70cddfdb07033e591c38f02019ec1bf4468f8c036ab1a3936e26ecf55f896af48f83aac5dd25403f479576733b0aee60fdeff94806dfb4401d0ebc480cf7594d56aa82ad1e1e2690201bec49a2a0d3430125130bea3dc587cfff137de5d454`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch Articles");
+        }
+        const data = await response.json();
+        console.log("articleDetails ", data);
+
+        const sections = data?.sections.map((section) => {
+          const sectionObject = {
+            imageUrl: `http://localhost:1337${section.SectionImage.formats.large.url}`,
+            description: section.SectionDescription,
+            nestedSections: section.NestedSections
+              ? section.NestedSections.map((nested) => ({
+                  imageUrl: `http://localhost:1337${nested.NestedSectionImage.formats.large.url}`,
+                  description: nested.NestedSectionDescription,
+                }))
+              : [],
+          };
+          return sectionObject;
+        });
+
+        const article = {
+          id: data?.id,
+          title: data?.Title,
+          sections: sections,
+        };
+
+        setDetails(article);
+        console.log("article ", article);
+      } catch (error) {
+        console.error("Error fetching Articles:", error);
+      }
+    };
+
+    fetchData();
+  }, [articleId]);
 
   return (
     <motion.div
@@ -154,8 +288,8 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
             <motion.div className="relative h-full w-full p-2">
               <motion.img
                 className="w-full h-full rounded-2xl"
-                src={details?.sections[currentPage].imageUrl}
-                alt={details?.sections[currentPage].title}
+                src={details?.sections[currentPage]?.imageUrl}
+                alt={details?.sections[currentPage]?.title}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.75 }}
                 whileInView={{ scaleX: [0.9, 1] }}
@@ -164,20 +298,24 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
                 draggable={false}
               />
               <motion.div
-                className="absolute bottom-8 w-full p-4 text-center"
+                className={`absolute bottom-8 w-full p-4 ${currentPage == 0 ? "text-left" : "text-center"}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.75, ease: "easeInOut" }}
-                key={details?.sections[currentPage].description}
+                key={details?.sections[currentPage]?.description}
               >
-                <span className="text-sm md:text-lg lg:text-2xl font-bold text-white">
-                  {details?.sections[currentPage].description}
+                <span
+                  className={`${
+                    currentPage == 0 ? "text-6xl" : "text-sm"
+                  } md:text-lg lg:text-2xl font-bold text-white`}
+                >
+                  {details?.sections[currentPage]?.description}
                 </span>
               </motion.div>
-              {details?.sections[currentPage].nestedSections && (
+              {details?.sections[currentPage]?.nestedSections && (
                 <motion.div className="absolute bottom-4 w-full flex justify-center">
-                  {details?.sections[currentPage].nestedSections.map(
+                  {details?.sections[currentPage]?.nestedSections.map(
                     (nestedSection, nestedIndex) => (
                       <motion.div
                         key={nestedIndex}
@@ -190,28 +328,9 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
                       ></motion.div>
                     )
                   )}
-                  <motion.div
-                    className="absolute left-1/4 -bottom-2 transform -translate-y-1/2 cursor-pointer"
-                    onClick={() => setCurrentNestedPage((prev) => Math.max(prev - 1, 0))}
-                  >
-                    <ChevronLeftIcon className="w-4 h-4 text-white" />
-                  </motion.div>
-                  <motion.div
-                    className="absolute right-1/4 -bottom-2 transform -translate-y-1/2 cursor-pointer"
-                    onClick={() =>
-                      setCurrentNestedPage((prev) =>
-                        Math.min(
-                          prev + 1,
-                          details?.sections[currentPage].nestedSections.length - 1
-                        )
-                      )
-                    }
-                  >
-                    <ChevronRightIcon className="w-4 h-4 text-white" />
-                  </motion.div>
                 </motion.div>
               )}
-              {details?.sections[currentPage].nestedSections && (
+              {details?.sections[currentPage]?.nestedSections.length > 0 && (
                 <motion.div
                   className="absolute inset-1 flex justify-center items-top mt-10"
                   drag="x"
@@ -223,16 +342,16 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
                 >
                   <motion.div className="w-64 h-64 md:w-72 md:h-72 lg:w-96 lg:h-96 rounded-2xl relative">
                     <motion.img
-                      className="w-full h-full rounded-2xl"
+                      className="w-full h-full rounded-2xl opacity-50"
                       src={
                         details?.sections[currentPage].nestedSections[
                           currentNestedPage
-                        ].imageUrl
+                        ]?.imageUrl
                       }
                       alt={
                         details?.sections[currentPage].nestedSections[
                           currentNestedPage
-                        ].description
+                        ]?.description
                       }
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -252,7 +371,7 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
                         {
                           details?.sections[currentPage].nestedSections[
                             currentNestedPage
-                          ].description
+                          ]?.description
                         }
                       </span>
                     </motion.div>
@@ -278,22 +397,44 @@ const DetailsPage = ({ params }: { params: { category: string } }) => {
                     ></motion.div>
                   ))}
                   <motion.div
-                    className="absolute -top-1/2 -right-3 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+                    className="absolute -top-2/3 -right-3 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
+                    onClick={handleArrowUpClick}
                   >
                     <ChevronUpIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                   </motion.div>
                   <motion.div
                     className="absolute -bottom-1/2 -right-3 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
-                    onClick={() =>
-                      setCurrentPage((prev) =>
-                        Math.min(prev + 1, details.sections.length - 1)
-                      )
-                    }
+                    onClick={handleArrowDownClick}
                   >
                     <ChevronDownIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                   </motion.div>
                 </motion.div>
+              )}
+              {details?.sections[currentPage]?.nestedSections.length > 0 && (
+                <>
+                  <div
+                    className="absolute left-1/4 bottom-2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() =>
+                      setCurrentNestedPage((prev) => Math.max(prev - 1, 0))
+                    }
+                  >
+                    <ChevronLeftIcon className="w-4 h-4 text-white" />
+                  </div>
+                  <div
+                    className="absolute right-1/4 bottom-2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() =>
+                      setCurrentNestedPage((prev) =>
+                        Math.min(
+                          prev + 1,
+                          details?.sections[currentPage]?.nestedSections
+                            .length - 1
+                        )
+                      )
+                    }
+                  >
+                    <ChevronRightIcon className="w-4 h-4 text-white" />
+                  </div>
+                </>
               )}
             </motion.div>
           </motion.div>

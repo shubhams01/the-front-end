@@ -69,14 +69,14 @@ const Card: React.FC<CardProps> = ({ id, imageUrl, category, title }) => {
         ref={imageRef}
         src={imageUrl}
         alt={title}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover opacity-75"
         // initial={{ opacity: 0.5 }}
         animate={imageControls}
         transition={{ duration: 1.5 }}
         />
       <div ref={titleRef} className="absolute bottom-0 left-0 right-0 p-4">
         <motion.h2
-          className="text-white font-black text-4xl md:text-xl lg:text-4xl m-4 overflow-hidden"
+          className="text-white font-black text-2xl lg:text-3xl m-4 overflow-hidden"
           initial={{ y: 30 }}
           animate={titleControls}
           // transition={{ type: "tween", duration: 4 }}

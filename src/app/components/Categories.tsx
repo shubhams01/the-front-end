@@ -27,7 +27,7 @@ const Categories = () => {
           'http://localhost:1337' + category.attributes.image.data.attributes.formats.large.url ||
           category.attributes.image.data.attributes.url
         }));
-        console.log('categories ', extractedCategories, data)
+        console.log('categories ', extractedCategories)
         setCategories(extractedCategories);
       } catch (error) {
         console.error("Error fetching categories:", error);
