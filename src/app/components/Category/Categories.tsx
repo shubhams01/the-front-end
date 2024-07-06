@@ -1,8 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import CategoryCard from "./CategoryCard";
+import { useRouter } from "next/navigation";
 
 const Categories = () => {
+  const router = useRouter();
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -24,10 +27,11 @@ const Categories = () => {
           name: category.attributes.Title,
           slug: category.attributes.Slug,
           imageUrl:
-          'http://localhost:1337' + category.attributes.image.data.attributes.formats.large.url ||
-          category.attributes.image.data.attributes.url
+            "http://localhost:1337" +
+              category.attributes.image.data.attributes.formats.large.url ||
+            category.attributes.image.data.attributes.url,
         }));
-        console.log('categories ', extractedCategories)
+        console.log("categories ", extractedCategories);
         setCategories(extractedCategories);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -37,20 +41,31 @@ const Categories = () => {
     fetchData();
   }, []);
 
+  const handleClick = (category) => {
+    console.log("category clicked: ", category);
+    setTimeout(() => {
+      router.push(`/category/${category.slug}`);
+    }, 500);
+  };
+
   return (
     <div className="container mx-auto px-8 py-8 flex flex-col items-center">
-      <span className="text-center text-3xl font-bold">Categories</span>
-      <div className="flex justify-center w-full">
-        <hr className="w-1/2 my-4" />
+      <div className="sticky top-8 z-10 flex flex-col items-center">
+        <span className="text-center text-3xl font-bold">Categories</span>
+        <div className="flex justify-center w-full">
+          <hr className="w-full my-2" />
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
         {categories.map((category, index) => (
-          <CategoryCard
-            key={index}
-            category={category.name}
-            imageUrl={category.imageUrl}
-            slug={category.slug}
-          />
+          <div key={index} onClick={() => handleClick(category)}>
+            <CategoryCard
+              key={category.id}
+              category={category.name}
+              imageUrl={category.imageUrl}
+              slug={category.slug}
+            />
+          </div>
         ))}
       </div>
     </div>
