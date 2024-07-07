@@ -1,15 +1,24 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter(); // Initialize useRouter
+  const pathname = usePathname();
+
+  console.log('pathname ', pathname)
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const getLinkClass = (path) => {
+    return pathname === path
+      ? "text-4xl lg:text-6xl font-bold uppercase text-yellow-500"
+      : "text-4xl lg:text-6xl font-bold uppercase";
   };
 
   return (
@@ -30,11 +39,10 @@ const Navbar = () => {
             <div className="fullscreen-menu flex flex-col items-center justify-center h-full text-white">
               <nav>
                 <ul className="space-y-4 text-center">
-                  {/* Use Next.js Link component */}
                   <li>
                     <Link
                       href="/"
-                      className="text-4xl lg:text-6xl font-bold uppercase"
+                      className={getLinkClass("/")}
                       onClick={() => setIsOpen(false)}
                     >
                       Home
@@ -43,7 +51,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       href="/about"
-                      className="text-4xl lg:text-6xl font-bold uppercase"
+                      className={getLinkClass("/about")}
                       onClick={() => setIsOpen(false)}
                     >
                       About
@@ -52,7 +60,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       href="/categories"
-                      className="text-4xl lg:text-6xl font-bold uppercase"
+                      className={getLinkClass("/categories")}
                       onClick={() => setIsOpen(false)}
                     >
                       Categories

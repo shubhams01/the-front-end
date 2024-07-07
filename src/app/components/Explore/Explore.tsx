@@ -18,7 +18,7 @@ const Explore = () => {
     setSelectedCard(card);
     setTimeout(() => {
       router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
-    }, 500);
+    }, 1000);
   };
 
   const handleSwipe = (direction) => {
@@ -43,7 +43,8 @@ const Explore = () => {
           title: article.Title,
           slug: article.Slug,
           category: article.category.Title,
-          imageUrl: "http://localhost:1337" + article.Image[0].formats.large.url,
+          imageUrl:
+            "http://localhost:1337" + article.Image[0].formats.large.url,
         }));
         console.log("Articles ", extractedArticles, data);
         setArticles(extractedArticles);
@@ -59,26 +60,26 @@ const Explore = () => {
   return (
     <>
       <div className="explore-container flex flex-col items-center justify-center min-h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-        <span className="text-3xl font-bold mt-6">Explore</span>
+        <span className="text-3xl font-bold mt-4 z-30">Explore</span>
         <div className="card-wrapper flex items-center justify-center w-full h-full relative">
-          <AnimatePresence mode='wait'>
+          <AnimatePresence initial={false}>
             {articles.length > 0 && (
               <>
-                {currentIndex < articles.length - 1 && (
+                {currentIndex > 0 && (
                   <motion.div
-                    key={articles[currentIndex + 1].id}
+                    key={articles[currentIndex - 1].id}
                     className="absolute cursor-pointer"
                     style={{ zIndex: 0 }}
-                    initial={{ x: 100, opacity: 0.5 }}
+                    initial={{ x: -50, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.5 }}
+                    exit={{ x: 50, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                   >
                     <Card
-                      id={articles[currentIndex + 1].id}
-                      imageUrl={articles[currentIndex + 1].imageUrl}
-                      title={articles[currentIndex + 1].title}
-                      category={articles[currentIndex + 1].category}
+                      id={articles[currentIndex - 1].id}
+                      imageUrl={articles[currentIndex - 1].imageUrl}
+                      title={articles[currentIndex - 1].title}
+                      category={articles[currentIndex - 1].category}
                     />
                   </motion.div>
                 )}
@@ -86,7 +87,6 @@ const Explore = () => {
                   key={articles[currentIndex].id}
                   className="relative z-10 cursor-pointer"
                   onClick={() => handleClick(articles[currentIndex])}
-                  // whileTap={{ scale: 0.95 }}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
                   onDragEnd={(event, info) => {
@@ -99,7 +99,8 @@ const Explore = () => {
                   initial={{ x: 0, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
+                  dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
+                  transition={{ duration: 0.5 }}
                   layoutId={`card-${articles[currentIndex].id}`}
                 >
                   <Card
@@ -109,6 +110,24 @@ const Explore = () => {
                     category={articles[currentIndex].category}
                   />
                 </motion.div>
+                {currentIndex < articles.length - 1 && (
+                  <motion.div
+                    key={articles[currentIndex + 1].id}
+                    className="absolute cursor-pointer"
+                    style={{ zIndex: 0 }}
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -50, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                  >
+                    <Card
+                      id={articles[currentIndex + 1].id}
+                      imageUrl={articles[currentIndex + 1].imageUrl}
+                      title={articles[currentIndex + 1].title}
+                      category={articles[currentIndex + 1].category}
+                    />
+                  </motion.div>
+                )}
               </>
             )}
           </AnimatePresence>
@@ -120,14 +139,14 @@ const Explore = () => {
           <motion.div
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
             initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
+            transition={{ duration: 0.75, ease: "easeInOut" }}
           >
             <img
               src={selectedCard.imageUrl}
               alt={selectedCard.title}
-              className="w-full h-full object-cover rounded-lg"
+              className="max-w-full max-h-full object-contain rounded-lg"
             />
           </motion.div>
         )}

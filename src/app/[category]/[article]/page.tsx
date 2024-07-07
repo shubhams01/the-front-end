@@ -179,9 +179,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
     setDetails((prevDetails) => {
       const updatedDetails = {
-        id: nextSections[nextSectionIndex].id,
-        title: nextSections[nextSectionIndex].Title,
-        slug: nextSections[nextSectionIndex].Slug,
+        id: nextSections[nextSectionIndex]?.id,
+        title: nextSections[nextSectionIndex]?.Title,
+        slug: nextSections[nextSectionIndex]?.Slug,
         sections: sections,
       };
       console.log(

@@ -29,8 +29,8 @@ const Card = ({ id, imageUrl, category, title }) => {
   }, [isInView]);
 
   return (
-    <motion.div className="relative overflow-hidden rounded-2xl border-2 shadow-lg lg:w-80 w-auto m-4 cursor-pointer">
-      <ChevronLeftIcon className="absolute left-0 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white" />
+    <motion.div className="relative overflow-hidden rounded-2xl border-2 shadow-lg h-screen lg:w-80 w-auto m-4 cursor-pointer">
+      <ChevronLeftIcon className="absolute left-0 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white z-10" />
       <motion.span className="text-white text-bold absolute top-0 right-0 m-2 z-10 rounded-full bg-slate-900 px-2 py-1">
         {category}
       </motion.span>
@@ -40,15 +40,14 @@ const Card = ({ id, imageUrl, category, title }) => {
         alt={title}
         className="w-full h-full object-cover opacity-100"
         animate={{ x: [0.8, 1] }}
-        transition={{ duration: 1.5 }}
       />
       <motion.div
         ref={titleRef}
         className="absolute bottom-0 left-0 right-0 p-4"
       >
         <motion.h2
-          className="text-white font-black text-2xl lg:text-3xl m-4 overflow-hidden"
-          initial={{ y: 30 }}
+          className="text-white font-black text-4xl lg:text-3xl m-8 text-left overflow-hidden"
+          initial={{ y: 10 }}
           animate={titleControls}
           transition={{ type: "tween", duration: 1.5 }}
         >

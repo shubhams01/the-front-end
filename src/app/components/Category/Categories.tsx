@@ -50,7 +50,7 @@ const Categories = () => {
 
   return (
     <div className="container mx-auto px-8 py-8 flex flex-col items-center">
-      <div className="sticky top-8 z-10 flex flex-col items-center">
+      <div className="top-8 z-10 flex flex-col items-center">
         <span className="text-center text-3xl font-bold">Categories</span>
         <div className="flex justify-center w-full">
           <hr className="w-full my-2" />

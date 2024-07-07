@@ -27,9 +27,9 @@ const ContentSwitch = ({ onSwitch }) => {
   };
 
   return (
-    <div className="flex justify-center items-center my-4 bg-gray-100 rounded-full p-4">
+    <div className="flex justify-center items-center my-4  rounded-full p-4">
       <motion.button
-        className={`text-sm mx-1 px-2 py-1 font-bold rounded flex items-center gap-2 ${
+        className={`text-sm mx-1 px-1 py-1 font-bold rounded flex items-center gap-1 ${
           isTrending ? "bg-gray-500 text-white ring-offset-2 ring-4 ring-stone-950" : "bg-gray-200 text-stone-700"
         }`}
         onClick={handleTrendingClick}
@@ -44,7 +44,7 @@ const ContentSwitch = ({ onSwitch }) => {
         TRENDING
       </motion.button>
       <motion.button
-        className={`text-sm mx-1 px-1 py-1 font-bold rounded flex items-center gap-2 ${
+        className={`text-sm mx-1 px-1 py-1 font-bold rounded flex items-center gap-1  ${
           !isTrending ? "bg-gray-500 text-white ring-offset-2 ring-4 ring-stone-950" : "bg-gray-200 text-stone-700"
         }`}
         onClick={handleLatestClick}
