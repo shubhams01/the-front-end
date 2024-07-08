@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import Card from "../../components/Card";
+import Card from "../../components/Layout/Card";
 
 const page = ({ params }: { params: { category: string } }) => {
   const router = useRouter();

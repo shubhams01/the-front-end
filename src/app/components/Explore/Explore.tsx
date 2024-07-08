@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import Card from "../Card";
+import Card from "../Layout/Card";
 
 const Explore = () => {
   const router = useRouter();
-
   const [articles, setArticles] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,17 +14,25 @@ const Explore = () => {
 
   const handleClick = (card) => {
     console.log("card ", card);
-    setSelectedCard(card);
-    setTimeout(() => {
-      router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
-    }, 1000);
+    // setSelectedCard(card);
+    // setTimeout(() => {
+    //   router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
+    // }, 1000);
   };
 
   const handleSwipe = (direction) => {
-    if (direction === "left" && currentIndex < articles.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else if (direction === "right" && currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+    if (direction === "left") {
+      if (currentIndex < articles.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        setCurrentIndex(0); // Loop to first card
+      }
+    } else if (direction === "right") {
+      if (currentIndex > 0) {
+        setCurrentIndex(currentIndex - 1);
+      } else {
+        setCurrentIndex(articles.length - 1); // Loop to last card
+      }
     }
   };
 
@@ -65,24 +72,23 @@ const Explore = () => {
           <AnimatePresence initial={false}>
             {articles.length > 0 && (
               <>
-                {currentIndex > 0 && (
-                  <motion.div
-                    key={articles[currentIndex - 1].id}
-                    className="absolute cursor-pointer"
-                    style={{ zIndex: 0 }}
-                    initial={{ x: -50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: 50, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                  >
-                    <Card
-                      id={articles[currentIndex - 1].id}
-                      imageUrl={articles[currentIndex - 1].imageUrl}
-                      title={articles[currentIndex - 1].title}
-                      category={articles[currentIndex - 1].category}
-                    />
-                  </motion.div>
-                )}
+                <motion.div
+                  key={articles[(currentIndex - 1 + articles.length) % articles.length].id}
+                  className="absolute cursor-pointer"
+                  style={{ zIndex: 0 }}
+                  initial={{ x: -50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: 50, opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
+                  <Card
+                    id={articles[(currentIndex - 1 + articles.length) % articles.length].id}
+                    imageUrl={articles[(currentIndex - 1 + articles.length) % articles.length].imageUrl}
+                    title={articles[(currentIndex - 1 + articles.length) % articles.length].title}
+                    category={articles[(currentIndex - 1 + articles.length) % articles.length].category}
+                  />
+                </motion.div>
+
                 <motion.div
                   key={articles[currentIndex].id}
                   className="relative z-10 cursor-pointer"
@@ -110,24 +116,23 @@ const Explore = () => {
                     category={articles[currentIndex].category}
                   />
                 </motion.div>
-                {currentIndex < articles.length - 1 && (
-                  <motion.div
-                    key={articles[currentIndex + 1].id}
-                    className="absolute cursor-pointer"
-                    style={{ zIndex: 0 }}
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -50, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                  >
-                    <Card
-                      id={articles[currentIndex + 1].id}
-                      imageUrl={articles[currentIndex + 1].imageUrl}
-                      title={articles[currentIndex + 1].title}
-                      category={articles[currentIndex + 1].category}
-                    />
-                  </motion.div>
-                )}
+
+                <motion.div
+                  key={articles[(currentIndex + 1) % articles.length].id}
+                  className="absolute cursor-pointer"
+                  style={{ zIndex: 0 }}
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -50, opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
+                  <Card
+                    id={articles[(currentIndex + 1) % articles.length].id}
+                    imageUrl={articles[(currentIndex + 1) % articles.length].imageUrl}
+                    title={articles[(currentIndex + 1) % articles.length].title}
+                    category={articles[(currentIndex + 1) % articles.length].category}
+                  />
+                </motion.div>
               </>
             )}
           </AnimatePresence>

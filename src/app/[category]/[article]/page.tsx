@@ -49,7 +49,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   const _id = segments[segments.length - 1];
   const [articleId, setArticleId] = useState(_id);
 
-  const nextSection = searchParams.get('explore')
+  const nextSection = searchParams.get("explore");
 
   useEffect(() => {
     // setArticleId(id);
@@ -138,11 +138,18 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     const fetchNextSectionData = async () => {
       try {
         let response;
-        if(nextSection === 'explore') {
+        if (nextSection === "explore") {
           response = await fetch("http://localhost:1337/api/explore");
-        }
-        else {
-          response = await fetch( `http://localhost:1337/api/articles/category/${nextSection}`);
+        } else if (nextSection === "trending" || nextSection === "latest") {
+          if (nextSection === "trending") {
+            response = await fetch("http://localhost:1337/api/articles/trending");
+          } else {
+            response = await fetch("http://localhost:1337/api/articles/latest");
+          }
+        } else {
+          response = await fetch(
+            `http://localhost:1337/api/articles/category/${nextSection}`
+          );
         }
         if (!response.ok) {
           throw new Error("Failed to fetch next section");

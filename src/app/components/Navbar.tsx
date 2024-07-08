@@ -24,7 +24,7 @@ const Navbar = () => {
   return (
     <div>
       <Link href='/'>
-        <img src="/logo.png" alt="Logo" className="h-24 fixed z-50" onClick={() => setIsOpen(false)} />
+        <img src="/logo.png" alt="Logo" className="h-20 fixed z-50" onClick={() => setIsOpen(false)} />
       </Link>
       <AnimatePresence>
         {isOpen && (
@@ -76,7 +76,7 @@ const Navbar = () => {
       {/* Menu toggle button */}
       <button
         onClick={toggleMenu}
-        className="h-12 fixed top-0 right-0 m-5 z-40 flex items-center justify-center focus:outline-none"
+        className="h-10 fixed top-0 right-0 m-5 z-40 flex items-center justify-center focus:outline-none"
       >
         {isOpen ? (
           <svg

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "../Card";
+import Card from "../Layout/Card";
 import ContentSwitch from "./ContentSwitch";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,9 @@ const TrendingLatestPosts = () => {
 
   const fetchTrendingPosts = async () => {
     try {
-      const response = await fetch("http://localhost:1337/api/articles/trending");
+      const response = await fetch(
+        "http://localhost:1337/api/articles/trending"
+      );
       const data = await response.json();
       const trendingArticles = data.map((article) => ({
         id: article.id,
@@ -58,32 +60,46 @@ const TrendingLatestPosts = () => {
   const handleSwitch = (value) => {
     setIsTrending(value);
     setCurrentIndex(0);
-    setStackDepth(0); // Reset stack depth when switching content
+    // setStackDepth(0); // Reset stack depth when switching content
   };
 
   const handleClick = (card) => {
     console.log("trending/latest card ", card);
     setTimeout(() => {
-      router.push(`/${card.category}/${card.slug}-${card.id}`);
+      router.push(
+        `/${card.category}/${card.slug}-${card.id}?explore=${
+          isTrending ? "trending" : "latest"
+        }`
+      );
     }, 500);
   };
 
   const handleSwipe = (direction) => {
-    if (direction === "left" && currentIndex < posts.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setStackDepth(stackDepth + 1);
-    } else if (direction === "right" && currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setStackDepth(stackDepth > 0 ? stackDepth - 1 : 0);
+    if (direction === "left") {
+      if (currentIndex < posts.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+        // setStackDepth(stackDepth + 1);
+      } else {
+        setCurrentIndex(0);
+        // setStackDepth(0); // Reset stack depth when looping to the first card
+      }
+    } else if (direction === "right") {
+      if (currentIndex > 0) {
+        setCurrentIndex(currentIndex - 1);
+        // setStackDepth(stackDepth > 0 ? stackDepth - 1 : 0);
+      } else {
+        setCurrentIndex(posts.length - 1);
+        // setStackDepth(posts.length - 1); // Set stack depth when looping to the last card
+      }
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen mb-16">
-      <div className="relative mb-16">
+    <div className="flex flex-col justify-center items-center w-full h-screen">
+      <div className="w-full">
         <ContentSwitch onSwitch={handleSwitch} />
       </div>
-      <div className="relative w-full h-screen">
+      <div className="relative w-full flex-1 flex items-center justify-center">
         <AnimatePresence initial={false}>
           {posts.length > 0 && (
             <>
@@ -92,7 +108,7 @@ const TrendingLatestPosts = () => {
                   key={posts[currentIndex - 1].id}
                   className="absolute inset-0 flex items-center justify-center"
                   initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
-                  animate={{ opacity: 1, scale: 1, rotate: '-1deg' }}
+                  animate={{ opacity: 1, scale: 1, rotate: "-1deg" }}
                   exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
                   transition={{ duration: 0.5 }}
                   style={{ zIndex: stackDepth }}
@@ -111,7 +127,7 @@ const TrendingLatestPosts = () => {
                   zIndex: stackDepth + 1,
                   opacity: 1,
                   scale: 1,
-                  rotate: '1deg', // Tilt right for current card
+                  rotate: "1deg", // Tilt right for current card
                 }}
                 onClick={() => handleClick(posts[currentIndex])}
                 drag="x"
@@ -124,7 +140,7 @@ const TrendingLatestPosts = () => {
                   }
                 }}
                 initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
-                animate={{ opacity: 1, scale: 1, rotate: '1deg' }}
+                animate={{ opacity: 1, scale: 1, rotate: "1deg" }}
                 exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
                 transition={{ duration: 0.5 }}
                 dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
@@ -140,7 +156,7 @@ const TrendingLatestPosts = () => {
                   key={posts[currentIndex + 1].id}
                   className="absolute inset-0 flex items-center justify-center"
                   initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
-                  animate={{ opacity: 1, scale: 1, rotate: '1deg' }}
+                  animate={{ opacity: 1, scale: 1, rotate: "1deg" }}
                   exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
                   transition={{ duration: 0.5 }}
                   style={{ zIndex: stackDepth }}
