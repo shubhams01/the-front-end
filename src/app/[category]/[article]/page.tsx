@@ -16,8 +16,9 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/solid";
-import cardDetails from "../../../app/cardDetails.json";
-import nextSectionData from "../../../app/nextSectionData.json";
+import LikeButton from "@/app/components/Layout/CardActivity";
+import LoginRegisterModal from "@/app/components/Modal/LoginRegisterModal";
+
 
 const DetailsPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -31,19 +32,12 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
   const { scrollYProgress } = useScroll();
 
-  //const id = pathname.split("/")[2];
-
-  //const initialDetails = cardDetails.find((card) => card.id == id);
-
   const [details, setDetails] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
   const [currentNestedPage, setCurrentNestedPage] = useState(0);
   const [isFetchingNextSection, setIsFetchingNextSection] = useState(false);
   const [nextSections, setNextSections] = useState([]);
   const [nextSectionIndex, setNextSectionIndex] = useState(0);
-
-  // const cardId = searchParams.get("");
-  // const _id = searchParams;
 
   const segments = pathname.split("-");
   const _id = segments[segments.length - 1];
@@ -52,20 +46,12 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   const nextSection = searchParams.get("explore");
 
   useEffect(() => {
-    // setArticleId(id);
     console.log("cardDetails ", pathname, articleId, nextSection);
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     console.log("ScrollY ", latest);
   });
-
-  // useEffect(() => {
-  //   controls.start({
-  //     opacity: 1,
-  //     y: 0,
-  //   });
-  // }, [controls]);
 
   const handleDragEnd = (event, info, sectionIndex) => {
     console.log("dragend ", info.offset.x, currentNestedPage);
@@ -142,7 +128,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
           response = await fetch("http://localhost:1337/api/explore");
         } else if (nextSection === "trending" || nextSection === "latest") {
           if (nextSection === "trending") {
-            response = await fetch("http://localhost:1337/api/articles/trending");
+            response = await fetch(
+              "http://localhost:1337/api/articles/trending"
+            );
           } else {
             response = await fetch("http://localhost:1337/api/articles/latest");
           }
@@ -461,6 +449,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
             </motion.div>
           </AnimatePresence>
         )}
+        <div className='p-4'>
+          <LikeButton />
+        </div>
       </motion.div>
       <motion.div
         className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"
@@ -475,6 +466,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
           <img className="h-20 md:h-24 lg:h-28" src="/logo.png" alt="Logo" />
         </motion.span>
       </motion.div>
+      <LoginRegisterModal />
     </motion.div>
   );
 };

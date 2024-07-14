@@ -9,7 +9,7 @@ const Navbar = () => {
   const router = useRouter(); // Initialize useRouter
   const pathname = usePathname();
 
-  console.log('pathname ', pathname)
+  // console.log("pathname ", pathname);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -23,8 +23,13 @@ const Navbar = () => {
 
   return (
     <div>
-      <Link href='/'>
-        <img src="/logo.png" alt="Logo" className="h-20 fixed z-50" onClick={() => setIsOpen(false)} />
+      <Link href="/">
+        <img
+          src="/logo.png"
+          alt="Logo"
+          className="h-20 fixed z-50"
+          onClick={() => setIsOpen(false)}
+        />
       </Link>
       <AnimatePresence>
         {isOpen && (
@@ -50,11 +55,11 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      href="/about"
-                      className={getLinkClass("/about")}
+                      href="/profile/user"
+                      className={getLinkClass("/profile/user")}
                       onClick={() => setIsOpen(false)}
                     >
-                      About
+                      Profile
                     </Link>
                   </li>
                   <li>
@@ -64,6 +69,15 @@ const Navbar = () => {
                       onClick={() => setIsOpen(false)}
                     >
                       Categories
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/about"
+                      className={getLinkClass("/about")}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      About
                     </Link>
                   </li>
                 </ul>

@@ -3,12 +3,15 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Card from "../Layout/Card";
+import { useModal } from "@/app/context/ModalContext";
 
 const Explore = () => {
   const router = useRouter();
   const [articles, setArticles] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const { setIsLoginOpen, toggleLoginModal } = useModal();
 
   const overlayControls = useAnimation();
 
@@ -27,12 +30,14 @@ const Explore = () => {
       } else {
         setCurrentIndex(0); // Loop to first card
       }
+      setIsLoginOpen(false);
     } else if (direction === "right") {
       if (currentIndex > 0) {
         setCurrentIndex(currentIndex - 1);
       } else {
         setCurrentIndex(articles.length - 1); // Loop to last card
       }
+      setIsLoginOpen(false);
     }
   };
 
@@ -67,13 +72,17 @@ const Explore = () => {
   return (
     <>
       <div className="explore-container flex flex-col items-center justify-center min-h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-        <span className="text-3xl font-bold mt-4 z-30">Explore</span>
+        <span className="text-3xl font-bold mt-4 z-30 text-blue-600">Explore</span>
         <div className="card-wrapper flex items-center justify-center w-full h-full relative">
           <AnimatePresence initial={false}>
             {articles.length > 0 && (
               <>
                 <motion.div
-                  key={articles[(currentIndex - 1 + articles.length) % articles.length].id}
+                  key={
+                    articles[
+                      (currentIndex - 1 + articles.length) % articles.length
+                    ].id
+                  }
                   className="absolute cursor-pointer"
                   style={{ zIndex: 0 }}
                   initial={{ x: -50, opacity: 0 }}
@@ -82,10 +91,26 @@ const Explore = () => {
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 >
                   <Card
-                    id={articles[(currentIndex - 1 + articles.length) % articles.length].id}
-                    imageUrl={articles[(currentIndex - 1 + articles.length) % articles.length].imageUrl}
-                    title={articles[(currentIndex - 1 + articles.length) % articles.length].title}
-                    category={articles[(currentIndex - 1 + articles.length) % articles.length].category}
+                    id={
+                      articles[
+                        (currentIndex - 1 + articles.length) % articles.length
+                      ].id
+                    }
+                    imageUrl={
+                      articles[
+                        (currentIndex - 1 + articles.length) % articles.length
+                      ].imageUrl
+                    }
+                    title={
+                      articles[
+                        (currentIndex - 1 + articles.length) % articles.length
+                      ].title
+                    }
+                    category={
+                      articles[
+                        (currentIndex - 1 + articles.length) % articles.length
+                      ].category
+                    }
                   />
                 </motion.div>
 
@@ -128,9 +153,13 @@ const Explore = () => {
                 >
                   <Card
                     id={articles[(currentIndex + 1) % articles.length].id}
-                    imageUrl={articles[(currentIndex + 1) % articles.length].imageUrl}
+                    imageUrl={
+                      articles[(currentIndex + 1) % articles.length].imageUrl
+                    }
                     title={articles[(currentIndex + 1) % articles.length].title}
-                    category={articles[(currentIndex + 1) % articles.length].category}
+                    category={
+                      articles[(currentIndex + 1) % articles.length].category
+                    }
                   />
                 </motion.div>
               </>

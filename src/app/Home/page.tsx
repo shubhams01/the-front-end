@@ -7,10 +7,8 @@ import { Hero } from "../components/Hero/Hero";
 
 const Home = () => {
   return (
-    <div>
-      <div className="snap-start">
-        {/* <Hero /> */}
-      </div>
+    <div className="bg-gradient-to-r from-orange-500 via-white to-green-500">
+      <div className="snap-start">{/* <Hero /> */}</div>
       <div className="snap-start">
         <Explore />
       </div>
