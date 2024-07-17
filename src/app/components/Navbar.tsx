@@ -15,7 +15,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const getLinkClass = (path) => {
+  const getLinkClass = (path: string) => {
     return pathname === path
       ? "text-4xl lg:text-6xl font-bold uppercase text-yellow-500"
       : "text-4xl lg:text-6xl font-bold uppercase";

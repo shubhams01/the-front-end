@@ -15,7 +15,7 @@ const Explore = () => {
 
   const overlayControls = useAnimation();
 
-  const handleClick = (card) => {
+  const handleClick = (card: never) => {
     console.log("card ", card);
     // setSelectedCard(card);
     // setTimeout(() => {
@@ -23,7 +23,7 @@ const Explore = () => {
     // }, 1000);
   };
 
-  const handleSwipe = (direction) => {
+  const handleSwipe = (direction: string) => {
     if (direction === "left") {
       if (currentIndex < articles.length - 1) {
         setCurrentIndex(currentIndex + 1);
@@ -50,7 +50,7 @@ const Explore = () => {
           throw new Error("Failed to fetch Articles");
         }
         const data = await response.json();
-        const extractedArticles = data.map((article) => ({
+        const extractedArticles = data.map((article: { id: any; Title: any; Slug: any; category: { Title: any; }; Image: { formats: { large: { url: string; }; }; }[]; }) => ({
           id: article.id,
           title: article.Title,
           slug: article.Slug,
@@ -72,7 +72,7 @@ const Explore = () => {
   return (
     <>
       <div className="explore-container flex flex-col items-center justify-center min-h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-        <span className="text-3xl font-bold mt-4 z-30 text-blue-600">Explore</span>
+        <span className="text-3xl font-bold mt-4 z-30">Explore</span>
         <div className="card-wrapper flex items-center justify-center w-full h-full relative">
           <AnimatePresence initial={false}>
             {articles.length > 0 && (
