@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image";
 import React, { useState } from "react";
 
 const CategoryCard = ({ category, imageUrl }) => {
@@ -11,7 +12,7 @@ const CategoryCard = ({ category, imageUrl }) => {
   return (
     <div className="rounded-xl relative overflow-hidden group" onClick={handleClick}>
       <div className="w-100 h-96 rounded-lg overflow-hidden relative">
-        <img
+        <Image
           src={imageUrl}
           alt={category}
           className={`w-full h-full object-cover transition-transform duration-500 transform ${isClicked ? '-translate-x-1/2 scale-x-0' : 'translate-x-0 scale-x-100'}`}

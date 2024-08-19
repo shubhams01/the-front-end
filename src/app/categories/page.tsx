@@ -2,8 +2,9 @@
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect } from "react";
 import Categories from "../components/Category/Categories";
+import Image from "next/image";
 
-const page = () => {
+const CategoriesPage = () => {
   const overlayControls = useAnimation();
 
   useEffect(() => {
@@ -26,11 +27,11 @@ const page = () => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <img className="h-20 md:h-24 lg:h-28" src="/logo.png" alt="Logo" />
+          <Image className="h-20 md:h-24 lg:h-28" src="/logo.png" alt="Logo" />
         </motion.span>
       </motion.div>
     </>
   );
 };
 
-export default page;
+export default CategoriesPage;

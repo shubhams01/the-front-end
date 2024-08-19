@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Card from "../../components/Story/Card";
 
-const page = ({ params }: { params: { category: string } }) => {
+const CategoryPage = ({ params }: { params: { category: string } }) => {
   const router = useRouter();
 
   const [articles, setArticles] = useState([]);
@@ -19,7 +19,9 @@ const page = ({ params }: { params: { category: string } }) => {
     console.log("card ", card);
     setSelectedCard(card);
     setTimeout(() => {
-      router.push(`/${card.category}/${card.slug}-${card.id}?explore=${card.category}`);
+      router.push(
+        `/${card.category}/${card.slug}-${card.id}?explore=${card.category}`
+      );
     }, 500);
   };
 
@@ -64,11 +66,14 @@ const page = ({ params }: { params: { category: string } }) => {
   return (
     <>
       <div className="explore-container flex flex-col items-center justify-center h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-        <span className="text-2xl font-bold mt-10">{category.toLocaleUpperCase()}</span>
+        <span className="text-2xl font-bold mt-10">
+          {category.toLocaleUpperCase()}
+        </span>
         <div className="card-wrapper flex items-center justify-center w-full h-full">
           <AnimatePresence mode="wait">
             {articles.length > 0 && (
               <motion.div
+                // @ts-ignore
                 key={articles[currentIndex].id}
                 className="snap-center cursor-pointer"
                 onClick={() => handleClick(articles[currentIndex])}
@@ -86,12 +91,18 @@ const page = ({ params }: { params: { category: string } }) => {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ opacity: 0 }}
                 dragTransition={{ bounceStiffness: 100, bounceDamping: 20 }}
+                // @ts-ignore
+
                 layoutId={`card-${articles[currentIndex].id}`}
               >
                 <Card
+                  // @ts-ignore
                   id={articles[currentIndex].id}
+                  // @ts-ignore
                   imageUrl={articles[currentIndex].imageUrl}
+                  // @ts-ignore
                   title={articles[currentIndex].title}
+                  // @ts-ignore
                   category={articles[currentIndex].category}
                 />
               </motion.div>
@@ -110,7 +121,9 @@ const page = ({ params }: { params: { category: string } }) => {
             transition={{ duration: 1, ease: "easeInOut" }}
           >
             <img
+              // @ts-ignore
               src={selectedCard.imageUrl}
+              // @ts-ignore
               alt={selectedCard.title}
               className="w-full h-full object-cover rounded-lg"
             />
@@ -135,4 +148,4 @@ const page = ({ params }: { params: { category: string } }) => {
   );
 };
 
-export default page;
+export default CategoryPage;

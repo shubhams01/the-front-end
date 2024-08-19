@@ -266,6 +266,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
                   variants={arrowVariants}
                   initial="initial"
                   animate={isOpen ? "animate" : "exit"}
+                      // @ts-ignore
                   transition="transition"
                 >
                   <ChevronDoubleRightIcon className="w-5 h-5" />

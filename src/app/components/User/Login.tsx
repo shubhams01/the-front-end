@@ -14,6 +14,7 @@ import {
   faCheckCircle,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -171,7 +172,7 @@ const Login: React.FC = () => {
             type="button"
             className="w-full flex items-center justify-center p-4 text-black py-2 mt-2 rounded-lg shadow-lg transition duration-300 bg-white hover:bg-gray-100"
           >
-            <img
+            <Image
               className="h-5 w-5 mr-2"
               src="https://1000logos.net/wp-content/uploads/2016/11/New-Google-Logo.jpg"
               alt="google"
@@ -179,7 +180,7 @@ const Login: React.FC = () => {
             <span>Sign in with Google</span>
           </button>
           <p className="mt-4 text-center text-gray-600">
-            <span>Don't have an account? {" "}</span>
+            <span>Don&apos;t have an account?</span>
             <button
               type="button"
               className="text-blue-500 hover:underline focus:outline-none"

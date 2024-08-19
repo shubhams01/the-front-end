@@ -19,6 +19,25 @@ import {
 import CardActivity from "@/app/components/Story/CardActivity";
 import LoginRegisterModal from "@/app/components/Modal/LoginRegisterModal";
 
+interface Section {
+  nestedSections: Array<{
+    imageUrl: string;
+    description: string;
+  }>;
+}
+
+interface Details {
+  sections: Section[];
+}
+
+interface Article {
+  id: number;
+  title: string;
+  slug: string;
+  category: string;
+  imageUrl: string;
+}
+
 const DetailsPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -31,7 +50,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
   const { scrollYProgress } = useScroll();
 
-  const [details, setDetails] = useState({});
+  const [details, setDetails] = useState<Details>();
   const [currentPage, setCurrentPage] = useState(0);
   const [currentNestedPage, setCurrentNestedPage] = useState(0);
   const [isFetchingNextSection, setIsFetchingNextSection] = useState(false);
@@ -54,7 +73,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     console.log("ScrollY ", latest);
   });
 
-  const handleDragEnd = (event, info, sectionIndex) => {
+  const handleDragEnd = (event: any, info: any, sectionIndex: number) => {
     console.log("dragend ", info.offset.x, currentNestedPage);
     if (info.offset.x > 100 && currentNestedPage > 0) {
       // Swiped right
@@ -63,6 +82,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     } else if (
       info.offset.x < -100 &&
       currentNestedPage <
+        // @ts-ignore
         details.sections[sectionIndex].nestedSections.length - 1
     ) {
       // Swiped left
@@ -71,9 +91,10 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  const handleDrag = async (event, info) => {
+  const handleDrag = async (event: any, info: { offset: { y: number } }) => {
     if (isCommentsOpen) return; // Prevent scrolling/swiping if comments are open
     setCloseShare(true);
+    // @ts-ignore
     if (info.offset.y < -100 && currentPage < details?.sections.length - 1) {
       setCurrentPage(currentPage + 1);
       setCurrentNestedPage(0);
@@ -82,6 +103,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
       setCurrentNestedPage(0);
     } else if (
       info.offset.y < -100 &&
+      // @ts-ignore
       currentPage === details?.sections.length - 1
     ) {
       await fetchNextSection();
@@ -91,14 +113,16 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
       info.offset.y,
       currentPage,
       details?.sections.length,
+      // @ts-ignore
       details?.sections.length - 1 < currentPage
     );
   };
 
-  const handleScroll = async (event) => {
+  const handleScroll = async (event: { deltaY: number }) => {
     if (isCommentsOpen) return; // Prevent scrolling/swiping if comments are open
     setCloseShare(true);
     const direction = event.deltaY > 0 ? "down" : "up";
+    // @ts-ignore
     if (direction === "down" && currentPage < details.sections.length - 1) {
       setCurrentNestedPage(0);
       setCurrentPage(currentPage + 1);
@@ -119,6 +143,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
       // });
     } else if (
       direction === "down" &&
+      // @ts-ignore
       currentPage === details.sections.length - 1
     ) {
       await fetchNextSection();
@@ -160,28 +185,45 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     await overlayControls.start({ y: 0 });
 
     setCurrentPage(0);
-
-    const sections = nextSections[nextSectionIndex]?.sections.map((section) => {
-      const sectionObject = {
-        imageUrl: `http://localhost:1337${section?.SectionImage?.formats?.large?.url}`,
-        description: section.SectionDescription,
-        nestedSections: section.NestedSections
-          ? section.NestedSections.map((nested) => ({
-              imageUrl: `http://localhost:1337${nested?.NestedSectionImage?.formats?.large?.url}`,
-              description: nested.NestedSectionDescription,
-            }))
-          : [],
-      };
-      return sectionObject;
-    });
+    // @ts-ignore
+    const sections = nextSections[nextSectionIndex]?.sections.map(
+      (section: {
+        SectionImage: { formats: { large: { url: any } } };
+        SectionDescription: any;
+        NestedSections: any[];
+      }) => {
+        const sectionObject = {
+          imageUrl: `http://localhost:1337${section?.SectionImage?.formats?.large?.url}`,
+          description: section.SectionDescription,
+          nestedSections: section.NestedSections
+            ? section.NestedSections.map(
+                (nested: {
+                  NestedSectionImage: { formats: { large: { url: any } } };
+                  NestedSectionDescription: any;
+                }) => ({
+                  imageUrl: `http://localhost:1337${nested?.NestedSectionImage?.formats?.large?.url}`,
+                  description: nested.NestedSectionDescription,
+                })
+              )
+            : [],
+        };
+        return sectionObject;
+      }
+    );
 
     setDetails((prevDetails) => {
       const updatedDetails = {
+        // @ts-ignore
         id: nextSections[nextSectionIndex]?.id,
+        // @ts-ignore
         title: nextSections[nextSectionIndex]?.Title,
+        // @ts-ignore
         slug: nextSections[nextSectionIndex]?.Slug,
+        // @ts-ignore
         sections: sections,
+        // @ts-ignore
         likes: nextSections[nextSectionIndex]?.likesCount,
+        // @ts-ignore
         comments: nextSections[nextSectionIndex]?.commentsCount,
       };
       console.log(
@@ -204,8 +246,12 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     // Updating URL
     const nextSection = nextSections[nextSectionIndex];
     if (nextSection) {
+      // @ts-ignore
+
       const categorySlug = nextSection.category.Title;
+      // @ts-ignore
       const sectionSlug = nextSection.Slug;
+      // @ts-ignore
       const sectionId = nextSection.id;
 
       const newUrl = `/${categorySlug}/${sectionSlug}-${sectionId}`;
@@ -232,6 +278,8 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   };
 
   const handleArrowDownClick = () => {
+    // @ts-ignore
+
     if (currentPage < details.sections.length - 1) {
       setCurrentPage(currentPage + 1);
       setCurrentNestedPage(0);
@@ -255,19 +303,30 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
         const data = await response.json();
         console.log("articleDetails ", data);
 
-        const sections = data?.sections.map((section) => {
-          const sectionObject = {
-            imageUrl: `http://localhost:1337${section?.SectionImage?.formats?.large.url}`,
-            description: section?.SectionDescription,
-            nestedSections: section?.NestedSections
-              ? section.NestedSections.map((nested) => ({
-                  imageUrl: `http://localhost:1337${nested?.NestedSectionImage?.formats?.large?.url}`,
-                  description: nested?.NestedSectionDescription,
-                }))
-              : [],
-          };
-          return sectionObject;
-        });
+        const sections = data?.sections.map(
+          (section: {
+            SectionImage: { formats: { large: { url: any } } };
+            SectionDescription: any;
+            NestedSections: any[];
+          }) => {
+            const sectionObject = {
+              imageUrl: `http://localhost:1337${section?.SectionImage?.formats?.large.url}`,
+              description: section?.SectionDescription,
+              nestedSections: section?.NestedSections
+                ? section.NestedSections.map(
+                    (nested: {
+                      NestedSectionImage: { formats: { large: { url: any } } };
+                      NestedSectionDescription: any;
+                    }) => ({
+                      imageUrl: `http://localhost:1337${nested?.NestedSectionImage?.formats?.large?.url}`,
+                      description: nested?.NestedSectionDescription,
+                    })
+                  )
+                : [],
+            };
+            return sectionObject;
+          }
+        );
 
         const article = {
           id: data?.id,
@@ -315,7 +374,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
               <motion.div className="relative h-full w-full p-2">
                 <motion.img
                   className="w-full h-full rounded-2xl"
+                  // @ts-ignore
                   src={details?.sections[currentPage]?.imageUrl}
+                  // @ts-ignore
                   alt={details?.sections[currentPage]?.title}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.75 }}
@@ -330,6 +391,8 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.75, ease: "easeInOut" }}
+                  // @ts-ignore
+
                   key={details?.sections[currentPage]?.description}
                 >
                   <span
@@ -339,13 +402,19 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                         : "text-sm md:text-lg lg:text-2xl"
                     }  font-bold text-white`}
                   >
-                    {details?.sections[currentPage]?.description}
+                    {
+                      // @ts-ignore
+                      details?.sections[currentPage]?.description
+                    }
                   </span>
                 </motion.div>
                 {details?.sections[currentPage]?.nestedSections && (
                   <motion.div className="absolute bottom-4 items-center w-full flex justify-center">
                     {details?.sections[currentPage]?.nestedSections.map(
-                      (nestedSection, nestedIndex) => (
+                      (
+                        nestedSection: any,
+                        nestedIndex: React.Key | null | undefined
+                      ) => (
                         <motion.div
                           key={nestedIndex}
                           className={`bg-white rounded-full mx-2 ${
@@ -423,15 +492,17 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                     >
                       <ChevronUpIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </motion.div>
-                    {details.sections.map((_, index) => (
-                      <motion.div
-                        key={index}
-                        className={`bg-white rounded-full my-2 ${
-                          index === currentPage ? "w-3 h-3" : "w-1 h-1"
-                        }`}
-                        transition={{ duration: 0.5, ease: "smooth" }}
-                      ></motion.div>
-                    ))}
+                    {details.sections.map(
+                      (_: any, index: React.Key | null | undefined) => (
+                        <motion.div
+                          key={index}
+                          className={`bg-white rounded-full my-2 ${
+                            index === currentPage ? "w-3 h-3" : "w-1 h-1"
+                          }`}
+                          transition={{ duration: 0.5, ease: "smooth" }}
+                        ></motion.div>
+                      )
+                    )}
                     <motion.div
                       className="absolute -bottom-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
                       onClick={handleArrowDownClick}
@@ -468,8 +539,11 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                 )}
               </motion.div>
               <CardActivity
+                // @ts-ignore
                 postId={details?.id}
+                // @ts-ignore
                 initialLikes={details?.likes}
+                // @ts-ignore
                 initialComments={details?.comments}
                 setIsCommentsOpenDragScroll={setIsCommentsOpen}
                 closeShareOpenOnDragOrScroll={closeShare}

@@ -40,7 +40,7 @@ const Hero = ({ scrollToExplore }) => {
       </div>
       <div className="mt-8 lg:mt-12 flex items-center justify-center flex-wrap text-center relative z-10">
         <span className="text-md md:text-xl lg:text-2xl font-bold text-white">
-          "We know nothing" about{" "}
+        &quot; We know nothing &quot; about
         </span>
         <div className="relative h-8 md:h-10 lg:h-12">
           <AnimatePresence initial={false}>

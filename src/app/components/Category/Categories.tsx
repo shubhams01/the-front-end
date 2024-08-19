@@ -47,9 +47,13 @@ const Categories = () => {
         {categories.map((category, index) => (
           <div key={index} onClick={() => handleClick(category)}>
             <CategoryCard
+              // @ts-ignore
               key={category.id}
+              // @ts-ignore
               category={category.name}
+              // @ts-ignore
               imageUrl={category.imageUrl}
+              // @ts-ignore
               slug={category.slug}
             />
           </div>

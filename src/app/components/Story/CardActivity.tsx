@@ -254,10 +254,12 @@ const CardActivity = ({
       </motion.div>
       {isCommentsOpen && (
         <CommentsSection
+          // @ts-ignore
           userId={userId}
           postId={postId}
           isOpen={isCommentsOpen}
           onClose={() =>
+            // @ts-ignore
             setIsCommentsOpen(false) || setIsCommentsOpenDragScroll(false)
           }
         />

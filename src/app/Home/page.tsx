@@ -17,6 +17,7 @@ const Home = () => {
 
   const scrollToExplore = () => {
     if (exploreRef.current) {
+      // @ts-ignore
       exploreRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };

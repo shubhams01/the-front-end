@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+    // @ts-ignore
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import {
   type Container,

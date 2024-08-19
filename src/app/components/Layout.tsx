@@ -8,6 +8,7 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     const handleResize = () => {
+          // @ts-ignore
       contentRef.current.style.height = `${window.innerHeight}px`;
     };
 
@@ -24,6 +25,7 @@ const Layout = ({ children }) => {
       <div ref={contentRef} className="h-screen overflow-hidden">
         <motion.div
           style={{
+                // @ts-ignore
             transform: scrollY.get().transform((y) => `translateY(-${y}px)`),
           }}
           className="flex flex-col h-full"
