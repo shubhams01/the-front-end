@@ -5,6 +5,7 @@ import Modal from "./components/Modal/LoginRegisterModal";
 import Navbar from "./components/Navbar";
 import Login from "./components/User/Login";
 import { ModalProvider } from "./context/ModalContext";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +21,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google tag (gtag.js)  */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-C7Q378R3R9"
+        ></Script>
+        <Script id="google-analytics">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-C7Q378R3R9');
+            `}
+        </Script>
+      </head>
       <body className={inter.className}>
         <Navbar />
-        <ModalProvider>
-          {children}
-        </ModalProvider>
+        <ModalProvider>{children}</ModalProvider>
       </body>
     </html>
   );
