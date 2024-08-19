@@ -27,7 +27,7 @@ const CategoriesPage = () => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <Image className="h-20 md:h-24 lg:h-28" src="/logo.png" alt="Logo" />
+          <img className="h-20 md:h-24 lg:h-28" src="/logo.png" alt="Logo" />
         </motion.span>
       </motion.div>
     </>

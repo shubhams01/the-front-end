@@ -172,7 +172,7 @@ const Login: React.FC = () => {
             type="button"
             className="w-full flex items-center justify-center p-4 text-black py-2 mt-2 rounded-lg shadow-lg transition duration-300 bg-white hover:bg-gray-100"
           >
-            <Image
+            <img
               className="h-5 w-5 mr-2"
               src="https://1000logos.net/wp-content/uploads/2016/11/New-Google-Logo.jpg"
               alt="google"

@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <div className="relative">
       <Link href="/">
-        <Image
+        <img
           src="/logo.png"
           alt="Logo"
           className="h-20 fixed z-50"

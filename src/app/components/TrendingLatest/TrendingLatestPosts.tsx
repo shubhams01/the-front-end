@@ -14,7 +14,7 @@ const TrendingLatestPosts = () => {
   const fetchTrendingPosts = async () => {
     try {
       const response = await fetch(
-        "http://localhost:1337/api/articles/trending"
+        "https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/trending"
       );
       const data = await response.json();
       const trendingArticles = data.map((article) => ({
@@ -22,7 +22,7 @@ const TrendingLatestPosts = () => {
         title: article.Title,
         slug: article.Slug,
         category: article.category?.Title,
-        imageUrl: "http://localhost:1337" + article.Image[0].formats.large.url,
+        imageUrl: article.Image[0].formats.large.url,
       }));
       setPosts(trendingArticles);
       console.log("trending ", data);
@@ -33,14 +33,14 @@ const TrendingLatestPosts = () => {
 
   const fetchLatestPosts = async () => {
     try {
-      const response = await fetch("http://localhost:1337/api/articles/latest");
+      const response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/latest");
       const data = await response.json();
       const latestArticles = data.map((article) => ({
         id: article.id,
         title: article.Title,
         slug: article.Slug,
         category: article.category.Title,
-        imageUrl: "http://localhost:1337" + article.Image[0].formats.large.url,
+        imageUrl: article.Image[0].formats.large.url,
       }));
       setPosts(latestArticles);
       console.log("latest ", data);
@@ -116,7 +116,7 @@ const TrendingLatestPosts = () => {
                 >
                   <Card
                     // @ts-ignore
-                    id={posts[currentIndex + 1].id}
+                    id={posts[currentIndex - 1].id}
                     // @ts-ignore
                     imageUrl={posts[currentIndex - 1].imageUrl}
                     // @ts-ignore
@@ -154,7 +154,7 @@ const TrendingLatestPosts = () => {
               >
                 <Card
                   // @ts-ignore
-                  id={posts[currentIndex + 1].id}
+                  id={posts[currentIndex].id}
                   // @ts-ignore
                   imageUrl={posts[currentIndex].imageUrl}
                   // @ts-ignore

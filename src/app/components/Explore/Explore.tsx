@@ -21,12 +21,13 @@ const Explore = () => {
 
   const overlayControls = useAnimation();
 
+  const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
+
   const handleClick = (card: never) => {
     console.log("card ", card);
     setSelectedCard(card);
     setTimeout(() => {
       // @ts-ignore
-
       router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
     }, 1000);
   };
@@ -70,8 +71,8 @@ const Explore = () => {
       await overlayControls.start({ y: "0%" });
       try {
         const endpoint = isLoggedIn
-          ? "http://localhost:1337/api/recommendations"
-          : "http://localhost:1337/api/explore";
+          ? `https://striking-basketball-1ff3829bbe.strapiapp.com/api/recommendations`
+          : `https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`;
 
         const headers = isLoggedIn ? { Authorization: `Bearer ${token}` } : {};
         // @ts-ignore
@@ -87,7 +88,7 @@ const Explore = () => {
           slug: article?.Slug,
           category: article?.category.Title,
           imageUrl:
-            "http://localhost:1337" + article.Image[0]?.formats.large.url,
+            article.Image[0]?.formats.large.url,
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,
@@ -134,7 +135,6 @@ const Explore = () => {
             className="absolute cursor-pointer left-0 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
             onClick={() => handleLeftArrowClick()}
             // @ts-ignore
-
             animate={rotateLeftAnimation}
           />
           <AnimatePresence>

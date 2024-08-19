@@ -11,7 +11,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:1337/api/categories");
+        const response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/categories");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
@@ -19,7 +19,7 @@ const Categories = () => {
         const extractedCategories = data.map((category) => ({
           name: category.Title,
           slug: category.Slug,
-          imageUrl: `http://localhost:1337${category.Image}`,
+          imageUrl: category.Image,
         }));
         console.log("categories ", extractedCategories);
         setCategories(extractedCategories);
