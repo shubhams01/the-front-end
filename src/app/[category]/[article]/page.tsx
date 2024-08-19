@@ -16,9 +16,8 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/solid";
-import LikeButton from "@/app/components/Layout/CardActivity";
+import CardActivity from "@/app/components/Story/CardActivity";
 import LoginRegisterModal from "@/app/components/Modal/LoginRegisterModal";
-
 
 const DetailsPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -38,6 +37,8 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   const [isFetchingNextSection, setIsFetchingNextSection] = useState(false);
   const [nextSections, setNextSections] = useState([]);
   const [nextSectionIndex, setNextSectionIndex] = useState(0);
+  const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+  const [closeShare, setCloseShare] = useState(false);
 
   const segments = pathname.split("-");
   const _id = segments[segments.length - 1];
@@ -71,6 +72,8 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   };
 
   const handleDrag = async (event, info) => {
+    if (isCommentsOpen) return; // Prevent scrolling/swiping if comments are open
+    setCloseShare(true);
     if (info.offset.y < -100 && currentPage < details?.sections.length - 1) {
       setCurrentPage(currentPage + 1);
       setCurrentNestedPage(0);
@@ -93,25 +96,27 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   };
 
   const handleScroll = async (event) => {
+    if (isCommentsOpen) return; // Prevent scrolling/swiping if comments are open
+    setCloseShare(true);
     const direction = event.deltaY > 0 ? "down" : "up";
     if (direction === "down" && currentPage < details.sections.length - 1) {
       setCurrentNestedPage(0);
       setCurrentPage(currentPage + 1);
-      controls.start({
-        transition: {
-          bounceStiffness: 500,
-          bounceDamping: 25,
-        },
-      });
+      // controls.start({
+      //   transition: {
+      //     bounceStiffness: 500,
+      //     bounceDamping: 25,
+      //   },
+      // });
     } else if (direction === "up" && currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setCurrentNestedPage(0);
-      controls.start({
-        transition: {
-          bounceStiffness: 500,
-          bounceDamping: 25,
-        },
-      });
+      // controls.start({
+      //   transition: {
+      //     bounceStiffness: 500,
+      //     bounceDamping: 25,
+      //   },
+      // });
     } else if (
       direction === "down" &&
       currentPage === details.sections.length - 1
@@ -135,9 +140,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
             response = await fetch("http://localhost:1337/api/articles/latest");
           }
         } else {
-          response = await fetch(
-            `http://localhost:1337/api/articles/category/${nextSection}`
-          );
+          response = await fetch(`http://localhost:1337/api/explore`);
         }
         if (!response.ok) {
           throw new Error("Failed to fetch next section");
@@ -160,11 +163,11 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
     const sections = nextSections[nextSectionIndex]?.sections.map((section) => {
       const sectionObject = {
-        imageUrl: `http://localhost:1337${section.SectionImage.formats.large.url}`,
+        imageUrl: `http://localhost:1337${section?.SectionImage?.formats?.large?.url}`,
         description: section.SectionDescription,
         nestedSections: section.NestedSections
           ? section.NestedSections.map((nested) => ({
-              imageUrl: `http://localhost:1337${nested.NestedSectionImage.formats.large.url}`,
+              imageUrl: `http://localhost:1337${nested?.NestedSectionImage?.formats?.large?.url}`,
               description: nested.NestedSectionDescription,
             }))
           : [],
@@ -178,6 +181,8 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
         title: nextSections[nextSectionIndex]?.Title,
         slug: nextSections[nextSectionIndex]?.Slug,
         sections: sections,
+        likes: nextSections[nextSectionIndex]?.likesCount,
+        comments: nextSections[nextSectionIndex]?.commentsCount,
       };
       console.log(
         "Updated Details inside state update function:",
@@ -191,9 +196,23 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
       console.log(
         "nextSectionIndex ",
         nextSectionIndex,
-        nextSections[nextSectionIndex]
+        nextSections[nextSectionIndex],
+        pathname
       );
-      // router.replace(`science/${nextSections[nextSectionIndex].Slug}-${nextSections[nextSectionIndex].id}`);
+    }
+
+    // Updating URL
+    const nextSection = nextSections[nextSectionIndex];
+    if (nextSection) {
+      const categorySlug = nextSection.category.Title;
+      const sectionSlug = nextSection.Slug;
+      const sectionId = nextSection.id;
+
+      const newUrl = `/${categorySlug}/${sectionSlug}-${sectionId}`;
+      window.history.pushState({ urlPath: `/${categorySlug}` }, "", newUrl);
+      console.log("updatedUrl ", nextSection);
+    } else {
+      console.error("Some properties are undefined:", nextSection);
     }
 
     await overlayControls.start({ y: "-100%" });
@@ -254,6 +273,8 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
           id: data?.id,
           title: data?.Title,
           sections: sections,
+          likes: data?.likesCount,
+          comments: data?.commentsCount,
         };
 
         setDetails(article);
@@ -275,7 +296,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
         {details?.sections && (
           <AnimatePresence mode="wait">
             <motion.div
-              className="items-center justify-center mx-auto w-full md:w-3/4 lg:w-2/4 h-screen rounded-xl snap-center relative"
+              className="items-center justify-center mx-auto w-full md:w-1/3 lg:w-1/3 h-screen rounded-xl snap-center relative"
               animate={controls}
               initial="hidden"
               whileInView="visible"
@@ -314,7 +335,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   <span
                     className={`${
                       currentPage == 0
-                        ? "text-6xl"
+                        ? "text-6xl text-shadow shadow-slate-500"
                         : "text-sm md:text-lg lg:text-2xl"
                     }  font-bold text-white`}
                   >
@@ -370,7 +391,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                         draggable={false}
                       />
                       <motion.div
-                        className="w-full text-center max-h-60"
+                        className="w-full flex items-center justify-center text-center max-h-60"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
@@ -396,23 +417,23 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 1.25 }}
                   >
+                    <motion.div
+                      className="absolute -top-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
+                      onClick={handleArrowUpClick}
+                    >
+                      <ChevronUpIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
+                    </motion.div>
                     {details.sections.map((_, index) => (
                       <motion.div
                         key={index}
-                        className={`bg-white rounded-full my-4 ${
+                        className={`bg-white rounded-full my-2 ${
                           index === currentPage ? "w-3 h-3" : "w-1 h-1"
                         }`}
                         transition={{ duration: 0.5, ease: "smooth" }}
                       ></motion.div>
                     ))}
                     <motion.div
-                      className="absolute -top-2/3 -right-3 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
-                      onClick={handleArrowUpClick}
-                    >
-                      <ChevronUpIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
-                    </motion.div>
-                    <motion.div
-                      className="absolute -bottom-1/2 -right-3 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
+                      className="absolute -bottom-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
                       onClick={handleArrowDownClick}
                     >
                       <ChevronDownIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
@@ -446,12 +467,16 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   </>
                 )}
               </motion.div>
+              <CardActivity
+                postId={details?.id}
+                initialLikes={details?.likes}
+                initialComments={details?.comments}
+                setIsCommentsOpenDragScroll={setIsCommentsOpen}
+                closeShareOpenOnDragOrScroll={closeShare}
+              />
             </motion.div>
           </AnimatePresence>
         )}
-        <div className='p-4'>
-          <LikeButton />
-        </div>
       </motion.div>
       <motion.div
         className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"

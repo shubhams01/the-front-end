@@ -3,13 +3,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter(); // Initialize useRouter
   const pathname = usePathname();
-
-  // console.log("pathname ", pathname);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -21,8 +21,12 @@ const Navbar = () => {
       : "text-4xl lg:text-6xl font-bold uppercase";
   };
 
+  const goBack = () => {
+    router.back();
+  };
+
   return (
-    <div>
+    <div className="relative">
       <Link href="/">
         <img
           src="/logo.png"
@@ -31,6 +35,17 @@ const Navbar = () => {
           onClick={() => setIsOpen(false)}
         />
       </Link>
+
+      {/* Back button */}
+      {pathname !== "/" && (
+        <button
+          onClick={goBack}
+          className="fixed top-2 right-10 lg:right-12 m-5 z-40 flex items-center justify-center"
+        >
+          <FontAwesomeIcon icon={faChevronCircleLeft} size="lg" color="" />
+        </button>
+      )}
+
       <AnimatePresence>
         {isOpen && (
           <motion.div

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "../Layout/Card";
+import Card from "../Story/Card";
 import ContentSwitch from "./ContentSwitch";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,7 @@ const TrendingLatestPosts = () => {
         id: article.id,
         title: article.Title,
         slug: article.Slug,
-        category: article.category.Title,
+        category: article.category?.Title,
         imageUrl: "http://localhost:1337" + article.Image[0].formats.large.url,
       }));
       setPosts(trendingArticles);

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import Card from "../../components/Layout/Card";
+import Card from "../../components/Story/Card";
 
 const page = ({ params }: { params: { category: string } }) => {
   const router = useRouter();
@@ -45,8 +45,8 @@ const page = ({ params }: { params: { category: string } }) => {
         const extractedArticles = data.map((article) => ({
           id: article.id,
           title: article.Title,
-          slug: article.Slug,
-          category: article.category.Slug,
+          slug: article?.Slug,
+          category: article.category?.Title,
           imageUrl:
             "http://localhost:1337" + article.Image[0].formats.large.url,
         }));

@@ -1,9 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import Card from "../Layout/Card";
+import { motion, AnimatePresence, useAnimation, animate } from "framer-motion";
+import Card from "../Story/Card";
 import { useModal } from "@/app/context/ModalContext";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import LoginRegisterModal from "../Modal/LoginRegisterModal";
+import { useAuthStore } from "@/app/store/authStore";
+import { getAuthToken } from "@/app/hooks/useLocalStorageAuth";
 
 const Explore = () => {
   const router = useRouter();
@@ -11,16 +15,18 @@ const Explore = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const { setIsLoginOpen, toggleLoginModal } = useModal();
+  const { setIsLoginOpen } = useModal();
+  const { isLoggedIn } = useAuthStore();
+  const token = getAuthToken();
 
   const overlayControls = useAnimation();
 
   const handleClick = (card: never) => {
     console.log("card ", card);
-    // setSelectedCard(card);
-    // setTimeout(() => {
-    //   router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
-    // }, 1000);
+    setSelectedCard(card);
+    setTimeout(() => {
+      router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
+    }, 1000);
   };
 
   const handleSwipe = (direction: string) => {
@@ -41,24 +47,50 @@ const Explore = () => {
     }
   };
 
+  const handleLeftArrowClick = () => {
+    if (currentIndex < articles.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentIndex(0); // Loop to first card
+    }
+  };
+
+  const handleRighttArrowClick = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    } else {
+      setCurrentIndex(articles.length - 1); // Loop to last card
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       await overlayControls.start({ y: "0%" });
       try {
-        const response = await fetch("http://localhost:1337/api/articles");
+        const endpoint = isLoggedIn
+          ? "http://localhost:1337/api/recommendations"
+          : "http://localhost:1337/api/explore";
+
+        const headers = isLoggedIn ? { Authorization: `Bearer ${token}` } : {};
+
+        const response = await fetch(endpoint, { headers });
         if (!response.ok) {
           throw new Error("Failed to fetch Articles");
         }
         const data = await response.json();
-        const extractedArticles = data.map((article: { id: any; Title: any; Slug: any; category: { Title: any; }; Image: { formats: { large: { url: string; }; }; }[]; }) => ({
-          id: article.id,
-          title: article.Title,
-          slug: article.Slug,
-          category: article.category.Title,
+        console.log("data ", data);
+        const extractedArticles = data.map((article: any) => ({
+          id: article?.id,
+          title: article?.Title,
+          slug: article?.Slug,
+          category: article?.category.Title,
           imageUrl:
-            "http://localhost:1337" + article.Image[0].formats.large.url,
+            "http://localhost:1337" + article.Image[0]?.formats.large.url,
         }));
-        console.log("Articles ", extractedArticles, data);
+        console.log(
+          `Articles ${isLoggedIn ? "recommended" : "explore"}`,
+          extractedArticles,
+        );
         setArticles(extractedArticles);
         await overlayControls.start({ y: "-100%" });
       } catch (error) {
@@ -67,14 +99,41 @@ const Explore = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isLoggedIn]);
+
+  const rotateLeftAnimation = {
+    rotate: [0, -20, 0],
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+      repeatType: "loop",
+      ease: "easeInOut",
+    },
+  };
+
+  const rotateRightAnimation = {
+    rotate: [0, 20, 0],
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+      repeatType: "loop",
+      ease: "easeInOut",
+    },
+  };
 
   return (
     <>
-      <div className="explore-container flex flex-col items-center justify-center min-h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-        <span className="text-3xl font-bold mt-4 z-30">Explore</span>
-        <div className="card-wrapper flex items-center justify-center w-full h-full relative">
-          <AnimatePresence initial={false}>
+      <div className="flex flex-col justify-center items-center w-full h-screen">
+        <span className="text-3xl font-bold mt-6 z-30">Explore</span>
+        <div className="relative flex-1 flex items-center justify-center">
+          <motion.img
+            src="/left-swipe.png"
+            alt="left-swipe"
+            className="absolute cursor-pointer left-0 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
+            onClick={() => handleLeftArrowClick()}
+            animate={rotateLeftAnimation}
+          />
+          <AnimatePresence>
             {articles.length > 0 && (
               <>
                 <motion.div
@@ -165,6 +224,14 @@ const Explore = () => {
               </>
             )}
           </AnimatePresence>
+          <motion.img
+            src="/right-swipe.png"
+            alt="right-swipe"
+            className="absolute cursor-pointer -right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
+            onClick={() => handleRighttArrowClick()}
+            animate={rotateRightAnimation}
+          />
+          <LoginRegisterModal />
         </div>
       </div>
 

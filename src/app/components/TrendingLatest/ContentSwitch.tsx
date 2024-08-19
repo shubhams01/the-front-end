@@ -28,11 +28,11 @@ const ContentSwitch = ({ onSwitch }) => {
 
   return (
     <div className="flex justify-center items-center mt-4">
-      <div className="flex justify-center items-center rounded-full p-3 bg-white">
+      <div className="flex justify-center items-center rounded-full p-3 bg-white z-10">
         <motion.button
           className={`text-sm mx-1 px-2 py-1 font-bold rounded flex items-center gap-2 ${
             isTrending
-              ? "bg-gray-500 text-white ring-offset-2 ring-4 ring-stone-950"
+              ? "bg-gray-500 text-white ring-offset-1 ring-2 ring-stone-950"
               : "bg-gray-200 text-stone-700"
           }`}
           onClick={handleTrendingClick}
