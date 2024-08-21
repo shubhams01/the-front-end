@@ -193,7 +193,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
         NestedSections: any[];
       }) => {
         const sectionObject = {
-          imageUrl: `https://striking-basketball-1ff3829bbe.strapiapp.com${section?.SectionImage?.formats?.large?.url}`,
+          imageUrl: section?.SectionImage?.formats?.large?.url,
           description: section.SectionDescription,
           nestedSections: section.NestedSections
             ? section.NestedSections.map(
@@ -201,7 +201,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   NestedSectionImage: { formats: { large: { url: any } } };
                   NestedSectionDescription: any;
                 }) => ({
-                  imageUrl: `https://striking-basketball-1ff3829bbe.strapiapp.com${nested?.NestedSectionImage?.formats?.large?.url}`,
+                  imageUrl: nested?.NestedSectionImage?.formats?.large?.url,
                   description: nested.NestedSectionDescription,
                 })
               )
