@@ -155,17 +155,17 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
       try {
         let response;
         if (nextSection === "explore") {
-          response = await fetch("http://localhost:1337/api/explore");
+          response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore");
         } else if (nextSection === "trending" || nextSection === "latest") {
           if (nextSection === "trending") {
             response = await fetch(
-              "http://localhost:1337/api/articles/trending"
+              "https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/trending"
             );
           } else {
-            response = await fetch("http://localhost:1337/api/articles/latest");
+            response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/latest");
           }
         } else {
-          response = await fetch(`http://localhost:1337/api/explore`);
+          response = await fetch(`https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`);
         }
         if (!response.ok) {
           throw new Error("Failed to fetch next section");
@@ -193,7 +193,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
         NestedSections: any[];
       }) => {
         const sectionObject = {
-          imageUrl: `http://localhost:1337${section?.SectionImage?.formats?.large?.url}`,
+          imageUrl: `https://striking-basketball-1ff3829bbe.strapiapp.com${section?.SectionImage?.formats?.large?.url}`,
           description: section.SectionDescription,
           nestedSections: section.NestedSections
             ? section.NestedSections.map(
@@ -201,7 +201,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   NestedSectionImage: { formats: { large: { url: any } } };
                   NestedSectionDescription: any;
                 }) => ({
-                  imageUrl: `http://localhost:1337${nested?.NestedSectionImage?.formats?.large?.url}`,
+                  imageUrl: `https://striking-basketball-1ff3829bbe.strapiapp.com${nested?.NestedSectionImage?.formats?.large?.url}`,
                   description: nested.NestedSectionDescription,
                 })
               )
@@ -290,12 +290,12 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:1337/api/article/${articleId}`,
-          {
-            headers: {
-              Authorization: `Bearer f4da5bebc8dd837c1df99461784738662f5d9ee1505673fb922b0f547870eb17ba70cddfdb07033e591c38f02019ec1bf4468f8c036ab1a3936e26ecf55f896af48f83aac5dd25403f479576733b0aee60fdeff94806dfb4401d0ebc480cf7594d56aa82ad1e1e2690201bec49a2a0d3430125130bea3dc587cfff137de5d454`,
-            },
-          }
+          `https://striking-basketball-1ff3829bbe.strapiapp.com/api/article/${articleId}`,
+          // {
+          //   headers: {
+          //     Authorization: `Bearer f4da5bebc8dd837c1df99461784738662f5d9ee1505673fb922b0f547870eb17ba70cddfdb07033e591c38f02019ec1bf4468f8c036ab1a3936e26ecf55f896af48f83aac5dd25403f479576733b0aee60fdeff94806dfb4401d0ebc480cf7594d56aa82ad1e1e2690201bec49a2a0d3430125130bea3dc587cfff137de5d454`,
+          //   },
+          // }
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Articles");
@@ -310,7 +310,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
             NestedSections: any[];
           }) => {
             const sectionObject = {
-              imageUrl: `http://localhost:1337${section?.SectionImage?.formats?.large.url}`,
+              imageUrl: section?.SectionImage?.formats?.large.url,
               description: section?.SectionDescription,
               nestedSections: section?.NestedSections
                 ? section.NestedSections.map(
@@ -318,7 +318,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       NestedSectionImage: { formats: { large: { url: any } } };
                       NestedSectionDescription: any;
                     }) => ({
-                      imageUrl: `http://localhost:1337${nested?.NestedSectionImage?.formats?.large?.url}`,
+                      imageUrl: nested?.NestedSectionImage?.formats?.large?.url,
                       description: nested?.NestedSectionDescription,
                     })
                   )

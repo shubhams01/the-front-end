@@ -67,6 +67,7 @@ const Explore = () => {
   };
 
   useEffect(() => {
+    console.log("apiUrl ", apiUrl);
     const fetchData = async () => {
       await overlayControls.start({ y: "0%" });
       try {
@@ -87,8 +88,7 @@ const Explore = () => {
           title: article?.Title,
           slug: article?.Slug,
           category: article?.category.Title,
-          imageUrl:
-            article.Image[0]?.formats.large.url,
+          imageUrl: article.Image[0]?.formats.large.url,
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,
@@ -202,7 +202,7 @@ const Explore = () => {
                   exit={{ opacity: 0 }}
                   dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
                   transition={{ duration: 0.5 }}
-                      // @ts-ignore
+                  // @ts-ignore
                   layoutId={`card-${articles[currentIndex].id}`}
                 >
                   <Card
@@ -218,7 +218,7 @@ const Explore = () => {
                 </motion.div>
 
                 <motion.div
-                    // @ts-ignore
+                  // @ts-ignore
                   key={articles[(currentIndex + 1) % articles.length].id}
                   className="absolute cursor-pointer"
                   style={{ zIndex: 0 }}
