@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeroEffect } from "./HeroEffect";
 
-const words = ["universe", "galaxy", "stars", "cosmos", "planets", "nebulae"];
+const words = ["science", "arts", "history", "business", "culture"];
 
 const Hero = ({ scrollToExplore }) => {
-  const [dynamicWord, setDynamicWord] = useState("universe");
+  const [dynamicWord, setDynamicWord] = useState(words[0]);
   const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const changeWord = () => {
       setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-    }, 4000);
+    };
 
-    return () => clearInterval(interval);
-  }, []);
+    const timeout = setTimeout(changeWord, 3500); 
+
+    return () => clearTimeout(timeout);
+  }, [wordIndex]);
 
   useEffect(() => {
     setDynamicWord(words[wordIndex]);
@@ -30,33 +32,36 @@ const Hero = ({ scrollToExplore }) => {
           transition={{ duration: 0.5 }}
           className="text-6xl md:text-6xl lg:text-8xl font-sans text-white relative"
         >
-          <span className="select-none">Welcome to the</span>
-          <div className="relative mt-6 lg:mt-10 text-6xl lg:text-8xl font-thin">
+          <div className="relative mt-6 lg:mt-10 text-6xl lg:text-8xl font-extralight">
             <span className="relative inline-block bg-clip-text text-transparent hero-shine">
-              Cosmos
+              Gyaanhub
             </span>
           </div>
         </motion.h1>
       </div>
-      <div className="mt-8 lg:mt-12 flex items-center justify-center flex-wrap text-center relative z-10">
+      <div className="mt-10 lg:mt-14 flex items-center justify-center flex-wrap text-center relative z-10">
         <span className="text-md md:text-xl lg:text-2xl font-bold text-white">
-        &quot; We know nothing &quot; about
+          &quot;We know nothing&quot; about
         </span>
-        <div className="relative h-8 md:h-10 lg:h-12">
-          <AnimatePresence initial={false}>
+        <span className="relative flex items-center h-8 md:h-10 lg:h-12 ml-2">
+          <AnimatePresence initial={false} mode="wait">
             <motion.span
               key={dynamicWord}
-              initial={{ y: -20, opacity: 0 }}
+              initial={{ y: -25, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 20, opacity: 0 }}
-              transition={{ delay: 0.5 }}
-              className="absolute text-md md:text-xl lg:text-2xl font-thin text-gray-50 ml-1 mt-1 lg:mt-2"
+              exit={{ y: 25, opacity: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeInOut",
+              }}
+              className="absolute text-md md:text-xl lg:text-2xl font-thin text-gray-50"
             >
               {dynamicWord}
             </motion.span>
           </AnimatePresence>
-        </div>
+        </span>
       </div>
+
       <div className="absolute bottom-10 w-full flex justify-center z-10">
         <button
           onClick={scrollToExplore}

@@ -7,10 +7,7 @@ import {
   MoveDirection,
   OutMode,
 } from "@tsparticles/engine";
-// import { loadAll } from "@tsparticles/all"; // if you are going to use `loadAll`, install the "@tsparticles/all" package too.
-// import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
-import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
-// import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
+import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the 
 
 export const HeroEffect = () => {
   const [init, setInit] = useState(false);
@@ -69,10 +66,10 @@ export const HeroEffect = () => {
         },
         links: {
           color: "#ffffff",
-          distance: 150,
+          distance: 100,
           enable: true,
           opacity: 0.5,
-          width: 1,
+          width: 1.5,
         },
         move: {
           direction: MoveDirection.none,
@@ -81,7 +78,7 @@ export const HeroEffect = () => {
             default: OutMode.out,
           },
           random: false,
-          speed: 0.5,
+          speed: 1,
           straight: false,
         },
         number: {
@@ -91,7 +88,7 @@ export const HeroEffect = () => {
           value: 80,
         },
         opacity: {
-          value: 1.5,
+          value: 1,
         },
         shape: {
           type: "circle",

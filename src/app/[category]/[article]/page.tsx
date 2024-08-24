@@ -430,7 +430,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                 )}
                 {details?.sections[currentPage]?.nestedSections.length > 0 && (
                   <motion.div
-                    className="absolute inset-1 flex justify-center items-top mt-10"
+                    className="absolute inset-1 flex justify-center items-top mt-10 z-10"
                     drag="x"
                     dragDirectionLock
                     dragConstraints={{ left: 0, right: 0 }}
@@ -439,7 +439,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       handleDragEnd(event, info, currentPage)
                     }
                   >
-                    <motion.div className="w-64 h-64 md:w-72 md:h-72 lg:w-96 lg:h-96 rounded-2xl relative">
+                    <motion.div className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
                       <motion.img
                         className="w-full h-full rounded-2xl opacity-50"
                         src={
