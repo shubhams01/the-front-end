@@ -71,11 +71,18 @@ const Explore = () => {
     const fetchData = async () => {
       await overlayControls.start({ y: "0%" });
       try {
-        const endpoint = `https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`;
+        // const endpoint = isLoggedIn
+        //   ? `https://striking-basketball-1ff3829bbe.strapiapp.com/api/recommendations`
+        //   : `https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`;
 
-        const headers = isLoggedIn ? { Authorization: `Bearer ${token}` } : {};
-        // @ts-ignore
-        const response = await fetch(endpoint, { headers });
+        // const headers = isLoggedIn ? { Authorization: `Bearer ${token}` } : {};
+        // // @ts-ignore
+        // const response = await fetch(endpoint, { headers });
+
+        const response = await fetch(
+          "https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore"
+        );
+
         if (!response.ok) {
           throw new Error("Failed to fetch Articles");
         }
