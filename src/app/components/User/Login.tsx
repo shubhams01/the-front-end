@@ -168,7 +168,7 @@ const Login: React.FC = () => {
               )}
             </span>
           </motion.button>
-          <button
+          {/* <button
             type="button"
             className="w-full flex items-center justify-center p-4 text-black py-2 mt-2 rounded-lg shadow-lg transition duration-300 bg-white hover:bg-gray-100"
           >
@@ -178,7 +178,7 @@ const Login: React.FC = () => {
               alt="google"
             />
             <span>Sign in with Google</span>
-          </button>
+          </button> */}
           <p className="mt-4 text-center text-gray-600">
             <span>Don&apos;t have an account?</span>
             <button

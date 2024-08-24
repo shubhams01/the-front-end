@@ -71,9 +71,7 @@ const Explore = () => {
     const fetchData = async () => {
       await overlayControls.start({ y: "0%" });
       try {
-        const endpoint = isLoggedIn
-          ? `https://striking-basketball-1ff3829bbe.strapiapp.com/api/recommendations`
-          : `https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`;
+        const endpoint = `https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`;
 
         const headers = isLoggedIn ? { Authorization: `Bearer ${token}` } : {};
         // @ts-ignore
