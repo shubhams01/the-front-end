@@ -266,7 +266,7 @@ const Explore = () => {
         </div>
       </div>
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {selectedCard && (
           <motion.div
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
@@ -284,7 +284,7 @@ const Explore = () => {
             />
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <motion.div
         className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"

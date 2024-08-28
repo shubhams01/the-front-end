@@ -126,21 +126,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     if (direction === "down" && currentPage < details.sections.length - 1) {
       setCurrentNestedPage(0);
       setCurrentPage(currentPage + 1);
-      // controls.start({
-      //   transition: {
-      //     bounceStiffness: 500,
-      //     bounceDamping: 25,
-      //   },
-      // });
     } else if (direction === "up" && currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setCurrentNestedPage(0);
-      // controls.start({
-      //   transition: {
-      //     bounceStiffness: 500,
-      //     bounceDamping: 25,
-      //   },
-      // });
     } else if (
       direction === "down" &&
       // @ts-ignore

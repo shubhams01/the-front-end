@@ -39,7 +39,7 @@ const Hero = ({ scrollToExplore }) => {
           </div>
         </motion.h1>
       </div>
-      <div className="mt-10 lg:mt-14 flex items-center justify-center flex-wrap text-center relative z-10">
+      <div className="mt-10 lg:mt-16 flex items-center right-5 lg:right-6 relative">
         <span className="text-md md:text-xl lg:text-2xl font-bold text-white">
           &quot;We know nothing&quot; about
         </span>
