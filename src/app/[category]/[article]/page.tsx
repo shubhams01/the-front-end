@@ -143,17 +143,17 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
       try {
         let response;
         if (nextSection === "explore") {
-          response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore");
+          response = await fetch("https://api.gyaanhub.io/api/explore");
         } else if (nextSection === "trending" || nextSection === "latest") {
           if (nextSection === "trending") {
             response = await fetch(
-              "https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/trending"
+              "https://api.gyaanhub.io/api/articles/trending"
             );
           } else {
-            response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/latest");
+            response = await fetch("https://api.gyaanhub.io/api/articles/latest");
           }
         } else {
-          response = await fetch(`https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`);
+          response = await fetch(`https://api.gyaanhub.io/api/explore`);
         }
         if (!response.ok) {
           throw new Error("Failed to fetch next section");
@@ -278,7 +278,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://striking-basketball-1ff3829bbe.strapiapp.com/api/article/${articleId}`,
+          `https://api.gyaanhub.io/api/article/${articleId}`,
           // {
           //   headers: {
           //     Authorization: `Bearer f4da5bebc8dd837c1df99461784738662f5d9ee1505673fb922b0f547870eb17ba70cddfdb07033e591c38f02019ec1bf4468f8c036ab1a3936e26ecf55f896af48f83aac5dd25403f479576733b0aee60fdeff94806dfb4401d0ebc480cf7594d56aa82ad1e1e2690201bec49a2a0d3430125130bea3dc587cfff137de5d454`,

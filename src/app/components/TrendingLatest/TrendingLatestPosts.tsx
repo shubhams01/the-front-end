@@ -14,7 +14,7 @@ const TrendingLatestPosts = () => {
   const fetchTrendingPosts = async () => {
     try {
       const response = await fetch(
-        "https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/trending"
+        "https://api.gyaanhub.io/api/articles/trending"
       );
       const data = await response.json();
       const trendingArticles = data.map((article) => ({
@@ -33,7 +33,7 @@ const TrendingLatestPosts = () => {
 
   const fetchLatestPosts = async () => {
     try {
-      const response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/articles/latest");
+      const response = await fetch("https://api.gyaanhub.io/api/articles/latest");
       const data = await response.json();
       const latestArticles = data.map((article) => ({
         id: article.id,

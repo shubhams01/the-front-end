@@ -72,15 +72,15 @@ const Explore = () => {
       await overlayControls.start({ y: "0%" });
       try {
         // const endpoint = isLoggedIn
-        //   ? `https://striking-basketball-1ff3829bbe.strapiapp.com/api/recommendations`
-        //   : `https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore`;
+        //   ? `https://api.gyaanhub.io/api/recommendations`
+        //   : `https://api.gyaanhub.io/api/explore`;
 
         // const headers = isLoggedIn ? { Authorization: `Bearer ${token}` } : {};
         // // @ts-ignore
         // const response = await fetch(endpoint, { headers });
 
         const response = await fetch(
-          "https://striking-basketball-1ff3829bbe.strapiapp.com/api/explore"
+          "https://api.gyaanhub.io/api/explore"
         );
 
         if (!response.ok) {

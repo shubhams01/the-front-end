@@ -11,7 +11,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://striking-basketball-1ff3829bbe.strapiapp.com/api/categories");
+        const response = await fetch("https://api.gyaanhub.io/api/categories");
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }
