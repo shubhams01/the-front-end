@@ -30,7 +30,7 @@ const Navbar = () => {
     <div className="relative">
       <Link href="/">
         <img
-          src="/logo.png"
+          src="/logo-light.svg"
           alt="Logo"
           className="h-20 fixed z-50"
           onClick={() => setIsOpen(false)}
