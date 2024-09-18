@@ -141,7 +141,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <img className="h-20 md:h-24 lg:h-28" src="/logo-light.svg" alt="Logo" />
+          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
         </motion.span>
       </motion.div>
     </>
