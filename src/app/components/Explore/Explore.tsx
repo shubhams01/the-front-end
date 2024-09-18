@@ -93,7 +93,7 @@ const Explore = () => {
           title: article?.Title,
           slug: article?.Slug,
           category: article?.category.Title,
-          imageUrl: article.Image[0]?.formats.small.url,
+          imageUrl: 'https://api.gyaanhub.io' + article.Image[0]?.formats.small.url,
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,
