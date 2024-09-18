@@ -22,7 +22,7 @@ const TrendingLatestPosts = () => {
         title: article.Title,
         slug: article.Slug,
         category: article.category?.Title,
-        imageUrl: article.Image[0].formats.large.url,
+        imageUrl: article.Image[0].formats.small.url,
       }));
       setPosts(trendingArticles);
       console.log("trending ", data);
@@ -40,7 +40,7 @@ const TrendingLatestPosts = () => {
         title: article.Title,
         slug: article.Slug,
         category: article.category.Title,
-        imageUrl: article.Image[0].formats.large.url,
+        imageUrl: article.Image[0].formats.small?.url,
       }));
       setPosts(latestArticles);
       console.log("latest ", data);

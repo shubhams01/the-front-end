@@ -38,7 +38,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
       await overlayControls.start({ y: "0%" });
       try {
         const response = await fetch(
-          `http://localhost:1337/api/articles/category/${category}`
+          `https://api.gyaanhub.io/api/articles/category/${category}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Articles");
@@ -50,7 +50,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
           slug: article?.Slug,
           category: article.category?.Title,
           imageUrl:
-            "http://localhost:1337" + article.Image[0].formats.large.url,
+            "https://api.gyaanhub.io" + article.Image[0].formats.large.url,
         }));
         console.log("Articles by Category", extractedArticles, data);
         setArticles(extractedArticles);
