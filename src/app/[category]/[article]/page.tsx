@@ -293,20 +293,20 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
         const sections = data?.sections.map(
           (section: {
-            SectionImage: { formats: { large: { url: any } } };
+            SectionImage: { formats: { small: { url: any } } };
             SectionDescription: any;
             NestedSections: any[];
           }) => {
             const sectionObject = {
-              imageUrl: section?.SectionImage?.formats?.large.url,
+              imageUrl: section?.SectionImage?.formats?.small.url,
               description: section?.SectionDescription,
               nestedSections: section?.NestedSections
                 ? section.NestedSections.map(
                     (nested: {
-                      NestedSectionImage: { formats: { large: { url: any } } };
+                      NestedSectionImage: { formats: { small: { url: any } } };
                       NestedSectionDescription: any;
                     }) => ({
-                      imageUrl: nested?.NestedSectionImage?.formats?.large?.url,
+                      imageUrl: nested?.NestedSectionImage?.formats?.small?.url,
                       description: nested?.NestedSectionDescription,
                     })
                   )

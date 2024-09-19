@@ -19,7 +19,7 @@ const Categories = () => {
         const extractedCategories = data.map((category) => ({
           name: category.Title,
           slug: category.Slug,
-          imageUrl: category.Image,
+          imageUrl: 'https://api.gyaanhub.io' + category.Image,
         }));
         console.log("categories ", extractedCategories);
         setCategories(extractedCategories);
