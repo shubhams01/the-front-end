@@ -176,20 +176,20 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     // @ts-ignore
     const sections = nextSections[nextSectionIndex]?.sections.map(
       (section: {
-        SectionImage: { formats: { large: { url: any } } };
+        SectionImage: { formats: { small: { url: any } } };
         SectionDescription: any;
         NestedSections: any[];
       }) => {
         const sectionObject = {
-          imageUrl: section?.SectionImage?.formats?.large?.url,
+          imageUrl: section?.SectionImage?.formats?.small?.url,
           description: section.SectionDescription,
           nestedSections: section.NestedSections
             ? section.NestedSections.map(
                 (nested: {
-                  NestedSectionImage: { formats: { large: { url: any } } };
+                  NestedSectionImage: { formats: { small: { url: any } } };
                   NestedSectionDescription: any;
                 }) => ({
-                  imageUrl: nested?.NestedSectionImage?.formats?.large?.url,
+                  imageUrl: nested?.NestedSectionImage?.formats?.small?.url,
                   description: nested.NestedSectionDescription,
                 })
               )
@@ -298,7 +298,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
             NestedSections: any[];
           }) => {
             const sectionObject = {
-              imageUrl: section?.SectionImage?.formats?.small.url,
+              imageUrl: "https://api.gyaanhub.io" + section?.SectionImage?.formats?.small.url,
               description: section?.SectionDescription,
               nestedSections: section?.NestedSections
                 ? section.NestedSections.map(
@@ -306,7 +306,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       NestedSectionImage: { formats: { small: { url: any } } };
                       NestedSectionDescription: any;
                     }) => ({
-                      imageUrl: nested?.NestedSectionImage?.formats?.small?.url,
+                      imageUrl: "https://api.gyaanhub.io" + nested?.NestedSectionImage?.formats?.small?.url,
                       description: nested?.NestedSectionDescription,
                     })
                   )
@@ -386,7 +386,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   <span
                     className={`${
                       currentPage == 0
-                        ? "text-6xl text-shadow shadow-slate-500"
+                        ? "text-4xl text-shadow shadow-slate-500"
                         : "text-sm md:text-lg lg:text-2xl"
                     }  font-bold text-white`}
                   >

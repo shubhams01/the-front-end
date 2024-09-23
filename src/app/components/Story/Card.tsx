@@ -26,7 +26,7 @@ const Card: React.FC<CardProps> = ({ id, imageUrl, category, title }) => {
       />
       <motion.div className="absolute bottom-0 left-0 right-0 p-4">
         <motion.h2
-          className="text-white font-black text-4xl lg:text-3xl m-8 text-left text-shadow shadow-slate-500"
+          className="text-white font-black text-3xl lg:text-3xl m-6 text-left text-shadow shadow-slate-500"
           initial={{ y: 0 }}
           transition={{ type: 'tween', duration: 1.5 }}
         >

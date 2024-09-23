@@ -67,7 +67,7 @@ const Explore = () => {
   };
 
   useEffect(() => {
-    console.log("apiUrl ", apiUrl);
+    console.log("apiUrl ", apiUrl, process.env.NEXT_PUBLIC_STRAPI_API_URL);
     const fetchData = async () => {
       await overlayControls.start({ y: "0%" });
       try {
@@ -89,11 +89,11 @@ const Explore = () => {
         const data = await response.json();
         console.log("data ", data);
         const extractedArticles = data.map((article: any) => ({
-          id: article?.id,
-          title: article?.Title,
-          slug: article?.Slug,
-          category: article?.category.Title,
-          imageUrl: 'https://api.gyaanhub.io' + article.Image[0]?.formats.small.url,
+          id: article.id,
+          title: article.title,
+          slug: article.slug,
+          category: article.category,
+          imageUrl: 'https://api.gyaanhub.io' + article.imageUrl,
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,

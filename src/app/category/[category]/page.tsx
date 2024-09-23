@@ -50,7 +50,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
           slug: article?.Slug,
           category: article.category?.Title,
           imageUrl:
-            "https://api.gyaanhub.io" + article.Image[0].formats.large.url,
+            "https://api.gyaanhub.io" + article.imageUrl,
         }));
         console.log("Articles by Category", extractedArticles, data);
         setArticles(extractedArticles);
