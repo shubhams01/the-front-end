@@ -176,20 +176,20 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     // @ts-ignore
     const sections = nextSections[nextSectionIndex]?.sections?.map(
       (section: {
-        SectionImage: { formats: { small: { url: any } } };
+        SectionImage: { formats: { large: { url: any } } };
         SectionDescription: any;
         NestedSections: any[];
       }) => {
         const sectionObject = {
-          imageUrl: section?.SectionImage?.formats?.small?.url,
+          imageUrl: "https://api.gyaanhub.io" + section?.SectionImage?.formats?.large?.url,
           description: section.SectionDescription,
           nestedSections: section.NestedSections
             ? section.NestedSections.map(
                 (nested: {
-                  NestedSectionImage: { formats: { small: { url: any } } };
+                  NestedSectionImage: { formats: { large: { url: any } } };
                   NestedSectionDescription: any;
                 }) => ({
-                  imageUrl: nested?.NestedSectionImage?.formats?.small?.url,
+                  imageUrl: "https://api.gyaanhub.io" + nested?.NestedSectionImage?.formats?.large?.url,
                   description: nested.NestedSectionDescription,
                 })
               )
@@ -293,20 +293,20 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
         const sections = data?.sections.map(
           (section: {
-            SectionImage: { formats: { small: { url: any } } };
+            SectionImage: { formats: { large: { url: any } } };
             SectionDescription: any;
             NestedSections: any[];
           }) => {
             const sectionObject = {
-              imageUrl: "https://api.gyaanhub.io" + section?.SectionImage?.formats?.small.url,
+              imageUrl: "https://api.gyaanhub.io" + section?.SectionImage?.formats?.large.url,
               description: section?.SectionDescription,
               nestedSections: section?.NestedSections
                 ? section.NestedSections.map(
                     (nested: {
-                      NestedSectionImage: { formats: { small: { url: any } } };
+                      NestedSectionImage: { formats: { large: { url: any } } };
                       NestedSectionDescription: any;
                     }) => ({
-                      imageUrl: "https://api.gyaanhub.io" + nested?.NestedSectionImage?.formats?.small?.url,
+                      imageUrl: "https://api.gyaanhub.io" + nested?.NestedSectionImage?.formats?.large?.url,
                       description: nested?.NestedSectionDescription,
                     })
                   )
