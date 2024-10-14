@@ -90,10 +90,10 @@ const Explore = () => {
         console.log("data ", data);
         const extractedArticles = data.map((article: any) => ({
           id: article.id,
-          title: article.title,
-          slug: article.slug,
-          category: article.category,
-          imageUrl: 'https://api.gyaanhub.io' + article.imageUrl,
+          title: article.Title,
+          slug: article.Slug,
+          category: article.category.Title,
+          imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,

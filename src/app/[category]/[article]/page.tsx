@@ -174,7 +174,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
     setCurrentPage(0);
     // @ts-ignore
-    const sections = nextSections[nextSectionIndex]?.sections.map(
+    const sections = nextSections[nextSectionIndex]?.sections?.map(
       (section: {
         SectionImage: { formats: { small: { url: any } } };
         SectionDescription: any;

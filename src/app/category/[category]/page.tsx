@@ -46,9 +46,9 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
         const data = await response.json();
         const extractedArticles = data.map((article) => ({
           id: article.id,
-          title: article.Title,
-          slug: article?.Slug,
-          category: article.category?.Title,
+          title: article.title,
+          slug: article?.slug,
+          category: article.category,
           imageUrl:
             "https://api.gyaanhub.io" + article.imageUrl,
         }));

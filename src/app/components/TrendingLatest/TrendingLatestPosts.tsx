@@ -19,10 +19,10 @@ const TrendingLatestPosts = () => {
       const data = await response.json();
       const trendingArticles = data.map((article) => ({
         id: article.id,
-        title: article.title,
-        slug: article.slug,
-        category: article.category,
-        imageUrl: 'https://api.gyaanhub.io' + article.imageUrl,
+        title: article.Title,
+        slug: article.Slug,
+        category: article.category.Title,
+        imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
       }));
       setPosts(trendingArticles);
       console.log("trending ", data);
@@ -40,7 +40,7 @@ const TrendingLatestPosts = () => {
         title: article.Title,
         slug: article.Slug,
         category: article.category.Title,
-        imageUrl: 'https://api.gyaanhub.io' + article.imageUrl,
+        imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
       }));
       setPosts(latestArticles);
       console.log("latest ", data);
