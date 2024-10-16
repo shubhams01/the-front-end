@@ -57,7 +57,8 @@ const Register: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
-      await registerUser(data.email, data.password, data.username);
+      console.log('data ', data)
+      await registerUser(data.username, data.email, data.password);
       setSuccess(true);
       setTimeout(() => {
         toggleRegisterModal();

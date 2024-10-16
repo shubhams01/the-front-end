@@ -20,12 +20,13 @@ import {
   LinkedinIcon,
   WhatsappIcon,
 } from "react-share";
-import CountUp from "react-countup";
 import { formatNumber } from "@/app/utils/numberFormatter";
+
+const API_URL = 'https://api.gyaanhub.io/api';
 
 const api = {
   like: async (userId, articleId, token) => {
-    return fetch("http://localhost:1337/api/likes", {
+    return fetch(`${API_URL}/likes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +36,7 @@ const api = {
     }).then((res) => res.json());
   },
   bookmark: async (userId, articleId, token) => {
-    return fetch("http://localhost:1337/api/saves", {
+    return fetch(`${API_URL}/saves`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ const api = {
     }).then((res) => res.json());
   },
   fetchArticleActivities: async (articleId, token) => {
-    return fetch(`http://localhost:1337/api/articles/${articleId}/activities`, {
+    return fetch(`${API_URL}/articles/${articleId}/activities`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -155,7 +156,7 @@ const CardActivity = ({
   return (
     <>
       <motion.div
-        className="absolute bottom-2 right-2 flex flex-col items-center"
+        className="absolute bottom-2 right-2 flex flex-col items-center z-20"
         initial={false}
         animate={{ y: isExpanded ? -5 : 0 }}
         transition={{ type: "tween", duration: 0.5 }}

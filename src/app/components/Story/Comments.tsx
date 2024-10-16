@@ -59,11 +59,13 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
     }
   }, [isOpen]);
 
+  const API_URL = 'https://api.gyaanhub.io/api';
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `http://localhost:1337/api/comments/article/${postId}`,
+          `${API_URL}/comments/article/${postId}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -111,7 +113,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   const handleAddComment = async () => {
     if (newComment.trim() !== "") {
       try {
-        const response = await fetch("http://localhost:1337/api/comments", {
+        const response = await fetch(`${API_URL}/comments`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -146,7 +148,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
 
   const handleEditComment = async (id: number, content: string) => {
     try {
-      const response = await fetch(`http://localhost:1337/api/comments/${id}`, {
+      const response = await fetch(`${API_URL}/comments/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -180,7 +182,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
 
   const handleDeleteComment = async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:1337/api/comments/${id}`, {
+      const response = await fetch(`${API_URL}/comments/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

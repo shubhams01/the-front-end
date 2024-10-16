@@ -25,10 +25,12 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
     closed: { y: "100%" },
   };
 
+  const API_URL = 'https://api.gyaanhub.io/api';
+
   const fetchPosts = async () => {
     const endpoint = postsType === "Liked" ? "liked" : "saved";
     try {
-      const response = await fetch(`http://localhost:1337/api/${endpoint}`, {
+      const response = await fetch(`${API_URL}/${endpoint}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -45,7 +47,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
         title: item.article.Title,
         slug: item.article.Slug,
         category: item.article.category.Title,
-        imageUrl: "http://localhost:1337" + item.article.Image[0].formats.large.url,
+        imageUrl: API_URL + item.article.Image[0].formats.large.url,
       }));
       console.log("likedOrSavedPosts ", likedOrSavedPosts, data);
       setPosts(likedOrSavedPosts);

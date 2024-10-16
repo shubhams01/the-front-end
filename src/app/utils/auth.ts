@@ -1,5 +1,5 @@
 // src/utils/auth.ts
-const API_URL = 'http://localhost:1337/api';
+const API_URL = 'https://api.gyaanhub.io/api';
 
 interface AuthResponse {
   jwt: string;
@@ -11,6 +11,7 @@ interface AuthResponse {
 }
 
 export const registerUser = async (username: string, email: string, password: string): Promise<AuthResponse> => {
+  console.log('register ', username, email, password)
   const response = await fetch(`${API_URL}/auth/local/register`, {
     method: 'POST',
     headers: {

@@ -36,11 +36,13 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const controls = useAnimation();
   const token = getAuthToken();
 
+  const API_URL = 'https://api.gyaanhub.io/api';
+
   useEffect(() => {
     const fetchInterests = async () => {
       try {
         const response = await fetch(
-          "http://localhost:1337/api/user/interests",
+          `${API_URL}/user/interests`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -99,7 +101,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
       try {
         const response = await fetch(
-          "http://localhost:1337/api/user/profile-photo",
+          `${API_URL}/user/profile-photo`,
           {
             method: "PUT",
             headers: {
@@ -142,7 +144,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
   const handleSaveInterests = async () => {
     try {
-      const response = await fetch(`http://localhost:1337/api/user/interests`, {
+      const response = await fetch(`${API_URL}/user/interests`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
