@@ -22,13 +22,15 @@ const Page = () => {
     }
   }, [isLoggedIn, setIsLoginOpen]);
 
+  const API_URL = 'https://api.gyaanhub.io/api';
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = getAuthToken(); // Assuming getAuthToken retrieves the token from local storage
         if (!token) return; // Make sure token exists before making the request
 
-        const response = await fetch("http://localhost:1337/api/user/me", {
+        const response = await fetch(`${API_URL}/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -37,7 +39,7 @@ const Page = () => {
         if (response.ok) {
           const userData = await response.json();
           userData.profilePhoto = userData.profilePhoto
-            ? `http://localhost:1337${userData.profilePhoto}`
+            ? `${API_URL}${userData.profilePhoto}`
             : "https://cdn1.iconfinder.com/data/icons/essential-21/128/User-512.png";
           setUserData(userData);
           console.log("user ", userData);

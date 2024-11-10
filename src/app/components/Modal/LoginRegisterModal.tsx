@@ -20,7 +20,7 @@ const LoginRegisterModal: React.FC<LoginRegisterModalProps> = ({
     <AnimatePresence>
       {(isLoginOpen || isRegisterOpen) && (
         <motion.div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

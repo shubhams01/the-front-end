@@ -183,7 +183,7 @@ const Login: React.FC = () => {
             <span>Don&apos;t have an account?</span>
             <button
               type="button"
-              className="text-blue-500 hover:underline focus:outline-none"
+              className="text-blue-500 hover:underline focus:outline-none ml-2"
               onClick={handleRegisterClick}
             >
               Register here

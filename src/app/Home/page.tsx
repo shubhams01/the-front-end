@@ -8,17 +8,38 @@ import Categories from "../components/Category/Categories";
 import { useModal } from "../context/ModalContext";
 
 const Home = () => {
-  const exploreRef = useRef(null);
+  const exploreRef = useRef<HTMLDivElement | null>(null);
+  const trendingRef = useRef<HTMLDivElement | null>(null);
+  const categoriesRef = useRef<HTMLDivElement | null>(null);
   const { setIsLoginOpen } = useModal();
 
   useEffect(() => {
     setIsLoginOpen(false);
-  }, [])
+
+    const shouldJumpToExplore = sessionStorage.getItem("jumpToExplore");
+    const shouldJumpToTrendingLatest = sessionStorage.getItem("jumpToTrendingLatest");
+    const shouldJumpToCategories = sessionStorage.getItem("jumpToCategories");
+
+    if (shouldJumpToExplore && exploreRef.current) {
+      exploreRef.current.scrollIntoView({ behavior: "auto" });
+      sessionStorage.removeItem("jumpToExplore"); 
+    }
+
+    if (shouldJumpToTrendingLatest && trendingRef.current) {
+      trendingRef.current.scrollIntoView({ behavior: "auto" });
+      sessionStorage.removeItem("jumpToTrendingLatest"); 
+    }
+
+    if (shouldJumpToCategories && categoriesRef.current) {
+      categoriesRef.current.scrollIntoView({ behavior: "auto" });
+      sessionStorage.removeItem("jumpToCategories"); 
+    }
+  }, []);
 
   const scrollToExplore = () => {
     if (exploreRef.current) {
-      // @ts-ignore
       exploreRef.current.scrollIntoView({ behavior: "smooth" });
+      sessionStorage.setItem("jumpToExplore", "true"); 
     }
   };
 
@@ -30,10 +51,10 @@ const Home = () => {
       <div ref={exploreRef} className="snap-start h-screen">
         <Explore />
       </div>
-      <div className="snap-start h-screen">
+      <div ref={trendingRef} className="snap-start h-screen">
         <TrendingLatest />
       </div>
-      <div className="snap-start">
+      <div ref={categoriesRef} className="snap-start">
         <Categories />
       </div>
     </div>

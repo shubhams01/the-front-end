@@ -25,6 +25,7 @@ const Explore = () => {
 
   const handleClick = (card: never) => {
     console.log("card ", card);
+    sessionStorage.setItem("jumpToExplore", "true");
     setSelectedCard(card);
     setTimeout(() => {
       // @ts-ignore
@@ -266,25 +267,24 @@ const Explore = () => {
         </div>
       </div>
 
-      {/* <AnimatePresence>
+      <AnimatePresence>
         {selectedCard && (
           <motion.div
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.75, ease: "easeInOut" }}
+            transition={{ duration: 0.50, ease: "easeInOut" }}
           >
-            <img
-              // @ts-ignore
-              src={selectedCard.imageUrl}
-              // @ts-ignore
-              alt={selectedCard.title}
-              className="max-w-full max-h-full object-contain rounded-lg"
-            />
+            <motion.span
+          animate={{ rotate: 360 }}
+          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+        >
+          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
+        </motion.span>
           </motion.div>
         )}
-      </AnimatePresence> */}
+      </AnimatePresence> 
 
       <motion.div
         className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"

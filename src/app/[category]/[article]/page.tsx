@@ -334,6 +334,21 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     fetchData();
   }, [articleId]);
 
+
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state) {
+        router.push('/');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [router]);
+
   return (
     <motion.div
       className="flex flex-col items-center justify-center scroll-smooth h-screen overflow-y-scroll overflow-x-hidden"
@@ -418,7 +433,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                 )}
                 {details?.sections[currentPage]?.nestedSections.length > 0 && (
                   <motion.div
-                    className="absolute inset-1 flex justify-center items-top mt-10 z-10"
+                    className="absolute inset-1 flex justify-center items-top mt-10"
                     drag="x"
                     dragDirectionLock
                     dragConstraints={{ left: 0, right: 0 }}
@@ -427,7 +442,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       handleDragEnd(event, info, currentPage)
                     }
                   >
-                    <motion.div className="w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
+                    <motion.div className="mt-4 w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
                       <motion.img
                         className="w-full h-full rounded-2xl opacity-50"
                         src={
@@ -475,7 +490,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                     transition={{ duration: 1.25 }}
                   >
                     <motion.div
-                      className="absolute -top-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
+                      className="absolute -top-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer z-10"
                       onClick={handleArrowUpClick}
                     >
                       <ChevronUpIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
@@ -492,7 +507,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       )
                     )}
                     <motion.div
-                      className="absolute -bottom-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer"
+                      className="absolute -bottom-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer z-10"
                       onClick={handleArrowDownClick}
                     >
                       <ChevronDownIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
@@ -502,7 +517,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                 {details?.sections[currentPage]?.nestedSections.length > 0 && (
                   <>
                     <div
-                      className="absolute left-1/4 bottom-2 transform -translate-y-1/2 cursor-pointer"
+                      className="absolute left-1/4 bottom-2 transform -translate-y-1/2 cursor-pointer z-10"
                       onClick={() =>
                         setCurrentNestedPage((prev) => Math.max(prev - 1, 0))
                       }
@@ -510,7 +525,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       <ChevronLeftIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                     <div
-                      className="absolute right-1/4 bottom-2 transform -translate-y-1/2 cursor-pointer"
+                      className="absolute right-1/4 bottom-2 transform -translate-y-1/2 cursor-pointer z-10"
                       onClick={() =>
                         setCurrentNestedPage((prev) =>
                           Math.min(

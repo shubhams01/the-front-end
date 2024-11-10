@@ -65,6 +65,7 @@ const TrendingLatestPosts = () => {
 
   const handleClick = (card) => {
     console.log("trending/latest card ", card);
+    sessionStorage.setItem("jumpToTrendingLatest", "true");
     setTimeout(() => {
       router.push(
         `/${card.category}/${card.slug}-${card.id}?explore=${
