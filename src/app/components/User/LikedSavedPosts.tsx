@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Card from "../Story/Card";
 import { getAuthToken } from "@/app/hooks/useLocalStorageAuth";
@@ -20,12 +21,14 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
   const [direction, setDirection] = useState<1 | -1>(1);
   const token = getAuthToken();
 
+  const router = useRouter();
+
   const panelVariants = {
     open: { y: 0 },
     closed: { y: "100%" },
   };
 
-  const API_URL = 'https://api.gyaanhub.io/api';
+  const API_URL = "https://api.gyaanhub.io/api";
 
   const fetchPosts = async () => {
     const endpoint = postsType === "Liked" ? "liked" : "saved";
@@ -47,7 +50,8 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
         title: item.article.Title,
         slug: item.article.Slug,
         category: item.article.category.Title,
-        imageUrl: API_URL + item.article.Image[0].formats.large.url,
+        imageUrl:
+          "https://api.gyaanhub.io" + item.article.Image[0].formats.large.url,
       }));
       console.log("likedOrSavedPosts ", likedOrSavedPosts, data);
       setPosts(likedOrSavedPosts);
@@ -106,6 +110,14 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
     }),
   };
 
+  const handleClick = (card: any) => {
+    console.log("cardLikedorSaved ", card);
+    setTimeout(() => {
+      // @ts-ignore
+      router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
+    }, 1000);
+  };
+
   return (
     <motion.div
       drag="y"
@@ -143,6 +155,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={handleDragEnd}
+              onClick={() => handleClick(posts[currentIndex])}
             >
               <Card
                 id={posts[currentIndex]?.id}
