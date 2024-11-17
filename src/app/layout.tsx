@@ -4,7 +4,6 @@ import "./globals.css";
 import { ModalProvider } from "./context/ModalContext";
 import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar";
-import { useEffect } from "react";
 import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,11 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         {/* Google tag (gtag.js)  */}
-        <Script
+        <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-T9B3Y1JYSE"
-        ></Script>
-        <Script id="google-analytics">
+        ></script>
+        <script id="google-analytics">
           {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -33,8 +32,7 @@ export default function RootLayout({
 
           gtag('config', 'G-T9B3Y1JYSE');
             `}
-        </Script>
-        
+        </script> 
       </Head>
       <body className={inter.className}>
         <Navbar />
