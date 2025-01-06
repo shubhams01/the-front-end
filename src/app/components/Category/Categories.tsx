@@ -41,7 +41,7 @@ const Categories = () => {
 
   return (
     <div className="container mx-auto px-8 py-8 flex flex-col items-center">
-      <div className="top-8 mb-2 flex flex-col items-center">
+      <div className="top-8 mb-4 flex flex-col items-center">
         <span className="text-center text-3xl font-bold z-10">Categories</span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
