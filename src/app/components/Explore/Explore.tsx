@@ -133,7 +133,7 @@ const Explore = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center w-full h-screen">
-        <span className="text-3xl font-bold mt-6 z-30">Explore</span>
+        <span className="text-3xl font-bold mt-8 z-30">Explore</span>
         <div className="relative flex-1 flex items-center justify-center">
           <motion.img
             src="/left-swipe.png"

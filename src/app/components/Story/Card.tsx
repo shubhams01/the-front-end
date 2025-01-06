@@ -11,8 +11,8 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ id, imageUrl, category, title }) => {
   return (
     <motion.div
-      className="relative overflow-hidden rounded-2xl border-2 shadow-lg h-screen w-90vw lg:w-80 m-4 cursor-pointer"
-      style={{ height: '85vh' }}
+      className="relative overflow-hidden rounded-2xl border-2 shadow-lg w-90vw lg:w-80 m-4 cursor-pointer"
+      style={{ height: '80vh' }}
     >
       <motion.span className="text-white text-bold absolute top-0 right-0 m-2 z-10 rounded-full bg-slate-900 px-2 py-1">
         {category}
