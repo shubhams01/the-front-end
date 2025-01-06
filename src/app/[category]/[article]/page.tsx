@@ -402,7 +402,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                     className={`${
                       currentPage == 0
                         ? "text-4xl text-shadow shadow-slate-500"
-                        : "text-sm md:text-lg lg:text-2xl"
+                        : "text-lg md:text-lg lg:text-2xl"
                     }  font-bold text-white`}
                   >
                     {
@@ -463,13 +463,13 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                         draggable={false}
                       />
                       <motion.div
-                        className="w-full flex items-center justify-center text-center max-h-60"
+                        className="w-full flex items-center justify-center text-center max-h-100 mt-2"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.75, ease: "easeInOut" }}
                       >
-                        <motion.span className="text-sm md:text-md lg:text-lg font-bold text-white">
+                        <motion.span className="text-sm md:text-md lg:text-lg font-extrabold text-slate-100">
                           {
                             details?.sections[currentPage].nestedSections[
                               currentNestedPage
