@@ -69,7 +69,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
         <span className="text-2xl font-bold mt-10">
           {category.toLocaleUpperCase()}
         </span>
-        <div className="card-wrapper flex items-center justify-center w-full h-full">
+        <div className="card-wrapper flex items-center justify-center w-full h-dvh">
           <AnimatePresence mode="wait">
             {articles.length > 0 && (
               <motion.div
