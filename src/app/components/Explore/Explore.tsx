@@ -299,7 +299,7 @@ const Explore = () => {
           <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
         </motion.span>
       </motion.div>
-    </div>
+    </>
   );
 };
 
