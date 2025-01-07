@@ -131,9 +131,9 @@ const Explore = () => {
   };
 
   return (
-    <>
+    <div className="container max-w-screen-xl mx-auto flex justify-center items-center">
       <div className="flex flex-col justify-center items-center w-full h-screen">
-        <span className="text-3xl font-bold mt-12 -mb-10 z-30">Explore</span>
+        <span className="text-3xl font-bold mt-12 z-30">Explore</span>
         <div className="relative flex-1 flex items-center justify-center">
           <motion.img
             src="/left-swipe.png"
@@ -299,7 +299,7 @@ const Explore = () => {
           <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
         </motion.span>
       </motion.div>
-    </>
+    </div>
   );
 };
 

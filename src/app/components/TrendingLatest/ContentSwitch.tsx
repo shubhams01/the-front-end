@@ -27,7 +27,7 @@ const ContentSwitch = ({ onSwitch }) => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-12 -mb-10">
+    <div className="flex justify-center items-center mt-12">
       <div className="flex justify-center items-center rounded-full p-2 bg-white z-10">
         <motion.button
           className={`text-sm mx-1 px-1 py-1 font-bold rounded flex items-center gap-1 ${

@@ -22,7 +22,8 @@ const TrendingLatestPosts = () => {
         title: article.Title,
         slug: article.Slug,
         category: article.category.Title,
-        imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
+        imageUrl:
+          "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
       }));
       setPosts(trendingArticles);
       console.log("trending ", data);
@@ -33,14 +34,17 @@ const TrendingLatestPosts = () => {
 
   const fetchLatestPosts = async () => {
     try {
-      const response = await fetch("https://api.gyaanhub.io/api/articles/latest");
+      const response = await fetch(
+        "https://api.gyaanhub.io/api/articles/latest"
+      );
       const data = await response.json();
       const latestArticles = data.map((article) => ({
         id: article.id,
         title: article.Title,
         slug: article.Slug,
         category: article.category.Title,
-        imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
+        imageUrl:
+          "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
       }));
       setPosts(latestArticles);
       console.log("latest ", data);
@@ -96,100 +100,102 @@ const TrendingLatestPosts = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-screen">
-      <div className="w-full">
-        <ContentSwitch onSwitch={handleSwitch} />
-      </div>
-      <div className="relative w-full flex-1 flex items-center justify-center">
-        <AnimatePresence initial={false}>
-          {posts.length > 0 && (
-            <>
-              {currentIndex > 0 && (
+    <div className="container max-w-screen-xl mx-auto flex justify-center items-center">
+      <div className="flex flex-col justify-center items-center w-full h-screen">
+        <div className="w-full">
+          <ContentSwitch onSwitch={handleSwitch} />
+        </div>
+        <div className="relative w-full flex-1 flex items-center justify-center">
+          <AnimatePresence initial={false}>
+            {posts.length > 0 && (
+              <>
+                {currentIndex > 0 && (
+                  <motion.div
+                    // @ts-ignore
+                    key={posts[currentIndex - 1].id}
+                    className="absolute inset-0 flex items-center justify-center"
+                    initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
+                    animate={{ opacity: 1, scale: 1, rotate: "-1deg" }}
+                    exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
+                    transition={{ duration: 0.5 }}
+                    style={{ zIndex: stackDepth }}
+                  >
+                    <Card
+                      // @ts-ignore
+                      id={posts[currentIndex - 1].id}
+                      // @ts-ignore
+                      imageUrl={posts[currentIndex - 1].imageUrl}
+                      // @ts-ignore
+                      title={posts[currentIndex - 1].title}
+                      // @ts-ignore
+                      category={posts[currentIndex - 1].category}
+                    />
+                  </motion.div>
+                )}
                 <motion.div
                   // @ts-ignore
-                  key={posts[currentIndex - 1].id}
+                  key={posts[currentIndex].id}
                   className="absolute inset-0 flex items-center justify-center"
-                  initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
-                  animate={{ opacity: 1, scale: 1, rotate: "-1deg" }}
-                  exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
-                  transition={{ duration: 0.5 }}
-                  style={{ zIndex: stackDepth }}
-                >
-                  <Card
-                    // @ts-ignore
-                    id={posts[currentIndex - 1].id}
-                    // @ts-ignore
-                    imageUrl={posts[currentIndex - 1].imageUrl}
-                    // @ts-ignore
-                    title={posts[currentIndex - 1].title}
-                    // @ts-ignore
-                    category={posts[currentIndex - 1].category}
-                  />
-                </motion.div>
-              )}
-              <motion.div
-                // @ts-ignore
-                key={posts[currentIndex].id}
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  zIndex: stackDepth + 1,
-                  opacity: 1,
-                  scale: 1,
-                  rotate: "1deg", // Tilt right for current card
-                }}
-                onClick={() => handleClick(posts[currentIndex])}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(event, info) => {
-                  if (info.offset.x < -100) {
-                    handleSwipe("left");
-                  } else if (info.offset.x > 100) {
-                    handleSwipe("right");
-                  }
-                }}
-                initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
-                animate={{ opacity: 1, scale: 1, rotate: "1deg" }}
-                exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
-                transition={{ duration: 0.5 }}
-                dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
-              >
-                <Card
-                  // @ts-ignore
-                  id={posts[currentIndex].id}
-                  // @ts-ignore
-                  imageUrl={posts[currentIndex].imageUrl}
-                  // @ts-ignore
-                  title={posts[currentIndex].title}
-                  // @ts-ignore
-                  category={posts[currentIndex].category}
-                />
-              </motion.div>
-              {currentIndex < posts.length - 1 && (
-                <motion.div
-                  // @ts-ignore
-                  key={posts[currentIndex + 1].id}
-                  className="absolute inset-0 flex items-center justify-center"
+                  style={{
+                    zIndex: stackDepth + 1,
+                    opacity: 1,
+                    scale: 1,
+                    rotate: "1deg", // Tilt right for current card
+                  }}
+                  onClick={() => handleClick(posts[currentIndex])}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  onDragEnd={(event, info) => {
+                    if (info.offset.x < -100) {
+                      handleSwipe("left");
+                    } else if (info.offset.x > 100) {
+                      handleSwipe("right");
+                    }
+                  }}
                   initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
                   animate={{ opacity: 1, scale: 1, rotate: "1deg" }}
                   exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
                   transition={{ duration: 0.5 }}
-                  style={{ zIndex: stackDepth }}
+                  dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
                 >
                   <Card
                     // @ts-ignore
-                    id={posts[currentIndex + 1].id}
+                    id={posts[currentIndex].id}
                     // @ts-ignore
-                    imageUrl={posts[currentIndex + 1].imageUrl}
+                    imageUrl={posts[currentIndex].imageUrl}
                     // @ts-ignore
-                    title={posts[currentIndex + 1].title}
+                    title={posts[currentIndex].title}
                     // @ts-ignore
-                    category={posts[currentIndex + 1].category}
+                    category={posts[currentIndex].category}
                   />
                 </motion.div>
-              )}
-            </>
-          )}
-        </AnimatePresence>
+                {currentIndex < posts.length - 1 && (
+                  <motion.div
+                    // @ts-ignore
+                    key={posts[currentIndex + 1].id}
+                    className="absolute inset-0 flex items-center justify-center"
+                    initial={{ opacity: 0, scale: 0.95, rotate: 0 }}
+                    animate={{ opacity: 1, scale: 1, rotate: "1deg" }}
+                    exit={{ opacity: 0, scale: 0.95, rotate: 0 }}
+                    transition={{ duration: 0.5 }}
+                    style={{ zIndex: stackDepth }}
+                  >
+                    <Card
+                      // @ts-ignore
+                      id={posts[currentIndex + 1].id}
+                      // @ts-ignore
+                      imageUrl={posts[currentIndex + 1].imageUrl}
+                      // @ts-ignore
+                      title={posts[currentIndex + 1].title}
+                      // @ts-ignore
+                      category={posts[currentIndex + 1].category}
+                    />
+                  </motion.div>
+                )}
+              </>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
