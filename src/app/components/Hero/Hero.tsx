@@ -13,7 +13,7 @@ const Hero = ({ scrollToExplore }) => {
       setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
     };
 
-    const timeout = setTimeout(changeWord, 3500); 
+    const timeout = setTimeout(changeWord, 3500);
 
     return () => clearTimeout(timeout);
   }, [wordIndex]);
@@ -62,13 +62,14 @@ const Hero = ({ scrollToExplore }) => {
         </span>
       </div>
 
-      <div className="absolute bottom-10 w-full flex justify-center z-10">
-        <button
-          onClick={scrollToExplore}
-          className="text-white text-lg font-light animate-bounce"
-        >
-          ↓ Scroll to Explore ↓
-        </button>
+        <div className="absolute bottom-10 w-full flex justify-center z-10">
+          <button
+            onClick={scrollToExplore}
+            className="text-white text-lg font-light animate-bounce"
+          >
+            ↓ Scroll to Explore ↓
+          </button>
+        </div>
       </div>
     </div>
   );
