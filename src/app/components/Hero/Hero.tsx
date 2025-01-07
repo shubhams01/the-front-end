@@ -23,7 +23,7 @@ const Hero = ({ scrollToExplore }) => {
   }, [wordIndex]);
 
   return (
-    <div className="relative h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-slate-500 to-slate-200 p-4">
+    <div className="relative h-dvh flex flex-col items-center justify-center bg-gradient-to-br from-black via-slate-500 to-slate-200 p-4">
       <HeroEffect />
       <div className="relative z-10 text-center">
         <motion.h1

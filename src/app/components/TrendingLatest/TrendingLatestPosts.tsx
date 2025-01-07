@@ -96,7 +96,7 @@ const TrendingLatestPosts = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-screen">
+    <div className="flex flex-col justify-center items-center w-full h-dvh">
       <div className="w-full">
         <ContentSwitch onSwitch={handleSwitch} />
       </div>

@@ -351,14 +351,14 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center scroll-smooth h-dvh overflow-y-scroll overflow-x-hidden"
+      className="flex flex-col items-center justify-center scroll-smooth h-screen overflow-y-scroll overflow-x-hidden"
       onWheel={handleScroll}
     >
-      <motion.div className="h-dvh w-screen snap-start">
+      <motion.div className="h-screen w-screen snap-start">
         {details?.sections && (
           <AnimatePresence mode="wait">
             <motion.div
-              className="items-center justify-center mx-auto w-full md:w-1/3 lg:w-1/3 h-screen rounded-xl snap-center relative"
+              className="items-center justify-center mx-auto w-full md:w-1/3 lg:w-1/3 h-dvh rounded-xl snap-center relative"
               animate={controls}
               initial="hidden"
               whileInView="visible"
