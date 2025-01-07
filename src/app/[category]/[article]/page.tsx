@@ -358,7 +358,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
         {details?.sections && (
           <AnimatePresence mode="wait">
             <motion.div
-              className="items-center justify-center mx-auto w-full md:w-1/3 lg:w-1/3 h-screen rounded-xl snap-center relative"
+              className="items-center justify-center mx-auto w-full md:w-1/3 lg:w-1/3 h-dvh rounded-xl snap-center relative"
               animate={controls}
               initial="hidden"
               whileInView="visible"
@@ -370,7 +370,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
               transition={{ duration: 1.5 }}
               drag="y"
               dragDirectionLock
-              dragConstraints={{ top: 0, bottom: 0 }}
+             dragConstraints={{ top: 0, bottom: 0 }}
               dragTransition={{ bounceStiffness: 200, bounceDamping: 25 }}
               onDragEnd={(event: any, info: any) => handleDrag(event, info)}
             >

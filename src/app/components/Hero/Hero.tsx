@@ -13,7 +13,7 @@ const Hero = ({ scrollToExplore }) => {
       setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
     };
 
-    const timeout = setTimeout(changeWord, 3500); 
+    const timeout = setTimeout(changeWord, 3500);
 
     return () => clearTimeout(timeout);
   }, [wordIndex]);
@@ -23,7 +23,7 @@ const Hero = ({ scrollToExplore }) => {
   }, [wordIndex]);
 
   return (
-    <div className="relative h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-slate-500 to-slate-200 p-4">
+    <div className="relative h-dvh flex flex-col items-center justify-center bg-gradient-to-br from-black via-slate-500 to-slate-200 p-4">
       <HeroEffect />
       <div className="relative z-10 text-center">
         <motion.h1
@@ -62,15 +62,15 @@ const Hero = ({ scrollToExplore }) => {
         </span>
       </div>
 
-      <div className="absolute bottom-10 w-full flex justify-center z-10">
-        <button
-          onClick={scrollToExplore}
-          className="text-white text-lg font-light animate-bounce"
-        >
-          ↓ Scroll to Explore ↓
-        </button>
+        <div className="absolute bottom-10 w-full flex justify-center z-10">
+          <button
+            onClick={scrollToExplore}
+            className="text-white text-lg font-light animate-bounce"
+          >
+            ↓ Scroll to Explore ↓
+          </button>
+        </div>
       </div>
-    </div>
   );
 };
 
