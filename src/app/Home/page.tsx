@@ -45,16 +45,16 @@ const Home = () => {
 
   return (
     <div className="bg-black h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
-      <div className="snap-always snap-center">
+      <div className="snap-start h-screen">
         <Hero scrollToExplore={scrollToExplore} />
       </div>
-      <div ref={exploreRef} className="snap-always snap-center">
+      <div ref={exploreRef} className="snap-start h-screen">
         <Explore />
       </div>
-      <div ref={trendingRef} className="snap-always snap-center">
+      <div ref={trendingRef} className="snap-start h-screen">
         <TrendingLatest />
       </div>
-      <div ref={categoriesRef} className="snap-always snap-center">
+      <div ref={categoriesRef} className="snap-start">
         <Categories />
       </div>
     </div>

@@ -351,10 +351,10 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center scroll-smooth h-dvh overflow-y-scroll overflow-x-hidden"
+      className="flex flex-col items-center justify-center scroll-smooth h-screen overflow-y-scroll overflow-x-hidden"
       onWheel={handleScroll}
     >
-      <motion.div className="h-dvh w-screen snap-start">
+      <motion.div className="h-screen w-screen snap-start">
         {details?.sections && (
           <AnimatePresence mode="wait">
             <motion.div
