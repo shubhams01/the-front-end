@@ -401,9 +401,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   <span
                     className={`${
                       currentPage == 0
-                        ? "text-4xl text-shadow shadow-slate-500"
-                        : "text-lg md:text-lg lg:text-2xl"
-                    }  font-bold text-white`}
+                        ? "text-4xl"
+                        : "text-md md:text-lg lg:text-2xl"
+                    }  font-black text-white`}
                   >
                     {
                       // @ts-ignore
@@ -442,7 +442,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       handleDragEnd(event, info, currentPage)
                     }
                   >
-                    <motion.div className="mt-4 w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
+                    <motion.div className="mt-4 w-64 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
                       <motion.img
                         className="w-full h-full rounded-2xl opacity-50"
                         src={
@@ -463,13 +463,13 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                         draggable={false}
                       />
                       <motion.div
-                        className="w-full flex items-center justify-center text-center max-h-100 mt-2"
+                        className="text-center"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.75, ease: "easeInOut" }}
                       >
-                        <motion.span className="text-sm md:text-md lg:text-lg font-extrabold text-slate-100">
+                        <motion.span className="text-md font-bold text-white">
                           {
                             details?.sections[currentPage].nestedSections[
                               currentNestedPage

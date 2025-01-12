@@ -72,7 +72,7 @@ const CardActivity = ({
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const { isLoggedIn } = useAuthStore();
-  const { toggleLoginModal } = useModal();
+  const { isLoginOpen, isRegisterOpen, toggleLoginModal, toggleRegisterModal } = useModal();
   const token = getAuthToken();
   const userId = useAuthStore.getState().getUserId();
 
@@ -102,6 +102,15 @@ const CardActivity = ({
   }, [isLoggedIn, postId, token]);
 
   const handleBulbClick = async () => {
+    if(isLoginOpen) {
+      toggleLoginModal();
+    }
+    if(isRegisterOpen) {
+      toggleRegisterModal();
+    }
+    if(isShareOpen) {
+      setIsShareOpen(!isShareOpen);
+    }
     if (!isLoggedIn) {
       toggleLoginModal();
       return;
@@ -116,6 +125,15 @@ const CardActivity = ({
   };
 
   const handleCommentClick = () => {
+    if(isLoginOpen) {
+      toggleLoginModal();
+    }
+    if(isRegisterOpen) {
+      toggleRegisterModal();
+    }
+    if(isShareOpen) {
+      setIsShareOpen(!isShareOpen);
+    }
     if (!isLoggedIn) {
       toggleLoginModal();
       return;
@@ -125,6 +143,15 @@ const CardActivity = ({
   };
 
   const handleBookmarkClick = async () => {
+    if(isLoginOpen) {
+      toggleLoginModal();
+    }
+    if(isRegisterOpen) {
+      toggleRegisterModal();
+    }
+    if(isShareOpen) {
+      setIsShareOpen(!isShareOpen);
+    }
     if (!isLoggedIn) {
       toggleLoginModal();
       return;
@@ -138,6 +165,12 @@ const CardActivity = ({
   };
 
   const handleShareClick = () => {
+    if(isLoginOpen) {
+      toggleLoginModal();
+    }
+    if(isRegisterOpen) {
+      toggleRegisterModal();
+    }
     setIsShareOpen(!isShareOpen);
   };
 

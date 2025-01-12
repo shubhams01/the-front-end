@@ -1,5 +1,5 @@
 // components/Modal/Modal.tsx
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useModal } from "@/app/context/ModalContext";
 import Login from "../User/Login";
@@ -16,6 +16,26 @@ const LoginRegisterModal: React.FC<LoginRegisterModalProps> = ({
   const { isLoginOpen, isRegisterOpen, toggleLoginModal, toggleRegisterModal } =
     useModal();
 
+      const popupRef = useRef(null);
+      
+      const handleClickOutside = (event) => {
+        console.log('handleOutsideclick ', event.target.id);
+        if (popupRef.current && event.target.id == 'popup') {
+          toggleLoginModal();
+        }
+      };
+      
+      useEffect(() => {
+        if (isLoginOpen) {
+          document.addEventListener("click", handleClickOutside);
+        } else {
+          document.removeEventListener("click", handleClickOutside);
+        }
+        return () => {
+          document.removeEventListener("click", handleClickOutside);
+        };
+      }, [isLoginOpen]);
+
   return (
     <AnimatePresence>
       {(isLoginOpen || isRegisterOpen) && (
@@ -26,10 +46,12 @@ const LoginRegisterModal: React.FC<LoginRegisterModalProps> = ({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-transparent rounded-lg p-8 shadow-lg relative"
+            className="bg-transparent rounded-lg p-8 shadow-lg relative w-full max-w-md flex flex-col items-center justify-center h-screen"
             initial={{ y: -50 }}
             animate={{ y: 0 }}
             exit={{ y: -50 }}
+            ref={popupRef}
+            id="popup"
           >
             {showCloseButton && (
               <button
