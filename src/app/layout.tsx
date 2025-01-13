@@ -32,11 +32,13 @@ export default function RootLayout({
 
           gtag('config', 'G-T9B3Y1JYSE');
             `}
-        </script> 
+        </script>
       </Head>
       <body className={inter.className}>
-        <Navbar />
-        <ModalProvider>{children}</ModalProvider>
+        <ModalProvider>
+          <Navbar />
+          {children}
+        </ModalProvider>
       </body>
     </html>
   );

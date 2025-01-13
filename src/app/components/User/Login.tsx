@@ -74,6 +74,15 @@ const Login: React.FC = () => {
     });
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      const response = await fetch("https://api.gyaanhub.io/api/connect/google");
+      console.log('google signin', response);
+    } catch (error) {
+      console.error("Google login error:", error);
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, scaleY: 1.1 }}
@@ -168,9 +177,10 @@ const Login: React.FC = () => {
               )}
             </span>
           </motion.button>
-          {/* <button
+          <motion.button
             type="button"
             className="w-full flex items-center justify-center p-4 text-black py-2 mt-2 rounded-lg shadow-lg transition duration-300 bg-white hover:bg-gray-100"
+            onClick={handleGoogleSignIn}
           >
             <img
               className="h-5 w-5 mr-2"
@@ -178,7 +188,7 @@ const Login: React.FC = () => {
               alt="google"
             />
             <span>Sign in with Google</span>
-          </button> */}
+          </motion.button>
           <p className="mt-4 text-center text-gray-600">
             <span>Don&apos;t have an account?</span>
             <button

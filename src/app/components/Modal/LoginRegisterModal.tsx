@@ -5,6 +5,7 @@ import { useModal } from "@/app/context/ModalContext";
 import Login from "../User/Login";
 import Register from "../User/Register";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { usePathname } from "next/navigation";
 
 interface LoginRegisterModalProps {
   showCloseButton?: boolean;
@@ -17,10 +18,11 @@ const LoginRegisterModal: React.FC<LoginRegisterModalProps> = ({
     useModal();
 
       const popupRef = useRef(null);
+      const pathname = usePathname();
       
       const handleClickOutside = (event) => {
-        console.log('handleOutsideclick ', event.target.id);
-        if (popupRef.current && event.target.id == 'popup') {
+        console.log('handleOutsideclick ', event.target.id, pathname.split('/')[1]);
+        if (popupRef.current && event.target.id == 'popup' && pathname.split('/')[1] != 'profile') {
           toggleLoginModal();
         }
       };

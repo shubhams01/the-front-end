@@ -18,6 +18,7 @@ import {
 } from "@heroicons/react/24/solid";
 import CardActivity from "@/app/components/Story/CardActivity";
 import LoginRegisterModal from "@/app/components/Modal/LoginRegisterModal";
+import { useModal } from "@/app/context/ModalContext";
 
 interface Section {
   nestedSections: Array<{
@@ -64,6 +65,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   const [articleId, setArticleId] = useState(_id);
 
   const nextSection = searchParams.get("explore");
+  const { isLoginOpen, setIsLoginOpen, toggleLoginModal } = useModal();
 
   useEffect(() => {
     console.log("cardDetails ", pathname, articleId, nextSection);
@@ -461,6 +463,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                         viewport={{ once: false }}
                         transition={{ duration: 0.75 }}
                         draggable={false}
+                        whileTap={{ scale: 1.15 }}
                       />
                       <motion.div
                         className="text-center"

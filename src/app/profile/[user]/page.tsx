@@ -10,17 +10,24 @@ import { getAuthToken } from "@/app/hooks/useLocalStorageAuth"; // Assuming this
 
 const Page = () => {
   const { isLoggedIn } = useAuthStore();
-  const { isLoginOpen, setIsLoginOpen } = useModal();
+  const { isLoginOpen, isRegisterOpen, setIsLoginOpen, setIsRegisterOpen } = useModal();
   const [isClient, setIsClient] = useState(false);
   const overlayControls = useAnimation();
-  const [userData, setUserData] = useState<any>(null); // State to store user data
-
+  const [userData, setUserData] = useState<any>(null); 
+  
   useEffect(() => {
     setIsClient(true);
+
     if (!isLoggedIn) {
       setIsLoginOpen(true);
     }
   }, [isLoggedIn, setIsLoginOpen]);
+
+  useEffect(() => {
+    if(isLoginOpen) {
+      setIsRegisterOpen(false);
+    }
+  },[isLoginOpen]);
 
   const API_URL = 'https://api.gyaanhub.io/api';
 

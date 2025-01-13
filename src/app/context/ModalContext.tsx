@@ -7,6 +7,7 @@ interface ModalContextProps {
   setIsLoginOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleLoginModal: () => void;
   isRegisterOpen: boolean;
+  setIsRegisterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleRegisterModal: () => void;
 }
 
@@ -37,7 +38,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 
   return (
     <ModalContext.Provider
-      value={{ isLoginOpen, setIsLoginOpen, toggleLoginModal, isRegisterOpen, toggleRegisterModal }}
+      value={{ isLoginOpen, setIsLoginOpen, toggleLoginModal, isRegisterOpen, setIsRegisterOpen, toggleRegisterModal }}
     >
       {children}
     </ModalContext.Provider>

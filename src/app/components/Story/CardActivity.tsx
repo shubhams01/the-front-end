@@ -22,7 +22,7 @@ import {
 } from "react-share";
 import { formatNumber } from "@/app/utils/numberFormatter";
 
-const API_URL = 'https://api.gyaanhub.io/api';
+const API_URL = "https://api.gyaanhub.io/api";
 
 const api = {
   like: async (userId, articleId, token) => {
@@ -72,7 +72,8 @@ const CardActivity = ({
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const { isLoggedIn } = useAuthStore();
-  const { isLoginOpen, isRegisterOpen, toggleLoginModal, toggleRegisterModal } = useModal();
+  const { isLoginOpen, isRegisterOpen, toggleLoginModal, toggleRegisterModal } =
+    useModal();
   const token = getAuthToken();
   const userId = useAuthStore.getState().getUserId();
 
@@ -102,13 +103,13 @@ const CardActivity = ({
   }, [isLoggedIn, postId, token]);
 
   const handleBulbClick = async () => {
-    if(isLoginOpen) {
+    if (isLoginOpen) {
       toggleLoginModal();
     }
-    if(isRegisterOpen) {
+    if (isRegisterOpen) {
       toggleRegisterModal();
     }
-    if(isShareOpen) {
+    if (isShareOpen) {
       setIsShareOpen(!isShareOpen);
     }
     if (!isLoggedIn) {
@@ -125,13 +126,13 @@ const CardActivity = ({
   };
 
   const handleCommentClick = () => {
-    if(isLoginOpen) {
+    if (isLoginOpen) {
       toggleLoginModal();
     }
-    if(isRegisterOpen) {
+    if (isRegisterOpen) {
       toggleRegisterModal();
     }
-    if(isShareOpen) {
+    if (isShareOpen) {
       setIsShareOpen(!isShareOpen);
     }
     if (!isLoggedIn) {
@@ -143,13 +144,13 @@ const CardActivity = ({
   };
 
   const handleBookmarkClick = async () => {
-    if(isLoginOpen) {
+    if (isLoginOpen) {
       toggleLoginModal();
     }
-    if(isRegisterOpen) {
+    if (isRegisterOpen) {
       toggleRegisterModal();
     }
-    if(isShareOpen) {
+    if (isShareOpen) {
       setIsShareOpen(!isShareOpen);
     }
     if (!isLoggedIn) {
@@ -165,18 +166,21 @@ const CardActivity = ({
   };
 
   const handleShareClick = () => {
-    if(isLoginOpen) {
+    if (isLoginOpen) {
       toggleLoginModal();
     }
-    if(isRegisterOpen) {
+    if (isRegisterOpen) {
       toggleRegisterModal();
     }
     setIsShareOpen(!isShareOpen);
   };
 
   useEffect(() => {
-    setIsShareOpen(false);
-  }, [closeShareOpenOnDragOrScroll]);
+    const timer = setTimeout(() => {
+      setIsShareOpen(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isShareOpen]);
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);

@@ -6,11 +6,14 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import { useModal } from "@/app/context/ModalContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
   const pathname = usePathname();
+  const { isLoginOpen, toggleLoginModal, isRegisterOpen, toggleRegisterModal } =
+    useModal();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -24,6 +27,12 @@ const Navbar = () => {
 
   const goBack = () => {
     router.back();
+    if (isLoginOpen) {
+      toggleLoginModal();
+    }
+    if (isRegisterOpen) {
+      toggleRegisterModal();
+    }
   };
 
   return (
