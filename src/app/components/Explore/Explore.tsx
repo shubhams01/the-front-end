@@ -81,7 +81,12 @@ const Explore = () => {
         // const response = await fetch(endpoint, { headers });
 
         const response = await fetch(
-          "https://api.gyaanhub.io/api/explore"
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+            },
+          }
         );
 
         if (!response.ok) {
