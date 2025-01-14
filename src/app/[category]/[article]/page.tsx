@@ -39,11 +39,11 @@ interface Article {
   imageUrl: string;
 }
 
-const DetailsPage = ({ params }: { params: { id: string } }) => {
+const DetailsPage = () => {
+  
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { id } = params;
 
   const controls = useAnimation();
   const overlayControls = useAnimation();
@@ -65,7 +65,6 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
   const [articleId, setArticleId] = useState(_id);
 
   const nextSection = searchParams.get("explore");
-  const { isLoginOpen, setIsLoginOpen, toggleLoginModal } = useModal();
 
   useEffect(() => {
     console.log("cardDetails ", pathname, articleId, nextSection);
@@ -378,7 +377,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
             >
               <motion.div className="relative h-full w-full p-2">
                 <motion.img
-                  className="w-full h-full rounded-2xl"
+                  className={`w-full h-full rounded-2xl ${currentPage == 0 ? "blur-none" : "blur-sm"}`}
                   // @ts-ignore
                   src={details?.sections[currentPage]?.imageUrl}
                   // @ts-ignore

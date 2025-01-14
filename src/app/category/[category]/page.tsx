@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Card from "../../components/Story/Card";
 
-const CategoryPage = ({ params }: { params: { category: string } }) => {
+const CategoryPage = (category) => {
   const router = useRouter();
 
   const [articles, setArticles] = useState([]);
@@ -13,7 +13,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
 
   const overlayControls = useAnimation();
 
-  const { category } = params;
+  // const { category } = params;
 
   const handleClick = (card) => {
     console.log("card ", card);
@@ -67,7 +67,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
     <>
       <div className="explore-container flex flex-col items-center justify-center h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
         <span className="text-2xl font-bold mt-10">
-          {category.toLocaleUpperCase()}
+          {/* {category.toLocaleUpperCase()} */}
         </span>
         <div className="card-wrapper flex items-center justify-center w-full h-dvh">
           <AnimatePresence mode="wait">
