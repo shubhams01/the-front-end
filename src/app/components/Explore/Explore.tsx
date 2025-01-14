@@ -81,12 +81,7 @@ const Explore = () => {
         // const response = await fetch(endpoint, { headers });
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
-            },
-          }
+          "https://api.gyaanhub.io/api/explore"
         );
 
         if (!response.ok) {
@@ -99,8 +94,7 @@ const Explore = () => {
           title: article.Title,
           slug: article.Slug,
           category: article.category.Title,
-          imageUrl:
-            "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
+          imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,
@@ -280,21 +274,17 @@ const Explore = () => {
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            transition={{ duration: 0.50, ease: "easeInOut" }}
           >
             <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-            >
-              <img
-                className="h-20 md:h-24 lg:h-28"
-                src="/logo-white.svg"
-                alt="Logo"
-              />
-            </motion.span>
+          animate={{ rotate: 360 }}
+          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+        >
+          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
+        </motion.span>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> 
 
       <motion.div
         className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"
@@ -306,11 +296,7 @@ const Explore = () => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <img
-            className="h-20 md:h-24 lg:h-28"
-            src="/logo-white.svg"
-            alt="Logo"
-          />
+          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
         </motion.span>
       </motion.div>
     </>
