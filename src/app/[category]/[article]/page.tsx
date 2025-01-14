@@ -378,7 +378,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
             >
               <motion.div className="relative h-full w-full p-2">
                 <motion.img
-                  className="w-full h-full rounded-2xl"
+                className={`w-full h-full rounded-2xl ${currentPage == 0 ? "blur-none" : "blur-sm"}`}
                   // @ts-ignore
                   src={details?.sections[currentPage]?.imageUrl}
                   // @ts-ignore
