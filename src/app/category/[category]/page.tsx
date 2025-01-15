@@ -4,7 +4,9 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Card from "../../components/Story/Card";
 
-const CategoryPage = ({ params }) => {
+const CategoryPage = ({ params }: { params: { category: string } }) => {
+  const { category } = params;
+
   const router = useRouter();
 
   const [articles, setArticles] = useState([]);
@@ -12,8 +14,6 @@ const CategoryPage = ({ params }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const overlayControls = useAnimation();
-
-  const { category } = React.use(params);
 
   const handleClick = (card) => {
     console.log("card ", card);
