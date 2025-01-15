@@ -66,7 +66,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
   return (
     <>
       <div className="explore-container flex flex-col items-center justify-center h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-        <span className="text-2xl font-bold mt-10">
+        <span className="text-2xl font-bold mt-6 -mb-8">
           {category.toLocaleUpperCase()}
         </span>
         <div className="card-wrapper flex items-center justify-center w-full h-dvh">
