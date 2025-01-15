@@ -14,7 +14,12 @@ const TrendingLatestPosts = () => {
   const fetchTrendingPosts = async () => {
     try {
       const response = await fetch(
-        "https://api.gyaanhub.io/api/articles/trending"
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/trending`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+          },
+        }
       );
       const data = await response.json();
       const trendingArticles = data.map((article) => ({
@@ -22,7 +27,8 @@ const TrendingLatestPosts = () => {
         title: article.Title,
         slug: article.Slug,
         category: article.category.Title,
-        imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
+        imageUrl:
+          "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
       }));
       setPosts(trendingArticles);
       console.log("trending ", data);
@@ -33,14 +39,22 @@ const TrendingLatestPosts = () => {
 
   const fetchLatestPosts = async () => {
     try {
-      const response = await fetch("https://api.gyaanhub.io/api/articles/latest");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/latest`,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+          },
+        }
+      );
       const data = await response.json();
       const latestArticles = data.map((article) => ({
         id: article.id,
         title: article.Title,
         slug: article.Slug,
         category: article.category.Title,
-        imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
+        imageUrl:
+          "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
       }));
       setPosts(latestArticles);
       console.log("latest ", data);

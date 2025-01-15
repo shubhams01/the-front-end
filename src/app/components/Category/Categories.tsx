@@ -11,7 +11,12 @@ const Categories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://api.gyaanhub.io/api/categories");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/categories`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+            },
+          });
         if (!response.ok) {
           throw new Error("Failed to fetch categories");
         }

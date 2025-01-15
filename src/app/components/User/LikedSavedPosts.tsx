@@ -28,7 +28,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
     closed: { y: "100%" },
   };
 
-  const API_URL = "https://api.gyaanhub.io/api";
+  const API_URL = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}`;
 
   const fetchPosts = async () => {
     const endpoint = postsType === "Liked" ? "liked" : "saved";

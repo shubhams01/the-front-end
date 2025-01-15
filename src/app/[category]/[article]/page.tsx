@@ -145,17 +145,43 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
       try {
         let response;
         if (nextSection === "explore") {
-          response = await fetch("https://api.gyaanhub.io/api/explore");
+          response = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+              },
+            }
+          );
         } else if (nextSection === "trending" || nextSection === "latest") {
           if (nextSection === "trending") {
             response = await fetch(
-              "https://api.gyaanhub.io/api/articles/trending"
+              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/trending`,
+              {
+                headers: {
+                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+                },
+              }
             );
           } else {
-            response = await fetch("https://api.gyaanhub.io/api/articles/latest");
+            response = await fetch(
+              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/latest`,
+              {
+                headers: {
+                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+                },
+              }
+            );
           }
         } else {
-          response = await fetch(`https://api.gyaanhub.io/api/explore`);
+          response = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
+            {
+              headers: {
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+              },
+            }
+          );
         }
         if (!response.ok) {
           throw new Error("Failed to fetch next section");
@@ -183,7 +209,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
         NestedSections: any[];
       }) => {
         const sectionObject = {
-          imageUrl: "https://api.gyaanhub.io" + section?.SectionImage?.formats?.large?.url,
+          imageUrl:
+            "https://api.gyaanhub.io" +
+            section?.SectionImage?.formats?.large?.url,
           description: section.SectionDescription,
           nestedSections: section.NestedSections
             ? section.NestedSections.map(
@@ -191,7 +219,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                   NestedSectionImage: { formats: { large: { url: any } } };
                   NestedSectionDescription: any;
                 }) => ({
-                  imageUrl: "https://api.gyaanhub.io" + nested?.NestedSectionImage?.formats?.large?.url,
+                  imageUrl:
+                    "https://api.gyaanhub.io" +
+                    nested?.NestedSectionImage?.formats?.large?.url,
                   description: nested.NestedSectionDescription,
                 })
               )
@@ -280,12 +310,12 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://api.gyaanhub.io/api/article/${articleId}`,
-          // {
-          //   headers: {
-          //     Authorization: `Bearer f4da5bebc8dd837c1df99461784738662f5d9ee1505673fb922b0f547870eb17ba70cddfdb07033e591c38f02019ec1bf4468f8c036ab1a3936e26ecf55f896af48f83aac5dd25403f479576733b0aee60fdeff94806dfb4401d0ebc480cf7594d56aa82ad1e1e2690201bec49a2a0d3430125130bea3dc587cfff137de5d454`,
-          //   },
-          // }
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/article/${articleId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Articles");
@@ -300,7 +330,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
             NestedSections: any[];
           }) => {
             const sectionObject = {
-              imageUrl: "https://api.gyaanhub.io" + section?.SectionImage?.formats?.large.url,
+              imageUrl:
+                "https://api.gyaanhub.io" +
+                section?.SectionImage?.formats?.large.url,
               description: section?.SectionDescription,
               nestedSections: section?.NestedSections
                 ? section.NestedSections.map(
@@ -308,7 +340,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       NestedSectionImage: { formats: { large: { url: any } } };
                       NestedSectionDescription: any;
                     }) => ({
-                      imageUrl: "https://api.gyaanhub.io" + nested?.NestedSectionImage?.formats?.large?.url,
+                      imageUrl:
+                        "https://api.gyaanhub.io" +
+                        nested?.NestedSectionImage?.formats?.large?.url,
                       description: nested?.NestedSectionDescription,
                     })
                   )
@@ -336,18 +370,17 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
     fetchData();
   }, [articleId]);
 
-
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       if (event.state) {
-        router.push('/');
+        router.push("/");
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
-    
+    window.addEventListener("popstate", handlePopState);
+
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, [router]);
 
@@ -372,13 +405,15 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
               transition={{ duration: 1.5 }}
               drag="y"
               dragDirectionLock
-             dragConstraints={{ top: 0, bottom: 0 }}
+              dragConstraints={{ top: 0, bottom: 0 }}
               dragTransition={{ bounceStiffness: 200, bounceDamping: 25 }}
               onDragEnd={(event: any, info: any) => handleDrag(event, info)}
             >
               <motion.div className="relative h-full w-full p-2">
                 <motion.img
-                className={`w-full h-full rounded-2xl ${currentPage == 0 ? "blur-none" : "blur-sm"}`}
+                  className={`w-full h-full rounded-2xl ${
+                    currentPage == 0 ? "blur-none" : "blur-sm"
+                  }`}
                   // @ts-ignore
                   src={details?.sections[currentPage]?.imageUrl}
                   // @ts-ignore
@@ -444,9 +479,9 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                       handleDragEnd(event, info, currentPage)
                     }
                   >
-                    <motion.div className="mt-4 w-64 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
+                    <motion.div className="mt-4 w-72 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
                       <motion.img
-                        className="w-full h-full rounded-2xl opacity-50"
+                        className="w-full h-full rounded-2xl"
                         src={
                           details?.sections[currentPage].nestedSections[
                             currentNestedPage
@@ -463,7 +498,6 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                         viewport={{ once: false }}
                         transition={{ duration: 0.75 }}
                         draggable={false}
-                        whileTap={{ scale: 1.15 }}
                       />
                       <motion.div
                         className="text-center"
@@ -568,7 +602,11 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
+          <img
+            className="h-20 md:h-24 lg:h-28"
+            src="/logo-white.svg"
+            alt="Logo"
+          />
         </motion.span>
       </motion.div>
       <LoginRegisterModal />

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Card from "../../components/Story/Card";
 
-const CategoryPage = ({ params }: { params: { category: string } }) => {
+const CategoryPage = ({ params }) => {
   const router = useRouter();
 
   const [articles, setArticles] = useState([]);
@@ -13,7 +13,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
 
   const overlayControls = useAnimation();
 
-  const { category } = params;
+  const { category } = React.use(params);
 
   const handleClick = (card) => {
     console.log("card ", card);
@@ -38,7 +38,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
       await overlayControls.start({ y: "0%" });
       try {
         const response = await fetch(
-          `https://api.gyaanhub.io/api/articles/category/${category}`
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/category/${category}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Articles");

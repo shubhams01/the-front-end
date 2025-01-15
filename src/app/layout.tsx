@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ModalProvider } from "./context/ModalContext";
 import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar";
 import Head from "next/head";
+import { Inter, Open_Sans, Roboto_Mono, Montserrat } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const openSans = Open_Sans({subsets: ["latin"]});
+
+const robotoMono = Montserrat({subsets: ["latin"]});
+
+const inter = Inter({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Gyaanhub",
@@ -34,7 +38,7 @@ export default function RootLayout({
             `}
         </script>
       </Head>
-      <body className={inter.className}>
+      <body className={robotoMono.className}>
         <ModalProvider>
           <Navbar />
           {children}
