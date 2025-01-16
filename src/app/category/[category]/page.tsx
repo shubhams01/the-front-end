@@ -38,7 +38,12 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
       await overlayControls.start({ y: "0%" });
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/category/${category}`
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/category/${category}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Failed to fetch Articles");

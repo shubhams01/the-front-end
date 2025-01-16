@@ -4,13 +4,10 @@ import { ModalProvider } from "./context/ModalContext";
 import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar";
 import Head from "next/head";
-import { Inter, Open_Sans, Roboto_Mono, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
+import AdSense from "./components/Ads/Adsense";
 
-const openSans = Open_Sans({subsets: ["latin"]});
-
-const robotoMono = Montserrat({subsets: ["latin"]});
-
-const inter = Inter({ subsets: ["latin"]});
+const montserrat = Montserrat({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Gyaanhub",
@@ -23,6 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
+        {/* Google Adsense */}
+        <AdSense pId="ca-pub-8954233353863168"/>
+        
         {/* Google tag (gtag.js)  */}
         <script
           async
@@ -38,7 +38,7 @@ export default function RootLayout({
             `}
         </script>
       </Head>
-      <body className={robotoMono.className}>
+      <body className={montserrat.className}>
         <ModalProvider>
           <Navbar />
           {children}
