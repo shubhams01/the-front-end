@@ -26,11 +26,11 @@ const ConfirmationPage = () => {
           mode: "no-cors", // Set the request's mode to 'no-cors'
         }
       );
-      if (response.ok) {
-        setConfirmationCompleted(true);
+      if (response) {
         setTimeout(() => {
-          toggleLoginModal();
-        }, 1000);
+          setConfirmationCompleted(true);
+        }, 2000);
+        setShowLoginModal(true);
       }
     };
 

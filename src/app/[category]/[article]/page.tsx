@@ -425,7 +425,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                 />
                 <motion.div
                   className={`absolute bottom-8 w-full p-4 ${
-                    currentPage == 0 ? "text-left" : "text-center"
+                    currentPage == 0 ? "text-left pr-10" : "text-center px-10 -mb-4"
                   }`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -439,7 +439,7 @@ const DetailsPage = ({ params }: { params: { id: string } }) => {
                     className={`${
                       currentPage == 0
                         ? "text-4xl"
-                        : "text-md md:text-lg lg:text-2xl"
+                        : "text-lg md:text-lg lg:text-2xl"
                     }  font-black text-white`}
                   >
                     {

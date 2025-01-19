@@ -55,7 +55,7 @@ const LoginRegisterModal: React.FC<LoginRegisterModalProps> = ({
             ref={popupRef}
             id="popup"
           >
-            {showCloseButton && (
+            {/* {showCloseButton && (
               <button
                 className="text-gray-900 absolute top-10 right-10"
                 onClick={() => {
@@ -65,7 +65,7 @@ const LoginRegisterModal: React.FC<LoginRegisterModalProps> = ({
               >
                 <XMarkIcon className="h-5 w-5" />
               </button>
-            )}
+            )} */}
             {isLoginOpen && <Login />}
             {isRegisterOpen && <Register />}
           </motion.div>

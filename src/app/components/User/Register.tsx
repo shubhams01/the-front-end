@@ -60,9 +60,10 @@ const Register: React.FC = () => {
 
   const animationControls = useAnimation();
   const [success, setSuccess] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState(false);
 
   const onSubmit = async (data: RegisterFormInputs) => {
+    setSuccess(true);
     try {
       const response = await registerUser(
         data.username,
@@ -71,24 +72,13 @@ const Register: React.FC = () => {
       );
       console.log("register response ", response);
       if (response) {
-        // Step 1: Close the registration modal
-        setIsRegisterOpen(false);
-      
-        // Step 2: Show success popup after registration modal is fully closed
+        setIsRegisterSuccess(true);
         setTimeout(() => {
-          setPopupVisible(true); // Show success popup
-      
-          // Step 3: Keep the success popup visible for 2 seconds
-          setTimeout(() => {
-            setPopupVisible(false); // Hide success popup
-      
-            // Step 4: Open the login modal
-            setIsLoginOpen(true);
-          }, 2000); // Duration for showing the success popup
-        }, 300); // Delay to ensure the modal transition is complete
-      }
-      
-      //setSuccess(false);
+          setIsRegisterOpen(false);
+          setIsLoginOpen(true);
+        }, 5000); 
+        setSuccess(false);
+      }   
     } catch (error) {
       console.error("Registration error:", error);
     }
@@ -100,6 +90,28 @@ const Register: React.FC = () => {
       transition: { duration: 0.4 },
     });
   };
+
+  if (isRegisterSuccess) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="flex items-center justify-center bg-gray-100 rounded-3xl"
+      >
+        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+          <h2 className="text-2xl font-semibold text-center mb-4 text-black">
+            Registration Successful
+          </h2>
+          <p className="text-center text-gray-700">
+            A confirmation email has been sent to your registered email address.
+            Please check your inbox.
+          </p>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div

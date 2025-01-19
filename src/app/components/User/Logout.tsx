@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/store/authStore";
-import ConfirmationModal from "@/app/components/Modal/LogoutModal";
+import LogoutModal from "@/app/components/Modal/LogoutModal";
 
 const Logout: React.FC = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -68,7 +68,7 @@ const Logout: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <ConfirmationModal
+      <LogoutModal
         isOpen={isConfirmationOpen}
         onConfirm={confirmLogout}
         onCancel={cancelLogout}

@@ -34,7 +34,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({
             <div className="flex justify-center space-x-4">
               <button
                 onClick={onConfirm}
-                className="bg-red-500 text-white px-4 py-2 rounded"
+                className="bg-slate-900 text-white px-4 py-2 rounded"
               >
                 Yes
               </button>

@@ -50,9 +50,6 @@ const Login: React.FC = () => {
           toggleLoginModal();
         }
       });
-      setTimeout(() => {
-        // toggleLoginModal();
-      }, 2000);
       setSuccess(false);
     } catch (error) {
       console.error("Login error:", error);
