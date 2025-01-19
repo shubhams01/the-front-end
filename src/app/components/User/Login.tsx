@@ -44,9 +44,14 @@ const Login: React.FC = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     setSuccess(true); // Set submitting state when form is submitted
     try {
-      await login(data.email, data.password);
+      await login(data.email, data.password).then((response) => {
+        console.log('login response', response);  
+        if(response) {
+          toggleLoginModal();
+        }
+      });
       setTimeout(() => {
-        toggleLoginModal();
+        // toggleLoginModal();
       }, 2000);
       setSuccess(false);
     } catch (error) {
@@ -74,14 +79,14 @@ const Login: React.FC = () => {
     });
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const response = await fetch("https://api.gyaanhub.io/api/connect/google");
-      console.log('google signin', response);
-    } catch (error) {
-      console.error("Google login error:", error);
-    }
-  }
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     const response = await fetch("https://api.gyaanhub.io/api/connect/google");
+  //     console.log('google signin', response);
+  //   } catch (error) {
+  //     console.error("Google login error:", error);
+  //   }
+  // }
 
   return (
     <motion.div
@@ -177,7 +182,7 @@ const Login: React.FC = () => {
               )}
             </span>
           </motion.button>
-          <motion.button
+          {/* <motion.button
             type="button"
             className="w-full flex items-center justify-center p-4 text-black py-2 mt-2 rounded-lg shadow-lg transition duration-300 bg-white hover:bg-gray-100"
             onClick={handleGoogleSignIn}
@@ -188,7 +193,7 @@ const Login: React.FC = () => {
               alt="google"
             />
             <span>Sign in with Google</span>
-          </motion.button>
+          </motion.button> */}
           <p className="mt-4 text-center text-gray-600">
             <span>Don&apos;t have an account?</span>
             <button

@@ -1,6 +1,4 @@
 // src/utils/auth.ts
-const API_URL = 'https://api.gyaanhub.io/api';
-
 interface AuthResponse {
   jwt: string;
   user: {
@@ -12,7 +10,7 @@ interface AuthResponse {
 
 export const registerUser = async (username: string, email: string, password: string): Promise<AuthResponse> => {
   console.log('register ', username, email, password)
-  const response = await fetch(`${API_URL}/auth/local/register`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth/local/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,15 +22,21 @@ export const registerUser = async (username: string, email: string, password: st
     }),
   });
 
+  console.log("Raw response: ", response);
+
   if (!response.ok) {
-    throw new Error('Failed to register user');
+    const data = await response.json();
+    console.log("auth register response", data);
+    throw new Error(`${data.error.message}`);
   }
 
-  return response.json();
+  const jsonResponse = await response.json();
+  console.log("Parsed response: ", jsonResponse);
+  return jsonResponse;
 };
 
 export const loginUser = async (identifier: string, password: string): Promise<AuthResponse> => {
-  const response = await fetch(`${API_URL}/auth/local`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth/local`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +48,9 @@ export const loginUser = async (identifier: string, password: string): Promise<A
   });
 
   if (!response.ok) {
-    throw new Error('Failed to login user');
+    const data = await response.json();
+    console.log('auth login response', data);
+    throw new Error(`${data.error.message}`);
   }
 
   return response.json();

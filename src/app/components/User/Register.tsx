@@ -42,7 +42,12 @@ type RegisterFormInputs = z.infer<typeof schema>;
 
 const Register: React.FC = () => {
   const { register: registerUser, error } = useAuthStore();
-  const { toggleRegisterModal, toggleLoginModal } = useModal();
+  const {
+    toggleRegisterModal,
+    toggleLoginModal,
+    setIsLoginOpen,
+    setIsRegisterOpen,
+  } = useModal();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
@@ -55,15 +60,35 @@ const Register: React.FC = () => {
 
   const animationControls = useAnimation();
   const [success, setSuccess] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
+
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
-      console.log('data ', data)
-      await registerUser(data.username, data.email, data.password);
-      setSuccess(true);
-      setTimeout(() => {
-        toggleRegisterModal();
-      }, 2000);
-      setSuccess(false);
+      const response = await registerUser(
+        data.username,
+        data.email,
+        data.password
+      );
+      console.log("register response ", response);
+      if (response) {
+        // Step 1: Close the registration modal
+        setIsRegisterOpen(false);
+      
+        // Step 2: Show success popup after registration modal is fully closed
+        setTimeout(() => {
+          setPopupVisible(true); // Show success popup
+      
+          // Step 3: Keep the success popup visible for 2 seconds
+          setTimeout(() => {
+            setPopupVisible(false); // Hide success popup
+      
+            // Step 4: Open the login modal
+            setIsLoginOpen(true);
+          }, 2000); // Duration for showing the success popup
+        }, 300); // Delay to ensure the modal transition is complete
+      }
+      
+      //setSuccess(false);
     } catch (error) {
       console.error("Registration error:", error);
     }
@@ -239,6 +264,7 @@ const Register: React.FC = () => {
           </p>
         </form>
       </div>
+      
     </motion.div>
   );
 };

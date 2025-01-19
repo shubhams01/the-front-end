@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HeroEffect } from "./HeroEffect";
 
-const words = ["science", "arts", "history", "business", "culture"];
+const words = ["science", "arts", "history", "culture"];
 
 const Hero = ({ scrollToExplore }) => {
   const [dynamicWord, setDynamicWord] = useState(words[0]);
@@ -13,7 +13,7 @@ const Hero = ({ scrollToExplore }) => {
       setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
     };
 
-    const timeout = setTimeout(changeWord, 3500);
+    const timeout = setTimeout(changeWord, 3000);
 
     return () => clearTimeout(timeout);
   }, [wordIndex]);
@@ -65,7 +65,7 @@ const Hero = ({ scrollToExplore }) => {
         <div className="absolute bottom-10 w-full flex justify-center z-10">
           <button
             onClick={scrollToExplore}
-            className="text-white text-lg font-light animate-bounce"
+            className="text-white text-lg font-light animate-pulse"
           >
             ↓ Scroll to Explore ↓
           </button>

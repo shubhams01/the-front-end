@@ -13,8 +13,8 @@ interface AuthState {
   isLoggedIn: boolean;
   user: User | null;
   error: string | null;
-  register: (username: string, email: string, password: string) => Promise<void>;
-  login: (identifier: string, password: string) => Promise<void>;
+  register: (username: string, email: string, password: string) => Promise<any>;
+  login: (identifier: string, password: string) => Promise<any>;
   logout: () => void;
   loadToken: () => void;
   setUser: (user: User) => void;
@@ -28,8 +28,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   register: async (username, email, password) => {
     try {
       const data = await registerUser(username, email, password);
-      setAuthToken(data.jwt);
-      set({ isLoggedIn: true, user: data.user, error: null });
+      //setAuthToken(data.jwt);
+      //set({ isLoggedIn: true, user: data.user, error: null });
+      console.log('authStore register data', data);
+      return data;
     } catch (error) {
       // @ts-ignore
       set({ error: error.message });
@@ -40,6 +42,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       const data = await loginUser(identifier, password);
       setAuthToken(data.jwt);
       set({ isLoggedIn: true, user: data.user, error: null });
+      return data;
     } catch (error) {
       // @ts-ignore
       set({ error: error.message });

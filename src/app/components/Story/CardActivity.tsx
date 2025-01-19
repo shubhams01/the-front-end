@@ -22,11 +22,9 @@ import {
 } from "react-share";
 import { formatNumber } from "@/app/utils/numberFormatter";
 
-const API_URL = "https://api.gyaanhub.io/api";
-
 const api = {
   like: async (userId, articleId, token) => {
-    return fetch(`${API_URL}/likes`, {
+    return fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/likes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +34,7 @@ const api = {
     }).then((res) => res.json());
   },
   bookmark: async (userId, articleId, token) => {
-    return fetch(`${API_URL}/saves`, {
+    return fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/saves`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +44,7 @@ const api = {
     }).then((res) => res.json());
   },
   fetchArticleActivities: async (articleId, token) => {
-    return fetch(`${API_URL}/articles/${articleId}/activities`, {
+    return fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/${articleId}/activities`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

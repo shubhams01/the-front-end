@@ -37,7 +37,7 @@ const Page = () => {
         const token = getAuthToken(); // Assuming getAuthToken retrieves the token from local storage
         if (!token) return; // Make sure token exists before making the request
 
-        const response = await fetch(`${API_URL}/user/me`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/user/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

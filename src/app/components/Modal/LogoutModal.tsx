@@ -1,13 +1,13 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-interface ConfirmationModalProps {
+interface LogoutModalProps {
   isOpen: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+const LogoutModal: React.FC<LogoutModalProps> = ({
   isOpen,
   onConfirm,
   onCancel,
@@ -52,4 +52,4 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   );
 };
 
-export default ConfirmationModal;
+export default LogoutModal;
