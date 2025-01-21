@@ -8,7 +8,7 @@ export async function generateMetadata({
   const { category, article } = params;
   const segments = article.split("-");
   const articleId = segments[segments.length - 1];
-  console.log("articleId", params, articleId);
+  // console.log("articleId", params, articleId);
 
   const apiUrl = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/article/${articleId}`;
 
@@ -23,7 +23,7 @@ export async function generateMetadata({
     }
 
     const article = await response.json();
-    console.log("metadata response", article);
+    // console.log("metadata response", article);
 
     // Extract key fields for metadata
     const title = article?.Title || "Gyaanhub";

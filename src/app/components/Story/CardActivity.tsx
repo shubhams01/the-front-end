@@ -245,7 +245,7 @@ const CardActivity = ({
             >
               <BookmarkIcon
                 className={`h-6 w-6 lg:h-8 lg:w-8 ${
-                  isBookmarked ? "text-black" : "text-white"
+                  isBookmarked ? "text-lime-500" : "text-white"
                 }`}
               />
             </button>

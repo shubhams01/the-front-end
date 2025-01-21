@@ -387,10 +387,10 @@ const Details = () => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center scroll-smooth h-screen overflow-y-scroll overflow-x-hidden"
+      className="flex flex-col items-center justify-center scroll-smooth h-dvh overflow-y-hidden overflow-x-hidden"
       onWheel={handleScroll}
     >
-      <motion.div className="h-screen w-screen snap-start">
+      <motion.div className="h-dvh w-screen snap-start overflow-y-hidden overflow-x-hidden">
         {details?.sections && (
           <AnimatePresence mode="wait">
             <motion.div
