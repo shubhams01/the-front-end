@@ -54,12 +54,12 @@ const Login: React.FC = () => {
   });
 
   const onSubmit = async (data: LoginFormInputs | ForgotPasswordInputs) => {
-    setIsProcessing(true); 
+    setIsProcessing(true);
     if (isForgotPassword) {
       setResetLinkSent(false);
       try {
         const response = await fetch(
-          "http://localhost:1337/api/auth/forgot-password",
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth/forgot-password`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -89,14 +89,14 @@ const Login: React.FC = () => {
           const response = await login(data.email, data.password);
           if (response.ok) {
             console.log("Login response:", response);
-            setLoginSuccess(true); 
+            setLoginSuccess(true);
             toggleLoginModal();
           }
         }
       } catch (error) {
         console.error("Login error:", error);
       } finally {
-        setIsProcessing(false); 
+        setIsProcessing(false);
       }
     }
   };
@@ -163,7 +163,9 @@ const Login: React.FC = () => {
                   placeholder="Password"
                   type={showPassword ? "text" : "password"}
                   className={`mt-1 block w-full pl-10 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black ${
-                  'password' in errors &&  errors?.password ? "border-red-500" : "border-gray-300"
+                    "password" in errors && errors?.password
+                      ? "border-red-500"
+                      : "border-gray-300"
                   }`}
                   {...register("password")}
                 />
@@ -175,7 +177,7 @@ const Login: React.FC = () => {
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
               </div>
-              {'password' in errors && errors.password && (
+              {"password" in errors && errors.password && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.password.message}
                 </p>

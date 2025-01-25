@@ -5,7 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faEyeSlash,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import LoadingScreen from "../Loading/LoadingScreen";
 import { motion } from "framer-motion";
 
@@ -53,7 +57,7 @@ const ResetPassword: React.FC = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1337/api/auth/reset-password",
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth/reset-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -70,7 +74,7 @@ const ResetPassword: React.FC = () => {
       }
 
       setSuccess(true);
-      setTimeout(() => router.push("/profile/user"), 5000); 
+      setTimeout(() => router.push("/profile/user"), 5000);
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");
     } finally {
@@ -159,7 +163,10 @@ const ResetPassword: React.FC = () => {
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, loop: Infinity, ease: "linear" }}
               >
-                <FontAwesomeIcon icon={faCheckCircle} className="text-green-500" />
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className="text-green-500"
+                />
               </motion.div>
             ) : success ? (
               <motion.div
@@ -167,7 +174,10 @@ const ResetPassword: React.FC = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <FontAwesomeIcon icon={faCheckCircle} className="text-green-500" />
+                <FontAwesomeIcon
+                  icon={faCheckCircle}
+                  className="text-green-500"
+                />
               </motion.div>
             ) : (
               "Change Password"
