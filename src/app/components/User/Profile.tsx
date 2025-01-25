@@ -163,7 +163,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col items-center h-dvh w-screen bg-gradient-to-br from-black via-slate-400 to-black relative overflow-hidden">
+    <div className="flex flex-col items-center h-full w-screen bg-gradient-to-br from-black via-slate-400 to-black relative overflow-hidden">
       <span className="text-3xl font-bold text-white text-center mt-6">
         Profile
       </span>

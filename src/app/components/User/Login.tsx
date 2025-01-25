@@ -87,7 +87,7 @@ const Login: React.FC = () => {
       try {
         if ("password" in data) {
           const response = await login(data.email, data.password);
-          if (response.ok) {
+          if (response) {
             console.log("Login response:", response);
             setLoginSuccess(true);
             toggleLoginModal();

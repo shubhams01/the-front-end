@@ -8,6 +8,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import LoginRegisterModal from "../Modal/LoginRegisterModal";
 import { useAuthStore } from "@/app/store/authStore";
 import { getAuthToken } from "@/app/hooks/useLocalStorageAuth";
+import LoadingScreen from "../Loading/LoadingScreen";
 
 const Explore = () => {
   const router = useRouter();
@@ -99,7 +100,8 @@ const Explore = () => {
           title: article.Title,
           slug: article.Slug,
           category: article.category.Title,
-          imageUrl: 'https://api.gyaanhub.io' + article?.Image[0]?.formats?.large?.url
+          imageUrl:
+            "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,
@@ -139,15 +141,15 @@ const Explore = () => {
     <>
       <div className="flex flex-col justify-center items-center w-full h-dvh">
         <span className="text-3xl font-bold mt-8 z-30">Explore</span>
-        <div className="relative flex-1 flex items-center justify-center">
-          <motion.img
+        <div className="relative flex-1 flex items-center justify-center mt-6">
+          {/* <motion.img
             src="/left-swipe.png"
             alt="left-swipe"
             className="absolute cursor-pointer left-0 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
             onClick={() => handleLeftArrowClick()}
             // @ts-ignore
             animate={rotateLeftAnimation}
-          />
+          /> */}
           <AnimatePresence>
             {articles.length > 0 && (
               <>
@@ -160,9 +162,9 @@ const Explore = () => {
                   }
                   className="absolute cursor-pointer"
                   style={{ zIndex: 0 }}
-                  initial={{ x: -50, opacity: 0 }}
+                  initial={{ x: -50, y: -25, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 50, opacity: 0 }}
+                  exit={{ x: 50, y: 25, opacity: 0 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 >
                   <Card
@@ -208,9 +210,9 @@ const Explore = () => {
                       handleSwipe("right");
                     }
                   }}
-                  initial={{ x: 0, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  initial={{ x: 0, y: -15, opacity: 0 }}
+                  animate={{ x: 0, y: -15, opacity: 1 }}
+                  exit={{ x: 0, y: 15, opacity: 0 }}
                   dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
                   transition={{ duration: 0.5 }}
                   // @ts-ignore
@@ -233,9 +235,9 @@ const Explore = () => {
                   key={articles[(currentIndex + 1) % articles.length].id}
                   className="absolute cursor-pointer"
                   style={{ zIndex: 0 }}
-                  initial={{ x: 50, opacity: 0 }}
+                  initial={{ x: 50, y: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -50, opacity: 0 }}
+                  exit={{ x: -50, y: 20, opacity: 0 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
                 >
                   <Card
@@ -260,14 +262,15 @@ const Explore = () => {
               </>
             )}
           </AnimatePresence>
-          <motion.img
+
+          {/* <motion.img
             src="/right-swipe.png"
             alt="right-swipe"
             className="absolute cursor-pointer -right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
             onClick={() => handleRighttArrowClick()}
             // @ts-ignore
             animate={rotateRightAnimation}
-          />
+          /> */}
           <LoginRegisterModal />
         </div>
       </div>
@@ -279,31 +282,23 @@ const Explore = () => {
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.50, ease: "easeInOut" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             <motion.span
-          animate={{ rotate: 360 }}
-          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-        >
-          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
-        </motion.span>
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+            >
+              <img
+                className="h-20 md:h-24 lg:h-28"
+                src="/logo-white.svg"
+                alt="Logo"
+              />
+            </motion.span>
           </motion.div>
         )}
-      </AnimatePresence> 
+      </AnimatePresence>
 
-      <motion.div
-        className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"
-        initial={{ y: "0%" }}
-        animate={overlayControls}
-        transition={{ duration: 1 }}
-      >
-        <motion.span
-          animate={{ rotate: 360 }}
-          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-        >
-          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
-        </motion.span>
-      </motion.div>
+      <LoadingScreen />
     </>
   );
 };
