@@ -39,7 +39,7 @@ interface Article {
   imageUrl: string;
 }
 
-const Details = () => {
+const CardDetails = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -615,4 +615,4 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default CardDetails;

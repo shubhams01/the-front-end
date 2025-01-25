@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import Details from "@/app/components/Story/Details";
+import Details from "@/app/components/Story/CardDetails";
 
 export async function generateMetadata({
   params,

@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingScreen from "../components/Loading/LoadingScreen";
 
 const Page = () => {
   return (
@@ -18,6 +19,7 @@ const Page = () => {
           Join us as we navigate the vast sea of knowledge, always mindful that the true essence of learning lies in recognizing the limits of our knowledge and embracing the endless possibilities that lie beyond. Welcome to Gyaanhub where the quest for understanding is a collective endeavor, and every question is a step toward discovery.
         </p>
       </div>
+      <LoadingScreen />
     </div>
   );
 };

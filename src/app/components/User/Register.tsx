@@ -128,7 +128,7 @@ const Register: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="relative">
             <label htmlFor="email" className="block text-gray-700">
-              Email
+              {/* Email */}
             </label>
             <div className="flex items-center mt-1">
               <FontAwesomeIcon
@@ -138,6 +138,7 @@ const Register: React.FC = () => {
               <input
                 id="email"
                 type="email"
+                placeholder="Email"
                 className={`mt-1 block w-full pl-10 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black ${
                   errors.email ? "border-red-500" : "border-gray-300"
                 }`}
@@ -152,7 +153,7 @@ const Register: React.FC = () => {
           </div>
           <div className="relative">
             <label htmlFor="username" className="block text-gray-700">
-              Username
+              {/* Username */}
             </label>
             <div className="flex items-center mt-1">
               <FontAwesomeIcon
@@ -162,6 +163,7 @@ const Register: React.FC = () => {
               <input
                 id="username"
                 type="text"
+                placeholder="Username"
                 className={`mt-1 block w-full pl-10 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black ${
                   errors.username ? "border-red-500" : "border-gray-300"
                 }`}
@@ -176,7 +178,7 @@ const Register: React.FC = () => {
           </div>
           <div className="relative">
             <label htmlFor="password" className="block text-gray-700">
-              Password
+              {/* Password */}
             </label>
             <div className="flex items-center mt-1">
               <FontAwesomeIcon
@@ -185,6 +187,7 @@ const Register: React.FC = () => {
               />
               <input
                 id="password"
+                placeholder="Password"
                 type={showPassword ? "text" : "password"}
                 className={`mt-1 block w-full pl-10 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black ${
                   errors.password ? "border-red-500" : "border-gray-300"
@@ -207,7 +210,7 @@ const Register: React.FC = () => {
           </div>
           <div className="relative">
             <label htmlFor="confirmPassword" className="block text-gray-700">
-              Confirm Password
+              {/* Confirm Password */}
             </label>
             <div className="flex items-center mt-1">
               <FontAwesomeIcon
@@ -216,6 +219,7 @@ const Register: React.FC = () => {
               />
               <input
                 id="confirmPassword"
+                placeholder="Confirm Password"
                 type={showConfirmPassword ? "text" : "password"}
                 className={`mt-1 block w-full pl-10 px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black ${
                   errors.confirmPassword ? "border-red-500" : "border-gray-300"

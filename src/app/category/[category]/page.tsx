@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Card from "../../components/Story/Card";
+import LoadingScreen from "@/app/components/Loading/LoadingScreen";
 
 const CategoryPage = ({ params }: { params: { category: string } }) => {
   const { category } = params;
@@ -136,19 +137,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
         )}
       </AnimatePresence>
 
-      <motion.div
-        className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"
-        initial={{ y: "0%" }}
-        animate={overlayControls}
-        transition={{ duration: 1 }}
-      >
-        <motion.span
-          animate={{ rotate: 360 }}
-          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-        >
-          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
-        </motion.span>
-      </motion.div>
+      <LoadingScreen />
     </>
   );
 };
