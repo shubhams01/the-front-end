@@ -5,8 +5,8 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";
 import { useModal } from "@/app/context/ModalContext";
+import { set } from "react-hook-form";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const getLinkClass = (path: string) => {
     return pathname === path
-      ? "text-4xl lg:text-6xl font-bold uppercase text-yellow-500"
+      ? "text-4xl lg:text-6xl font-bold uppercase text-violet-600"
       : "text-4xl lg:text-6xl font-bold uppercase";
   };
 
@@ -107,6 +107,23 @@ const Navbar = () => {
                   </li>
                 </ul>
               </nav>
+            </div>
+
+            <div className="absolute bottom-4 right-4 text-white text-sm space-y-2 flex flex-col items-end">
+              <Link
+                href="/privacy-policy"
+                className="hover:underline"
+                onClick={() => setIsOpen(false)}
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms-of-service"
+                className="hover:underline"
+                onClick={() => setIsOpen(false)}
+              >
+                Terms of Service
+              </Link>
             </div>
           </motion.div>
         )}

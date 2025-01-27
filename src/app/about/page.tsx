@@ -1,22 +1,22 @@
 import React from "react";
 import LoadingScreen from "../components/Loading/LoadingScreen";
 
-const Page = () => {
+const page = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-black">
-      <h1 className="text-3xl font-bold m-2">About Us</h1>
-      <div className="max-w-4xl w-full bg-black p-6 rounded-lg shadow-lg overflow-y-auto">
-        <p className="text-gray-50">
-          Welcome to Gyaanhub a space dedicated to the noble pursuit of knowledge and the collective journey of learning. Inspired by Socrates’ profound insight, “All I know is that I know nothing,” our platform embraces the spirit of intellectual humility and curiosity. Here at Gyaanhub, we acknowledge that the quest for knowledge is an ever-evolving adventure. No matter how much we learn, there is always more to discover, understand, and explore. This awareness drives our mission to create a dynamic environment where knowledge is freely shared, questions are encouraged, and every perspective is valued.
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-b from-gray-900 to-black p-6">
+      <h1 className="text-3xl font-extrabold text-white text-center mb-8 tracking-wide leading-tight">
+        About Us
+      </h1>
+      <div className="max-w-3xl w-full bg-gray-800 p-8 rounded-2xl shadow-2xl transform transition-all duration-500 hover:scale-105">
+        <p className="text-lg text-gray-300 leading-relaxed">
+          Welcome to <span className="font-semibold text-indigo-500">Gyaanhub</span>, where knowledge is a journey, not a destination. 
+          Inspired by Socrates’ profound insight, “All I know is that I know nothing,” we embrace intellectual humility and curiosity.
         </p>
-        <p className="mt-4 text-gray-50">
-          Our platform is designed to be a space where individuals from all walks of life can come together to share their insights, ask questions, and engage in thoughtful discussions. We believe that through the exchange of ideas, we not only expand our own understanding but also contribute to the greater collective wisdom.
+        <p className="mt-6 text-lg text-gray-300 leading-relaxed">
+          Here, learning is a shared experience. We believe that through open dialogue and exchange, we grow together. Our mission is to create a community where the pursuit of understanding is both celebrated and supported, where every perspective enriches our collective wisdom.
         </p>
-        <p className="mt-4 text-gray-50">
-          While we may not have all the answers, our aim is to provide a space where the pursuit of understanding is both supported and celebrated. By fostering an environment of openness and curiosity, we hope to inspire a community where the search for knowledge becomes a shared journey, driven by the realization that in the grand tapestry of learning, none of us holds all the threads.
-        </p>
-        <p className="mt-4 text-gray-50">
-          Join us as we navigate the vast sea of knowledge, always mindful that the true essence of learning lies in recognizing the limits of our knowledge and embracing the endless possibilities that lie beyond. Welcome to Gyaanhub where the quest for understanding is a collective endeavor, and every question is a step toward discovery.
+        <p className="mt-6 text-lg text-gray-300 leading-relaxed">
+          The search for knowledge is infinite, and at <span className="font-semibold text-indigo-500">Gyaanhub</span>, we honor this endless quest. Join us as we embark on a journey where every question is a step toward discovery, and every answer opens new horizons.
         </p>
       </div>
       <LoadingScreen />
@@ -24,4 +24,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;
