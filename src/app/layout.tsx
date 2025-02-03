@@ -5,7 +5,9 @@ import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar";
 import Head from "next/head";
 import { Montserrat } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import AdSense from "./components/Ads/Adsense";
+
 
 const montserrat = Montserrat({subsets: ["latin"]});
 
@@ -94,6 +96,7 @@ export default function RootLayout({
           {children}
         </ModalProvider>
       </body>
+      <GoogleAnalytics gaId="G-05GW6CSNL3" />
     </html>
   );
 }
