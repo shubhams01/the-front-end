@@ -40,7 +40,8 @@ const Categories = () => {
     console.log("category clicked: ", category);
     sessionStorage.setItem("jumpToCategories", "true");
     setTimeout(() => {
-      router.push(`/category/${category.slug}`);
+      //router.push(`/category/${category.slug}`);
+      router.push(`/category?category=${category.slug}`);
     }, 500);
   };
 

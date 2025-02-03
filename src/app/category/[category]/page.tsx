@@ -1,12 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect, use } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Card from "../../components/Story/Card";
 import LoadingScreen from "@/app/components/Loading/LoadingScreen";
 
-const CategoryPage = ({ params }: { params: { category: string } }) => {
-  const { category } = params;
+
+
+const CategoryPage = () => {
+  const searchParams = useSearchParams()
+ 
+  const category = searchParams.get('category');
 
   const router = useRouter();
 
@@ -73,7 +77,7 @@ const CategoryPage = ({ params }: { params: { category: string } }) => {
     <>
       <div className="explore-container flex flex-col items-center justify-center h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
         <span className="text-2xl font-bold mt-6 -mb-8">
-          {category.toLocaleUpperCase()}
+          {category && category?.toLocaleUpperCase()}
         </span>
         <div className="card-wrapper flex items-center justify-center w-full h-dvh">
           <AnimatePresence mode="wait">
