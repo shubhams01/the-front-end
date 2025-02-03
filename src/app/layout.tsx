@@ -71,12 +71,12 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         {/* Google Adsense */}
-        <AdSense pId="ca-pub-8954233353863168"/>
+        {/* <AdSense pId="ca-pub-8954233353863168"/> */}
         
         {/* Google tag (gtag.js)  */}
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-T9B3Y1JYSE"
+          src="https://www.googletagmanager.com/gtag/js?id=G-05GW6CSNL3"
         ></script>
         <script id="google-analytics">
           {`
@@ -84,7 +84,7 @@ export default function RootLayout({
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-T9B3Y1JYSE');
+          gtag('config', 'G-05GW6CSNL3');
             `}
         </script>
       </Head>
