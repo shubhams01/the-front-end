@@ -104,13 +104,13 @@ const CategoryPageContent = () => {
 
   return (
     <div className="explore-container flex flex-col items-center justify-center h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-      <div className="text-3xl font-bold mt-8 z-30">
+      <div className="text-2xl font-bold mt-8 z-30">
         {category?.toLocaleUpperCase()}
       </div>
 
       <div className="relative w-96 flex-1 flex items-center justify-center">
         <motion.div
-          className="absolute cursor-pointer left-1 lg:-left-0 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
+          className="absolute cursor-pointer left-2 lg:left-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
           onClick={handleLeftArrowClick}
           // @ts-ignore
           animate={leftArrowAnimation}
@@ -155,7 +155,7 @@ const CategoryPageContent = () => {
         </AnimatePresence>
 
         <motion.div
-          className="absolute cursor-pointer right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
+          className="absolute cursor-pointer right-1 lg:-right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
           onClick={handleRightArrowClick}
           // @ts-ignore
           animate={rightArrowAnimation}

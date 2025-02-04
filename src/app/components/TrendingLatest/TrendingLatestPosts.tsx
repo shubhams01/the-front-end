@@ -127,7 +127,7 @@ const TrendingLatestPosts = () => {
       </div>
       <div className="relative w-96 flex-1 flex items-center justify-center">
         <motion.div
-          className="absolute cursor-pointer left-0 lg:-left-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
+          className="absolute cursor-pointer left-2 lg:left-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
           onClick={() => handleLeftArrowClick()}
           // @ts-ignore
           animate={leftArrowAnimation}
@@ -170,7 +170,7 @@ const TrendingLatestPosts = () => {
           )}
         </AnimatePresence>
         <motion.div
-          className="absolute cursor-pointer right-0 lg:-right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
+          className="absolute cursor-pointer right-1 lg:-right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
           onClick={handleRightArrowClick}
           // @ts-ignore
           animate={rightArrowAnimation}
