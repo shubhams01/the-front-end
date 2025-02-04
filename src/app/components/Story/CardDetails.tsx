@@ -518,7 +518,7 @@ const CardDetails = () => {
                     </motion.div>
                   </motion.div>
                 )}
-                {details && (
+                {details && currentPage > 0 && (
                   <motion.div
                     className="absolute flex flex-col items-center top-1/2 right-3 transform -translate-y-1/2"
                     key={currentPage}
@@ -533,12 +533,12 @@ const CardDetails = () => {
                     >
                       <ChevronUpIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </motion.div>
-                    {details.sections.map(
+                    {details.sections.slice(1).map(
                       (_: any, index: React.Key | null | undefined) => (
                         <motion.div
                           key={index}
                           className={`bg-white rounded-full my-2 ${
-                            index === currentPage ? "w-3 h-3" : "w-1 h-1"
+                            index === currentPage-1 ? "w-3 h-3" : "w-1 h-1"
                           }`}
                           transition={{ duration: 0.5, ease: "smooth" }}
                         ></motion.div>

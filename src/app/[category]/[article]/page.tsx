@@ -5,7 +5,7 @@ import Details from "@/app/components/Story/CardDetails";
 export async function generateMetadata({
   params,
 }): Promise<Metadata> {
-  const { category, article } = params;
+  const { category, article } = await params;
   const segments = article.split("-");
   const articleId = segments[segments.length - 1];
   // console.log("articleId", params, articleId);

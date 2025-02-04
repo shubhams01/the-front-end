@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation, animate } from "framer-motion";
 import Card from "../Story/Card";
 import { useModal } from "@/app/context/ModalContext";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import LoginRegisterModal from "../Modal/LoginRegisterModal";
 import { useAuthStore } from "@/app/store/authStore";
 import { getAuthToken } from "@/app/hooks/useLocalStorageAuth";
 import LoadingScreen from "../Loading/LoadingScreen";
+import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline";
 
 const Explore = () => {
   const router = useRouter();
@@ -117,22 +118,22 @@ const Explore = () => {
     fetchData();
   }, [isLoggedIn]);
 
-  const rotateLeftAnimation = {
-    rotate: [0, -20, 0],
+  const rightArrowAnimation = {
+    x: [-5, 0, -5],
     transition: {
       duration: 1,
       repeat: Infinity,
-      repeatType: "loop",
+      repeatType: "reverse",
       ease: "easeInOut",
     },
   };
 
-  const rotateRightAnimation = {
-    rotate: [0, 20, 0],
+  const leftArrowAnimation = {
+    x: [0, -5, 0],
     transition: {
       duration: 1,
       repeat: Infinity,
-      repeatType: "loop",
+      repeatType: "reverse",
       ease: "easeInOut",
     },
   };
@@ -142,14 +143,14 @@ const Explore = () => {
       <div className="flex flex-col justify-center items-center w-full h-dvh">
         <span className="text-3xl font-bold mt-8 z-30">Explore</span>
         <div className="relative flex-1 flex items-center justify-center mt-6">
-          {/* <motion.img
-            src="/left-swipe.png"
-            alt="left-swipe"
-            className="absolute cursor-pointer left-0 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
+          <motion.div
+            className="absolute cursor-pointer -left-1 lg:-left-3 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
             onClick={() => handleLeftArrowClick()}
             // @ts-ignore
-            animate={rotateLeftAnimation}
-          /> */}
+            animate={leftArrowAnimation}
+          >
+            <ChevronDoubleLeftIcon />
+          </motion.div>
           <AnimatePresence>
             {articles.length > 0 && (
               <>
@@ -262,15 +263,14 @@ const Explore = () => {
               </>
             )}
           </AnimatePresence>
-
-          {/* <motion.img
-            src="/right-swipe.png"
-            alt="right-swipe"
-            className="absolute cursor-pointer -right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
+          <motion.div
+            className="absolute cursor-pointer -right-2 lg:-right-4 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
             onClick={() => handleRighttArrowClick()}
             // @ts-ignore
-            animate={rotateRightAnimation}
-          /> */}
+            animate={rightArrowAnimation}
+          >
+            <ChevronDoubleRightIcon />
+          </motion.div>
           <LoginRegisterModal />
         </div>
       </div>
