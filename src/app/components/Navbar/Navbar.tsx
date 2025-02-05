@@ -80,8 +80,8 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      href="/profile/user"
-                      className={getLinkClass("/profile/user")}
+                      href="/profile"
+                      className={getLinkClass("/profile")}
                       onClick={() => setIsOpen(false)}
                     >
                       Profile

@@ -41,7 +41,7 @@ const Categories = () => {
     sessionStorage.setItem("jumpToCategories", "true");
     setTimeout(() => {
       //router.push(`/category/${category.slug}`);
-      router.push(`/category?category=${category.slug}`);
+      router.push(`/category?type=${category.slug}`);
     }, 500);
   };
 

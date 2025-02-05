@@ -19,7 +19,7 @@ const CategoryPage = () => {
 
 const CategoryPageContent = () => {
   const searchParams = useSearchParams();
-  const category = searchParams.get("category");
+  const category = searchParams.get("type");
   const router = useRouter();
   const [articles, setArticles] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
@@ -31,7 +31,7 @@ const CategoryPageContent = () => {
     setSelectedCard(card);
     setTimeout(() => {
       router.push(
-        `/${card.category}/${card.slug}-${card.id}?explore=${card.category}`
+        `/${card.categorySlug}/${card.slug}-${card.id}?section=${card.categorySlug}`
       );
     }, 500);
   };
@@ -56,7 +56,8 @@ const CategoryPageContent = () => {
           id: article.id,
           title: article.title,
           slug: article?.slug,
-          category: article.category,
+          categoryTitle: article.categoryTitle,
+          categorySlug: article.categorySlug,
           imageUrl: "https://api.gyaanhub.io" + article.imageUrl,
         }));
         console.log("Articles by Category", category, extractedArticles, data);
@@ -103,12 +104,12 @@ const CategoryPageContent = () => {
   };
 
   return (
-    <div className="explore-container flex flex-col items-center justify-center h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
-      <div className="text-2xl font-bold mt-8 z-30">
+    <div className="explore-container flex flex-col items-center justify-center h-dvh snap-y snap-mandatory overflow-y-scroll overflow-x-hidden">
+      <div className="text-2xl font-bold mt-6 z-30">
         {category?.toLocaleUpperCase()}
       </div>
 
-      <div className="relative w-96 flex-1 flex items-center justify-center">
+      <div className="relative w-96 flex-1 flex items-center justify-center -mt-8">
         <motion.div
           className="absolute cursor-pointer left-2 lg:left-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
           onClick={handleLeftArrowClick}
@@ -148,7 +149,7 @@ const CategoryPageContent = () => {
                 // @ts-ignore
                 title={articles[currentIndex].title}
                 // @ts-ignore
-                category={articles[currentIndex].category}
+                category={articles[currentIndex].categoryTitle}
               />
             </motion.div>
           )}

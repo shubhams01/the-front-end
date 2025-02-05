@@ -2,10 +2,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
-import { useAuthStore } from "../../store/authStore";
-import Profile from "../../components/User/Profile";
-import LoginRegisterModal from "../../components/Modal/LoginRegisterModal";
-import { useModal } from "../../context/ModalContext";
+import { useAuthStore } from "../store/authStore";
+import Profile from "../components/User/Profile";
+import LoginRegisterModal from "../components/Modal/LoginRegisterModal";
+import { useModal } from "../context/ModalContext";
 import { getAuthToken } from "@/app/hooks/useLocalStorageAuth"; // Assuming this function gets the auth token from local storage
 
 const Page = () => {
@@ -75,14 +75,14 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen relative">
+    <div className="flex flex-col items-center justify-center h-dvh relative">
       {isLoggedIn ? (
         <Profile user={userData} />
       ) : (
         <LoginRegisterModal showCloseButton={false} />
       )}
       <motion.div
-        className="fixed top-0 left-0 w-full h-screen bg-slate-900 z-50 flex items-center justify-center"
+        className="fixed top-0 left-0 w-full h-dvh bg-slate-900 z-50 flex items-center justify-center"
         initial={{ y: "0%" }}
         animate={overlayControls}
         transition={{ duration: 1 }}

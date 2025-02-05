@@ -64,7 +64,7 @@ const CardDetails = () => {
   const _id = segments[segments.length - 1];
   const [articleId, setArticleId] = useState(_id);
 
-  const nextSection = searchParams.get("explore");
+  const nextSection = searchParams.get("section");
   const { isLoginOpen, setIsLoginOpen, toggleLoginModal } = useModal();
 
   useEffect(() => {

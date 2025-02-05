@@ -74,7 +74,7 @@ const ResetPassword: React.FC = () => {
       }
 
       setSuccess(true);
-      setTimeout(() => router.push("/profile/user"), 5000);
+      setTimeout(() => router.push("/profile"), 5000);
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");
     } finally {

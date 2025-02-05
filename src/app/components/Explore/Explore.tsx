@@ -31,7 +31,7 @@ const Explore = () => {
     setSelectedCard(card);
     setTimeout(() => {
       // @ts-ignore
-      router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
+      router.push(`/${card.categorySlug}/${card.slug}-${card.id}?section=explore`);
     }, 1000);
   };
 
@@ -100,7 +100,8 @@ const Explore = () => {
           id: article.id,
           title: article.Title,
           slug: article.Slug,
-          category: article.category.Title,
+          categoryTitle: article.category.Title,
+          categorySlug: article.category.Slug,
           imageUrl:
             "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
         }));
@@ -191,7 +192,7 @@ const Explore = () => {
                       articles[
                         (currentIndex - 1 + articles.length) % articles.length
                         // @ts-ignore
-                      ].category
+                      ].categoryTitle
                     }
                   />
                 </motion.div>
@@ -227,7 +228,7 @@ const Explore = () => {
                     // @ts-ignore
                     title={articles[currentIndex].title}
                     // @ts-ignore
-                    category={articles[currentIndex].category}
+                    category={articles[currentIndex].categoryTitle}
                   />
                 </motion.div>
 
@@ -256,7 +257,7 @@ const Explore = () => {
                     }
                     category={
                       // @ts-ignore
-                      articles[(currentIndex + 1) % articles.length].category
+                      articles[(currentIndex + 1) % articles.length].categoryTitle
                     }
                   />
                 </motion.div>

@@ -28,10 +28,12 @@ const TrendingLatestPosts = () => {
         id: article.id,
         title: article.Title,
         slug: article.Slug,
-        category: article.category.Title,
+        categoryTitle: article.category.Title,
+        categorySlug: article.category.Slug,
         imageUrl:
           "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
       }));
+      console.log('treningArticles', trendingArticles);
       setPosts(trendingArticles);
     } catch (error) {
       console.error("Error fetching trending posts:", error);
@@ -53,10 +55,12 @@ const TrendingLatestPosts = () => {
         id: article.id,
         title: article.Title,
         slug: article.Slug,
-        category: article.category.Title,
+        categoryTitle: article.category.Title,
+        categorySlug: article.category.Slug,
         imageUrl:
           "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
       }));
+      console.log('latestArticles', latestArticles);
       setPosts(latestArticles);
     } catch (error) {
       console.error("Error fetching latest posts:", error);
@@ -81,7 +85,7 @@ const TrendingLatestPosts = () => {
     setSelectedCard(card);
     setTimeout(() => {
       router.push(
-        `/${card.category}/${card.slug}-${card.id}?explore=${
+        `/${card.categorySlug}/${card.slug}-${card.id}?section=${
           isTrending ? "trending" : "latest"
         }`
       );
@@ -164,7 +168,7 @@ const TrendingLatestPosts = () => {
                 // @ts-ignore
                 title={posts[currentIndex].title}
                 // @ts-ignore
-                category={posts[currentIndex].category}
+                category={posts[currentIndex].categoryTitle}
               />
             </motion.div>
           )}

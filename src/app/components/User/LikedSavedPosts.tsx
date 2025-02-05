@@ -114,7 +114,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
     console.log("cardLikedorSaved ", card);
     setTimeout(() => {
       // @ts-ignore
-      router.push(`/${card.category}/${card.slug}-${card.id}?explore=explore`);
+      router.push(`/${card.category}/${card.slug}-${card.id}?section=explore`);
     }, 1000);
   };
 
