@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import Details from "@/app/components/Story/CardDetails";
+import CardDetails from "@/app/components/Story/CardDetails";
 
 export async function generateMetadata({
   params,
@@ -70,7 +70,7 @@ export async function generateMetadata({
 const DetailsPage = () => {
   return (
     <>
-      <Details />
+      <CardDetails />
     </>
   );
 };

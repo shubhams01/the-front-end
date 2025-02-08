@@ -19,11 +19,14 @@ import {
 import CardActivity from "@/app/components/Story/CardActivity";
 import LoginRegisterModal from "@/app/components/Modal/LoginRegisterModal";
 import { useModal } from "@/app/context/ModalContext";
+import { Blurhash } from "react-blurhash";
 
 interface Section {
+  blurhash: string;
   nestedSections: Array<{
     imageUrl: string;
     description: string;
+    blurhash: string;
   }>;
 }
 
@@ -43,7 +46,7 @@ const CardDetails = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-//   const { id } = params;
+  //   const { id } = params;
 
   const controls = useAnimation();
   const overlayControls = useAnimation();
@@ -66,6 +69,10 @@ const CardDetails = () => {
 
   const nextSection = searchParams.get("section");
   const { isLoginOpen, setIsLoginOpen, toggleLoginModal } = useModal();
+
+  const [sectionImageLoaded, setSectionImageLoaded] = useState(false);
+  const [nestedSectionImageLoaded, setNestedSectionImageLoaded] =
+    useState(false);
 
   useEffect(() => {
     console.log("cardDetails ", pathname, articleId, nextSection);
@@ -206,6 +213,7 @@ const CardDetails = () => {
       (section: {
         SectionImage: { formats: { large: { url: any } } };
         SectionDescription: any;
+        SectionImageBlurhash: any;
         NestedSections: any[];
       }) => {
         const sectionObject = {
@@ -213,16 +221,19 @@ const CardDetails = () => {
             "https://api.gyaanhub.io" +
             section?.SectionImage?.formats?.large?.url,
           description: section.SectionDescription,
+          blurhash: section?.SectionImageBlurhash,
           nestedSections: section.NestedSections
             ? section.NestedSections.map(
                 (nested: {
                   NestedSectionImage: { formats: { large: { url: any } } };
                   NestedSectionDescription: any;
+                  NestedSectionImageBlurhash: any;
                 }) => ({
                   imageUrl:
                     "https://api.gyaanhub.io" +
                     nested?.NestedSectionImage?.formats?.large?.url,
                   description: nested.NestedSectionDescription,
+                  blurhash: nested.NestedSectionImageBlurhash,
                 })
               )
             : [],
@@ -268,7 +279,7 @@ const CardDetails = () => {
     if (nextSection) {
       // @ts-ignore
 
-      const categorySlug = nextSection.category.Title;
+      const categorySlug = nextSection.category.Slug;
       // @ts-ignore
       const sectionSlug = nextSection.Slug;
       // @ts-ignore
@@ -325,6 +336,7 @@ const CardDetails = () => {
 
         const sections = data?.sections.map(
           (section: {
+            SectionImageBlurhash: any;
             SectionImage: { formats: { large: { url: any } } };
             SectionDescription: any;
             NestedSections: any[];
@@ -334,6 +346,7 @@ const CardDetails = () => {
                 "https://api.gyaanhub.io" +
                 section?.SectionImage?.formats?.large.url,
               description: section?.SectionDescription,
+              blurhash: section?.SectionImageBlurhash,
               nestedSections: section?.NestedSections
                 ? section.NestedSections.map(
                     (nested: {
@@ -383,7 +396,6 @@ const CardDetails = () => {
       window.removeEventListener("popstate", handlePopState);
     };
   }, [router]);
-  
 
   return (
     <motion.div
@@ -411,10 +423,24 @@ const CardDetails = () => {
               onDragEnd={(event: any, info: any) => handleDrag(event, info)}
             >
               <motion.div className="relative h-full w-full p-2">
+                {!sectionImageLoaded && (
+                  <Blurhash
+                    hash={
+                      details?.sections[currentPage]?.blurhash ||
+                      "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+                    }
+                    width={"100%"}
+                    height={"100%"}
+                    resolutionX={32}
+                    resolutionY={32}
+                    punch={1}
+                    className="absolute inset-0 w-full h-full"
+                  />
+                )}
                 <motion.img
-                  className={`w-full h-full rounded-2xl ${
-                    currentPage == 0 ? "blur-none" : "blur-sm"
-                  }`}
+                  className={`w-full h-full rounded-2xl transition-opacity duration-500 ${
+                    sectionImageLoaded ? "opacity-100" : "opacity-0"
+                  } ${currentPage == 0 ? "blur-none" : "blur-sm"}`}
                   // @ts-ignore
                   src={details?.sections[currentPage]?.imageUrl}
                   // @ts-ignore
@@ -423,10 +449,13 @@ const CardDetails = () => {
                   animate={{ opacity: 0.75 }}
                   transition={{ ease: "easeOut", duration: 2 }}
                   draggable={false}
+                  onLoad={() => setSectionImageLoaded(true)}
                 />
                 <motion.div
                   className={`absolute bottom-8 w-full p-4 ${
-                    currentPage == 0 ? "text-left pr-10" : "text-center px-10 -mb-4"
+                    currentPage == 0
+                      ? "text-left pr-10"
+                      : "text-center px-10 -mb-4"
                   }`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -481,8 +510,26 @@ const CardDetails = () => {
                     }
                   >
                     <motion.div className="mt-4 w-72 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
+                      {!nestedSectionImageLoaded && (
+                        <div className="w-full h-full rounded-4xl">
+                          <Blurhash
+                            hash={
+                              details?.sections[currentPage].nestedSections[
+                                currentNestedPage
+                              ]?.blurhash || "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+                            }
+                            width={"100%"}
+                            height={"100%"}
+                            resolutionX={32}
+                            resolutionY={32}
+                            punch={1}
+                          />
+                        </div>
+                      )}
                       <motion.img
-                        className="w-full h-full rounded-2xl"
+                        className={`w-full h-full rounded-2xl transition-opacity duration-500 ${
+                          nestedSectionImageLoaded ? "opacity-100" : "opacity-0"
+                        }`}
                         src={
                           details?.sections[currentPage].nestedSections[
                             currentNestedPage
@@ -499,6 +546,7 @@ const CardDetails = () => {
                         viewport={{ once: false }}
                         transition={{ duration: 0.75 }}
                         draggable={false}
+                        onLoad={() => setNestedSectionImageLoaded(true)}
                       />
                       <motion.div
                         className="text-center"
@@ -533,17 +581,17 @@ const CardDetails = () => {
                     >
                       <ChevronUpIcon className="w-4 h-4 lg:w-6 lg:h-6 text-white" />
                     </motion.div>
-                    {details.sections.slice(1).map(
-                      (_: any, index: React.Key | null | undefined) => (
+                    {details.sections
+                      .slice(1)
+                      .map((_: any, index: React.Key | null | undefined) => (
                         <motion.div
                           key={index}
                           className={`bg-white rounded-full my-2 ${
-                            index === currentPage-1 ? "w-3 h-3" : "w-1 h-1"
+                            index === currentPage - 1 ? "w-3 h-3" : "w-1 h-1"
                           }`}
                           transition={{ duration: 0.5, ease: "smooth" }}
                         ></motion.div>
-                      )
-                    )}
+                      ))}
                     <motion.div
                       className="absolute -bottom-1/3 -right-2.5 lg:-right-4 transform -translate-x-1/2 cursor-pointer z-10"
                       onClick={handleArrowDownClick}
