@@ -32,8 +32,9 @@ const TrendingLatestPosts = () => {
         categorySlug: article.category.Slug,
         imageUrl:
           "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
+        blurhash: article.blurhash,
       }));
-      console.log('treningArticles', trendingArticles);
+      console.log("treningArticles", trendingArticles);
       setPosts(trendingArticles);
     } catch (error) {
       console.error("Error fetching trending posts:", error);
@@ -59,8 +60,9 @@ const TrendingLatestPosts = () => {
         categorySlug: article.category.Slug,
         imageUrl:
           "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
+        blurhash: article.blurhash,
       }));
-      console.log('latestArticles', latestArticles);
+      console.log("latestArticles", latestArticles);
       setPosts(latestArticles);
     } catch (error) {
       console.error("Error fetching latest posts:", error);
@@ -169,6 +171,8 @@ const TrendingLatestPosts = () => {
                 title={posts[currentIndex].title}
                 // @ts-ignore
                 category={posts[currentIndex].categoryTitle}
+                // @ts-ignore
+                blurhash={posts[currentIndex].blurhash}
               />
             </motion.div>
           )}

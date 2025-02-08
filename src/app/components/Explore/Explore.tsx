@@ -83,12 +83,14 @@ const Explore = () => {
         // const response = await fetch(endpoint, { headers });
 
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
+          // `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
+          `https://api.gyaanhub.io/api/explore`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
             },
-          }
+          },
+          
         );
 
         if (!response.ok) {
@@ -104,6 +106,7 @@ const Explore = () => {
           categorySlug: article.category.Slug,
           imageUrl:
             "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
+          blurhash: article?.blurhash,
         }));
         console.log(
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,
@@ -194,6 +197,12 @@ const Explore = () => {
                         // @ts-ignore
                       ].categoryTitle
                     }
+                    blurhash={
+                      articles[
+                        (currentIndex - 1 + articles.length) % articles.length
+                        // @ts-ignore
+                      ].blurhash
+                    }
                   />
                 </motion.div>
 
@@ -229,6 +238,8 @@ const Explore = () => {
                     title={articles[currentIndex].title}
                     // @ts-ignore
                     category={articles[currentIndex].categoryTitle}
+                    // @ts-ignore
+                    blurhash={articles[currentIndex].blurhash}
                   />
                 </motion.div>
 
@@ -258,6 +269,10 @@ const Explore = () => {
                     category={
                       // @ts-ignore
                       articles[(currentIndex + 1) % articles.length].categoryTitle
+                    }
+                    blurhash={
+                      // @ts-ignore
+                      articles[(currentIndex + 1) % articles.length].blurhash
                     }
                   />
                 </motion.div>

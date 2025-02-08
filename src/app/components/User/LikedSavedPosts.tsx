@@ -162,6 +162,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
                 imageUrl={posts[currentIndex]?.imageUrl}
                 title={posts[currentIndex]?.title}
                 category={posts[currentIndex]?.category}
+                blurhash={"LEHV6nWB2yk8pyo0adR*.7kCMdnj"}
               />
             </motion.div>
           )}

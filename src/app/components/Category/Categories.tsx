@@ -25,6 +25,7 @@ const Categories = () => {
           name: category.Title,
           slug: category.Slug,
           imageUrl: 'https://api.gyaanhub.io' + category.Image,
+          blurhash: category.blurhash,
         }));
         console.log("categories ", extractedCategories);
         setCategories(extractedCategories);
@@ -62,6 +63,8 @@ const Categories = () => {
               imageUrl={category.imageUrl}
               // @ts-ignore
               slug={category.slug}
+              // @ts-ignore
+              blurhash={category.blurhash}
             />
           </div>
         ))}

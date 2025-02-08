@@ -59,6 +59,7 @@ const CategoryPageContent = () => {
           categoryTitle: article.categoryTitle,
           categorySlug: article.categorySlug,
           imageUrl: "https://api.gyaanhub.io" + article.imageUrl,
+          blurhash: article.blurhash,
         }));
         console.log("Articles by Category", category, extractedArticles, data);
         setArticles(extractedArticles);
@@ -150,6 +151,8 @@ const CategoryPageContent = () => {
                 title={articles[currentIndex].title}
                 // @ts-ignore
                 category={articles[currentIndex].categoryTitle}
+                // @ts-ignore
+                blurhash={articles[currentIndex].blurhash}
               />
             </motion.div>
           )}
