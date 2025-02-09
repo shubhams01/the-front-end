@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   motion,
   useAnimation,
@@ -15,6 +15,7 @@ import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  LightBulbIcon,
 } from "@heroicons/react/24/solid";
 import CardActivity from "@/app/components/Story/CardActivity";
 import LoginRegisterModal from "@/app/components/Modal/LoginRegisterModal";
@@ -73,6 +74,19 @@ const CardDetails = () => {
   const [sectionImageLoaded, setSectionImageLoaded] = useState(false);
   const [nestedSectionImageLoaded, setNestedSectionImageLoaded] =
     useState(false);
+
+    const bulbClickRef = useRef(null);
+
+  const handleDoubleClick = (bulbClickFn) => {
+    bulbClickRef.current = bulbClickFn;
+  };
+
+  const [showLike, setShowLike] = useState(false);
+
+  const handleLike = () => {
+    setShowLike(true);
+    setTimeout(() => setShowLike(false), 1000);
+  };
 
   useEffect(() => {
     console.log("cardDetails ", pathname, articleId, nextSection);
@@ -194,7 +208,9 @@ const CardDetails = () => {
           throw new Error("Failed to fetch next section");
         }
         const responseData = await response.json();
-        const filteredData = responseData.filter((section: { id: any }) => section.id !== Number(articleId))
+        const filteredData = responseData.filter(
+          (section: { id: any }) => section.id !== Number(articleId)
+        );
         setNextSections(filteredData);
         console.log("Next Sections:", filteredData, articleId);
       } catch (error) {
@@ -399,12 +415,31 @@ const CardDetails = () => {
       window.removeEventListener("popstate", handlePopState);
     };
   }, [router]);
+  
 
   return (
     <motion.div
       className="flex flex-col items-center justify-center scroll-smooth h-dvh overflow-y-hidden overflow-x-hidden"
       onWheel={handleScroll}
+      //onDoubleClick={handleLike}
+      onDoubleClick={() => {
+        if (bulbClickRef.current) {
+          handleLike();
+          bulbClickRef.current();
+        }
+      }}
     >
+      {showLike && (
+          <motion.div
+            className="absolute flex items-center justify-center z-10"
+            initial={{ scale: 0, opacity: 0, rotate: 0, color: "#ffffff" }}
+            animate={{ scale: 1.5, opacity: 0.5, rotate: -35, color: "#FFD700" }}
+            exit={{ scale: 1.5, opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <LightBulbIcon className="w-24 h-24" />
+          </motion.div>
+        )}
       <motion.div className="h-dvh w-screen snap-start overflow-y-hidden overflow-x-hidden">
         {details?.sections && (
           <AnimatePresence mode="wait">
@@ -429,8 +464,7 @@ const CardDetails = () => {
                 {!sectionImageLoaded && (
                   <Blurhash
                     hash={
-                      details?.sections[currentPage]?.blurhash 
-                      ||
+                      details?.sections[currentPage]?.blurhash ||
                       "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
                     }
                     width={"100%"}
@@ -514,7 +548,7 @@ const CardDetails = () => {
                     }
                   >
                     <motion.div className="mt-4 w-72 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative">
-                      {!nestedSectionImageLoaded && (
+                      {/* {!nestedSectionImageLoaded && (
                         <div className="w-full h-full rounded-4xl">
                           <Blurhash
                             hash={
@@ -529,11 +563,9 @@ const CardDetails = () => {
                             punch={1}
                           />
                         </div>
-                      )}
+                      )} */}
                       <motion.img
-                        className={`w-full h-full rounded-2xl transition-opacity duration-500 ${
-                          nestedSectionImageLoaded ? "opacity-100" : "opacity-0"
-                        }`}
+                        className="w-full h-full rounded-2xl"
                         src={
                           details?.sections[currentPage].nestedSections[
                             currentNestedPage
@@ -546,11 +578,10 @@ const CardDetails = () => {
                         }
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        // whileInView={{ scaleX: [0.9, 1] }}
-                        viewport={{ once: false }}
+                        whileInView={{ scaleX: [0.9, 1] }}
+                        viewport={{ once: true }}
                         transition={{ duration: 0.75 }}
                         draggable={false}
-                        onLoad={() => setNestedSectionImageLoaded(true)}
                       />
                       <motion.div
                         className="text-center"
@@ -640,6 +671,8 @@ const CardDetails = () => {
                 initialComments={details?.comments}
                 setIsCommentsOpenDragScroll={setIsCommentsOpen}
                 closeShareOpenOnDragOrScroll={closeShare}
+                // @ts-ignore
+                handleDoubleClick={handleDoubleClick}
               />
             </motion.div>
           </AnimatePresence>

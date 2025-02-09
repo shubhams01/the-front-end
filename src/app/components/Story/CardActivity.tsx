@@ -60,6 +60,7 @@ const CardActivity = ({
   initialComments,
   setIsCommentsOpenDragScroll,
   closeShareOpenOnDragOrScroll,
+  handleDoubleClick
 }) => {
   const [likes, setLikes] = useState(initialLikes);
   const [commentsCount, setCommentsCount] = useState(initialComments);
@@ -81,6 +82,13 @@ const CardActivity = ({
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    console.log('alreadyLiked', isLiked);
+    if (handleDoubleClick) {
+      handleDoubleClick(handleBulbClick);
+    }
+  }, [handleDoubleClick]);
 
   useEffect(() => {
     if (isLoggedIn) {
