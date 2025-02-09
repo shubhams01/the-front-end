@@ -194,8 +194,9 @@ const CardDetails = () => {
           throw new Error("Failed to fetch next section");
         }
         const responseData = await response.json();
-        setNextSections(responseData);
-        console.log("Next Sections:", nextSections);
+        const filteredData = responseData.filter((section: { id: any }) => section.id !== Number(articleId))
+        setNextSections(filteredData);
+        console.log("Next Sections:", filteredData, articleId);
       } catch (error) {
         console.error("Error fetching next section:", error);
       }
@@ -352,11 +353,13 @@ const CardDetails = () => {
                     (nested: {
                       NestedSectionImage: { formats: { large: { url: any } } };
                       NestedSectionDescription: any;
+                      NestedSectionImageBlurhash: any;
                     }) => ({
                       imageUrl:
                         "https://api.gyaanhub.io" +
                         nested?.NestedSectionImage?.formats?.large?.url,
                       description: nested?.NestedSectionDescription,
+                      blurhash: nested.NestedSectionImageBlurhash,
                     })
                   )
                 : [],
@@ -426,7 +429,8 @@ const CardDetails = () => {
                 {!sectionImageLoaded && (
                   <Blurhash
                     hash={
-                      details?.sections[currentPage]?.blurhash ||
+                      details?.sections[currentPage]?.blurhash 
+                      ||
                       "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
                     }
                     width={"100%"}
@@ -434,7 +438,7 @@ const CardDetails = () => {
                     resolutionX={32}
                     resolutionY={32}
                     punch={1}
-                    className="absolute inset-0 w-full h-full"
+                    className="absolute inset-0 w-full h-full rounded-2xl"
                   />
                 )}
                 <motion.img
@@ -542,7 +546,7 @@ const CardDetails = () => {
                         }
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        whileInView={{ scaleX: [0.9, 1] }}
+                        // whileInView={{ scaleX: [0.9, 1] }}
                         viewport={{ once: false }}
                         transition={{ duration: 0.75 }}
                         draggable={false}
@@ -550,9 +554,9 @@ const CardDetails = () => {
                       />
                       <motion.div
                         className="text-center"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
+                        // initial={{ opacity: 0, y: 10 }}
+                        // animate={{ opacity: 1, y: 0 }}
+                        // exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.75, ease: "easeInOut" }}
                       >
                         <motion.span className="text-md font-bold text-white">

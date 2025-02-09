@@ -40,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic routes
   const dynamicRoutes = posts.map((post) => ({
-    url: `https://gyaanhub.io/${post.category.Title}/${post.Slug}-${post.id}`,
+    url: `https://gyaanhub.io/${post.category.Slug}/${post.Slug}-${post.id}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.7,

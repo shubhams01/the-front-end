@@ -36,6 +36,18 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
   const controls = useAnimation();
   const token = getAuthToken();
 
+  const [gradient, setGradient] = useState("");
+
+  const VIBGYOR_COLORS = ["#9400D3", "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", "#FF0000"];
+
+  const getRandomGradient = () => {
+    const shuffledColors = VIBGYOR_COLORS.sort(() => Math.random() - 0.5); 
+    return `bg-gradient-to-bl from-[${shuffledColors[0]}] via-[${shuffledColors[1]}] to-[${shuffledColors[2]}]`;
+  };
+
+  useEffect(() => {
+    setGradient(getRandomGradient());
+  }, []);
 
   useEffect(() => {
     const fetchInterests = async () => {
@@ -143,14 +155,17 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
   const handleSaveInterests = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/user/interests`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ interests: selectedInterests }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/user/interests`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ interests: selectedInterests }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to save interests");
@@ -162,8 +177,9 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     }
   };
 
+
   return (
-    <div className="flex flex-col items-center h-full w-screen bg-gradient-to-br from-black via-slate-400 to-black relative overflow-hidden">
+    <div className="flex flex-col items-center h-dvh w-screen bg-gradient-to-br from-black via-slate-400 to-black relative overflow-hidden">
       <span className="text-3xl font-bold text-white text-center mt-6">
         Profile
       </span>
@@ -178,7 +194,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
             transition={{ duration: 0.5 }}
             className="relative w-80 h-80"
           >
-            <motion.img
+            {/* <motion.img
               // @ts-ignore
               src={currentImage}
               alt={user?.name}
@@ -186,7 +202,28 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               style={{ rotateY: isFlipped ? 180 : 0 }}
               onClick={handleFlip}
               draggable={false}
-            />
+            /> */}
+            <motion.div
+              className="w-full h-full rounded-2xl flex items-center justify-center 
+             cursor-pointer text-white text-6xl font-extrabold shadow-2xl 
+             bg-gradient-to-br from-purple-400 via-orange-400 to-red-400 
+             relative"
+              style={{
+                rotateY: isFlipped ? 180 : 0,
+              }}
+              onClick={handleFlip}
+            >
+              <span className="relative">
+                <span className="absolute top-1 left-1 text-gray-900 opacity-30 blur-md">
+                  {user?.username?.charAt(0).toUpperCase()}
+                </span>
+
+                <span className="relative drop-shadow-[4px_4px_0px_rgba(0,0,0,0.3)]">
+                  {user?.username?.charAt(0).toUpperCase()}
+                </span>
+              </span>
+            </motion.div>
+
             {!isFlipped && (
               <motion.div
                 className="absolute top-2 right-2 text-white text-sm rounded-full p-1 cursor-pointer"
@@ -200,7 +237,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
                   className="absolute inset-0 opacity-0 cursor-pointer"
                   onChange={handleImageChange}
                 />
-                <FontAwesomeIcon icon={faPencilAlt} />
+                {/* <FontAwesomeIcon icon={faPencilAlt} /> */}
               </motion.div>
             )}
           </motion.div>
@@ -222,9 +259,6 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           >
             {user && (
               <div className="w-full flex flex-col items-center">
-                <p className="text-4xl font-bold text-white text-center">
-                  {user?.name}
-                </p>
                 <p className="text-xl font-bold text-white text-center">
                   @{user?.username}
                 </p>
