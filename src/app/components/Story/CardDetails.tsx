@@ -75,7 +75,7 @@ const CardDetails = () => {
   const [nestedSectionImageLoaded, setNestedSectionImageLoaded] =
     useState(false);
 
-    const bulbClickRef = useRef(null);
+  const bulbClickRef = useRef<(() => void) | null>(null);
 
   const handleDoubleClick = (bulbClickFn) => {
     bulbClickRef.current = bulbClickFn;
@@ -415,7 +415,6 @@ const CardDetails = () => {
       window.removeEventListener("popstate", handlePopState);
     };
   }, [router]);
-  
 
   return (
     <motion.div
@@ -430,16 +429,16 @@ const CardDetails = () => {
       }}
     >
       {showLike && (
-          <motion.div
-            className="absolute flex items-center justify-center z-10"
-            initial={{ scale: 0, opacity: 0, rotate: 0, color: "#ffffff" }}
-            animate={{ scale: 1.5, opacity: 0.5, rotate: -35, color: "#FFD700" }}
-            exit={{ scale: 1.5, opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            <LightBulbIcon className="w-24 h-24" />
-          </motion.div>
-        )}
+        <motion.div
+          className="absolute flex items-center justify-center z-10"
+          initial={{ scale: 0, opacity: 0, rotate: 0, color: "#ffffff" }}
+          animate={{ scale: 1.5, opacity: 0.5, rotate: -35, color: "#FFD700" }}
+          exit={{ scale: 1.5, opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <LightBulbIcon className="w-24 h-24" />
+        </motion.div>
+      )}
       <motion.div className="h-dvh w-screen snap-start overflow-y-hidden overflow-x-hidden">
         {details?.sections && (
           <AnimatePresence mode="wait">
