@@ -84,10 +84,10 @@ const TermsOfService = () => {
         <p className="text-gray-400">
           If you have any questions, email us at: 
           <a
-            href="mailto:admin@gyaanhub.com"
+            href="mailto:admin@gyaanhub.io"
             className="text-blue-400 hover:underline"
           >
-            admin@gyaanhub.com
+            admin@gyaanhub.io
           </a>
         </p>
       </section>

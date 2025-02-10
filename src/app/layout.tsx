@@ -4,6 +4,7 @@ import { ModalProvider } from "./context/ModalContext";
 import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar";
 import Head from "next/head";
+import { Viewport } from "next"
 import { Montserrat } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import AdSense from "./components/Ads/Adsense";
@@ -67,6 +68,11 @@ export const metadata: Metadata = {
     },
   },
 };
+
+export const viewport: Viewport = {
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export default function RootLayout({
   children,
