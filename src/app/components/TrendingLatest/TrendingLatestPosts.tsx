@@ -96,13 +96,13 @@ const TrendingLatestPosts = () => {
 
   const handleLeftArrowClick = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex < posts.length - 1 ? prevIndex + 1 : 0
+      prevIndex > 0 ? prevIndex - 1 : posts.length - 1
     );
   };
 
   const handleRightArrowClick = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : posts.length - 1
+      prevIndex < posts.length - 1 ? prevIndex + 1 : 0
     );
   };
 

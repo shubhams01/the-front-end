@@ -21,6 +21,7 @@ import CardActivity from "@/app/components/Story/CardActivity";
 import LoginRegisterModal from "@/app/components/Modal/LoginRegisterModal";
 import { useModal } from "@/app/context/ModalContext";
 import { Blurhash } from "react-blurhash";
+import { useAuthStore } from "@/app/store/authStore";
 
 interface Section {
   blurhash: string;
@@ -70,6 +71,7 @@ const CardDetails = () => {
 
   const nextSection = searchParams.get("section");
   const { isLoginOpen, setIsLoginOpen, toggleLoginModal } = useModal();
+  const { isLoggedIn } = useAuthStore();
 
   const [sectionImageLoaded, setSectionImageLoaded] = useState(false);
   const [nestedSectionImageLoaded, setNestedSectionImageLoaded] =
@@ -420,7 +422,6 @@ const CardDetails = () => {
     <motion.div
       className="flex flex-col items-center justify-center scroll-smooth h-dvh overflow-y-hidden overflow-x-hidden"
       onWheel={handleScroll}
-      //onDoubleClick={handleLike}
       onDoubleClick={() => {
         if (bulbClickRef.current) {
           handleLike();
@@ -428,7 +429,7 @@ const CardDetails = () => {
         }
       }}
     >
-      {showLike && (
+      {isLoggedIn && showLike && (
         <motion.div
           className="absolute flex items-center justify-center z-10"
           initial={{ scale: 0, opacity: 0, rotate: 0, color: "#ffffff" }}

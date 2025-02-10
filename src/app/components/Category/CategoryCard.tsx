@@ -15,11 +15,6 @@ const CategoryCard = ({ category, imageUrl, blurhash }) => {
     }, 800);
   };
 
-  useEffect(() => {
-    console.log('blurhash', blurhash)
-  }, [])
-  
-
   return (
     <motion.div
       className="rounded-xl relative overflow-hidden group w-72 h-96"

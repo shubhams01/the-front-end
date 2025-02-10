@@ -5,13 +5,13 @@ import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar";
 import Head from "next/head";
 import { Montserrat } from "next/font/google";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from "@next/third-parties/google";
 import AdSense from "./components/Ads/Adsense";
 
-
-const montserrat = Montserrat({subsets: ["latin"]});
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: "Gyaanhub",
   description:
     "Gyaanhub is your ultimate platform to explore, share, and grow knowledge. Join a community of learners and thinkers who believe in the power of curiosity.",
@@ -38,11 +38,13 @@ export const metadata: Metadata = {
     title: "Gyaanhub",
     description:
       "Join Gyaanhub to discover, share, and grow knowledge with a global community of thinkers and learners.",
-    images: ["https://api.gyaanhub.io/uploads/Logo_black_800_px_f8523a9d1f.png"],
+    images: [
+      "https://api.gyaanhub.io/uploads/Logo_black_800_px_f8523a9d1f.png",
+    ],
   },
   icons: {
-    icon: "/favicon.ico", 
-    apple: "/apple-touch-icon.png", 
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,
@@ -74,7 +76,7 @@ export default function RootLayout({
       <Head>
         {/* Google Adsense */}
         {/* <AdSense pId="ca-pub-8954233353863168"/> */}
-        
+
         {/* Google tag (gtag.js)  */}
         <script
           async

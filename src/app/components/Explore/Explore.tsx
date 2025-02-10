@@ -4,16 +4,31 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useAnimation, animate } from "framer-motion";
 import Card from "../Story/Card";
 import { useModal } from "@/app/context/ModalContext";
-import { ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronDoubleRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/solid";
 import LoginRegisterModal from "../Modal/LoginRegisterModal";
 import { useAuthStore } from "@/app/store/authStore";
 import { getAuthToken } from "@/app/hooks/useLocalStorageAuth";
 import LoadingScreen from "../Loading/LoadingScreen";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline";
 
+interface Article {
+  id: number;
+  title: string;
+  slug: string;
+  categoryTitle: string;
+  categorySlug: string;
+  imageUrl: string;
+  blurhash: string;
+}
+
 const Explore = () => {
   const router = useRouter();
-  const [articles, setArticles] = useState([]);
+  
+  const [articles, setArticles] = useState<Article[]>([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -25,13 +40,15 @@ const Explore = () => {
 
   const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
-  const handleClick = (card: never) => {
+  const handleClick = (card: any) => {
     console.log("card ", card);
     sessionStorage.setItem("jumpToExplore", "true");
     setSelectedCard(card);
     setTimeout(() => {
       // @ts-ignore
-      router.push(`/${card.categorySlug}/${card.slug}-${card.id}?section=explore`);
+      router.push(
+        `/${card.categorySlug}/${card.slug}-${card.id}?section=explore`
+      );
     }, 1000);
   };
 
@@ -54,18 +71,18 @@ const Explore = () => {
   };
 
   const handleLeftArrowClick = () => {
-    if (currentIndex < articles.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else {
-      setCurrentIndex(0); // Loop to first card
-    }
-  };
-
-  const handleRighttArrowClick = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     } else {
       setCurrentIndex(articles.length - 1); // Loop to last card
+    }
+  };
+
+  const handleRightArrowClick = () => {
+    if (currentIndex < articles.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentIndex(0); // Loop to first card
     }
   };
 
@@ -83,14 +100,12 @@ const Explore = () => {
         // const response = await fetch(endpoint, { headers });
 
         const response = await fetch(
-          // `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
-          `https://api.gyaanhub.io/api/explore`,
+          `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
             },
-          },
-          
+          }
         );
 
         if (!response.ok) {
@@ -268,7 +283,8 @@ const Explore = () => {
                     }
                     category={
                       // @ts-ignore
-                      articles[(currentIndex + 1) % articles.length].categoryTitle
+                      articles[(currentIndex + 1) % articles.length]
+                        .categoryTitle
                     }
                     blurhash={
                       // @ts-ignore
@@ -281,7 +297,7 @@ const Explore = () => {
           </AnimatePresence>
           <motion.div
             className="absolute cursor-pointer -right-2 lg:-right-4 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
-            onClick={() => handleRighttArrowClick()}
+            onClick={() => handleRightArrowClick()}
             // @ts-ignore
             animate={rightArrowAnimation}
           >

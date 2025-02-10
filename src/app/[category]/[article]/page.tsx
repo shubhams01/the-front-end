@@ -30,7 +30,7 @@ export async function generateMetadata({
     const description =
       article?.Title ||
       "Explore this article on Gyaanhub for insightful content.";
-    const imageUrl = article.sections[0]?.SectionImage?.formats?.large?.url
+    const imageUrl = article?.sections[0]?.SectionImage?.formats?.large?.url
       ? "https://api.gyaanhub.io" +
         article.sections[0]?.SectionImage?.formats?.large?.url
       : "/default-og-image.jpg"; // Fallback image if none exists

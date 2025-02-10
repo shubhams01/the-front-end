@@ -44,7 +44,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-black h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+    <div className="bg-black h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth overflow-x-hidden">
       <div className="snap-start h-screen">
         <Hero scrollToExplore={scrollToExplore} />
       </div>
