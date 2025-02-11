@@ -492,7 +492,7 @@ const CardDetails = () => {
                 <motion.div
                   className={`absolute w-full p-4 ${
                     currentPage == 0
-                      ? "bottom-8 text-left pr-10"
+                      ? "bottom-0 text-left pr-10"
                       : "top-10 lg:top-3 text-center px-14 mt-2"
                   }`}
                   initial={{ opacity: 0, y: 10 }}
@@ -516,80 +516,88 @@ const CardDetails = () => {
                     }
                   </span>
                 </motion.div>
-                {details?.sections[currentPage]?.nestedSections && (
-                  <motion.div className="absolute bottom-4 items-center w-full flex justify-center">
-                    {details?.sections[currentPage]?.nestedSections.map(
-                      (
-                        nestedSection: any,
-                        nestedIndex: React.Key | null | undefined
-                      ) => (
-                        <motion.div
-                          key={nestedIndex}
-                          className={`bg-white rounded-full mx-2 ${
-                            nestedIndex === currentNestedPage
-                              ? "w-3 h-3"
-                              : "w-1 h-1"
-                          }`}
-                          transition={{ duration: 0.5, ease: "smooth" }}
-                        ></motion.div>
-                      )
-                    )}
-                  </motion.div>
-                )}
+                {details?.sections[currentPage]?.nestedSections &&
+                  details?.sections[currentPage]?.nestedSections.length > 1 && (
+                    <motion.div className="absolute bottom-4 items-center w-full flex justify-center">
+                      {details?.sections[currentPage]?.nestedSections.map(
+                        (
+                          nestedSection: any,
+                          nestedIndex: React.Key | null | undefined
+                        ) => (
+                          <motion.div
+                            key={nestedIndex}
+                            className={`bg-white rounded-full mx-2 ${
+                              nestedIndex === currentNestedPage
+                                ? "w-3 h-3"
+                                : "w-1 h-1"
+                            }`}
+                            transition={{ duration: 0.5, ease: "smooth" }}
+                          ></motion.div>
+                        )
+                      )}
+                    </motion.div>
+                  )}
                 {details?.sections[currentPage]?.nestedSections.length > 0 && (
-                 <motion.div
-                 className="absolute inset-1 flex flex-col items-center justify-center mt-10 px-4"
-                 drag="x"
-                 dragDirectionLock
-                 dragConstraints={{ left: 0, right: 0 }}
-                 dragTransition={{ bounceStiffness: 200, bounceDamping: 15 }}
-                 onDragEnd={(event, info) => handleDragEnd(event, info, currentPage)}
-               >
-                 {/* Image Container */}
-                 <motion.div className="w-72 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative flex justify-center items-center shadow-lg">
-                   <motion.img
-                     className="w-full h-full object-cover rounded-2xl"
-                     src={
-                       details?.sections[currentPage].nestedSections[currentNestedPage]
-                         ?.imageUrl
-                     }
-                     alt={
-                       details?.sections[currentPage].nestedSections[currentNestedPage]
-                         ?.description
-                     }
-                     initial={{ opacity: 0 }}
-                     animate={{ opacity: 1 }}
-                     whileInView={{ scaleX: [0.9, 1] }}
-                     viewport={{ once: true }}
-                     transition={{ duration: 0.75 }}
-                     draggable={false}
-                   />
-                 </motion.div>
-               
-                 {/* Description Below Image */}
-                 <motion.div
-                   className="w-full max-w-lg text-center bg-black/30 rounded-lg shadow-md"
-                   initial={{ opacity: 0, y: 10 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   transition={{ duration: 0.75, ease: "easeInOut" }}
-                 >
-                   <motion.span className="text-md md:text-xl font-semibold text-white leading-relaxed">
-                     {details?.sections[currentPage].nestedSections[currentNestedPage]
-                       ?.description
-                       .split(" ")
-                       .map((word, index) =>
-                         word.length > 8 ? (
-                           <span key={index} className="text-violet-700 font-bold">
-                             {word}{" "}
-                           </span>
-                         ) : (
-                           <span key={index}>{word} </span>
-                         )
-                       )}
-                   </motion.span>
-                 </motion.div>
-               </motion.div>
-               
+                  <motion.div
+                    className="absolute inset-1 flex flex-col items-center justify-center mt-10 px-4"
+                    drag="x"
+                    dragDirectionLock
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragTransition={{ bounceStiffness: 200, bounceDamping: 15 }}
+                    onDragEnd={(event, info) =>
+                      handleDragEnd(event, info, currentPage)
+                    }
+                  >
+                    {/* Image Container */}
+                    <motion.div className="w-72 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative flex justify-center items-center shadow-lg">
+                      <motion.img
+                        className="w-full h-full object-cover rounded-t-2xl"
+                        src={
+                          details?.sections[currentPage].nestedSections[
+                            currentNestedPage
+                          ]?.imageUrl
+                        }
+                        alt={
+                          details?.sections[currentPage].nestedSections[
+                            currentNestedPage
+                          ]?.description
+                        }
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        whileInView={{ scaleX: [0.9, 1] }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.75 }}
+                        draggable={false}
+                      />
+                    </motion.div>
+
+                    {/* Description Below Image */}
+                    <motion.div
+                      className="w-80 text-center bg-black/40 rounded-md shadow-md overflow-y-auto max-h-60"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.75, ease: "easeInOut" }}
+                    >
+                      <motion.span className="text-md md:text-xl font-bold text-white leading-relaxed">
+                        {details?.sections[currentPage].nestedSections[
+                          currentNestedPage
+                        ]?.description
+                          .split(" ")
+                          .map((word, index) =>
+                            word.length > 8 ? (
+                              <span
+                                key={index}
+                                className="text-violet-700 font-bold break-words"
+                              >
+                                {word}{" "}
+                              </span>
+                            ) : (
+                              <span key={index}>{word} </span>
+                            )
+                          )}
+                      </motion.span>
+                    </motion.div>
+                  </motion.div>
                 )}
                 {details && currentPage > 0 && (
                   <motion.div
@@ -625,7 +633,7 @@ const CardDetails = () => {
                     </motion.div>
                   </motion.div>
                 )}
-                {details?.sections[currentPage]?.nestedSections.length > 0 && (
+                {details?.sections[currentPage]?.nestedSections.length > 1 && (
                   <>
                     <div
                       className="absolute left-1/4 bottom-2 transform -translate-y-1/2 cursor-pointer z-10"
