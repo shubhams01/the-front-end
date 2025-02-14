@@ -493,7 +493,7 @@ const CardDetails = () => {
                   className={`absolute w-full p-4 ${
                     currentPage == 0
                       ? "bottom-0 text-left pr-10"
-                      : "top-10 lg:top-3 text-center px-14 mt-2"
+                      : "top-10 lg:top-2 text-center px-14 mt-2"
                   }`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: -15 }}
@@ -507,7 +507,7 @@ const CardDetails = () => {
                     className={`${
                       currentPage == 0
                         ? "text-4xl"
-                        : "text-lg md:text-lg lg:text-2xl"
+                        : "text-lg md:text-lg lg:text-xl"
                     }  font-black text-white`}
                   >
                     {
@@ -549,7 +549,7 @@ const CardDetails = () => {
                     }
                   >
                     {/* Image Container */}
-                    <motion.div className="w-72 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-2xl relative flex justify-center items-center shadow-lg">
+                    <motion.div className="w-80 h-56 md:w-72 md:h-72 lg:w-96 lg:h-80 rounded-2xl relative flex justify-center items-center shadow-lg">
                       <motion.img
                         className="w-full h-full object-cover rounded-t-2xl"
                         src={
@@ -573,12 +573,12 @@ const CardDetails = () => {
 
                     {/* Description Below Image */}
                     <motion.div
-                      className="w-80 text-center bg-black/40 rounded-md shadow-md overflow-y-auto max-h-60"
+                      className="w-80 lg:w-96 text-center bg-black/50 rounded-b-2xl shadow-md"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.75, ease: "easeInOut" }}
                     >
-                      <motion.span className="text-md md:text-xl font-bold text-white leading-relaxed">
+                      <motion.span className="text-sm lg:text-md font-bold text-white leading-relaxed">
                         {details?.sections[currentPage].nestedSections[
                           currentNestedPage
                         ]?.description
