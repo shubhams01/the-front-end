@@ -14,6 +14,7 @@ import { useAuthStore } from "@/app/store/authStore";
 import { getAuthToken } from "@/app/hooks/useLocalStorageAuth";
 import LoadingScreen from "../Loading/LoadingScreen";
 import { ChevronDoubleLeftIcon } from "@heroicons/react/24/outline";
+import { set } from "react-hook-form";
 
 interface Article {
   id: number;
@@ -27,10 +28,11 @@ interface Article {
 
 const Explore = () => {
   const router = useRouter();
-  
+
   const [articles, setArticles] = useState<Article[]>([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const { setIsLoginOpen } = useModal();
   const { isLoggedIn } = useAuthStore();
@@ -127,6 +129,7 @@ const Explore = () => {
           `Articles ${isLoggedIn ? "recommended" : "explore"}`,
           extractedArticles
         );
+        setLoading(false);
         setArticles(extractedArticles);
         await overlayControls.start({ y: "-100%" });
       } catch (error) {
@@ -170,131 +173,143 @@ const Explore = () => {
           >
             <ChevronDoubleLeftIcon />
           </motion.div>
-          <AnimatePresence>
-            {articles.length > 0 && (
-              <>
-                <motion.div
-                  key={
-                    articles[
-                      (currentIndex - 1 + articles.length) % articles.length
-                      // @ts-ignore
-                    ].id
-                  }
-                  className="absolute cursor-pointer"
-                  style={{ zIndex: 0 }}
-                  initial={{ x: -50, y: -25, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 50, y: 25, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                  <Card
-                    id={
+          {loading ? (
+            <div className="flex items-center justify-center bg-black bg-opacity-75 z-50">
+              <motion.img
+                src="/logo-white.svg"
+                alt="Loading"
+                className="h-20 md:h-24 lg:h-28"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+          ) : (
+            <AnimatePresence>
+              {articles.length > 0 && (
+                <>
+                  <motion.div
+                    key={
                       articles[
                         (currentIndex - 1 + articles.length) % articles.length
                         // @ts-ignore
                       ].id
                     }
-                    imageUrl={
-                      articles[
-                        (currentIndex - 1 + articles.length) % articles.length
-                        // @ts-ignore
-                      ].imageUrl
-                    }
-                    title={
-                      articles[
-                        (currentIndex - 1 + articles.length) % articles.length
-                        // @ts-ignore
-                      ].title
-                    }
-                    category={
-                      articles[
-                        (currentIndex - 1 + articles.length) % articles.length
-                        // @ts-ignore
-                      ].categoryTitle
-                    }
-                    blurhash={
-                      articles[
-                        (currentIndex - 1 + articles.length) % articles.length
-                        // @ts-ignore
-                      ].blurhash
-                    }
-                  />
-                </motion.div>
+                    className="absolute cursor-pointer"
+                    style={{ zIndex: 0 }}
+                    initial={{ x: -50, y: -25, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: 50, y: 25, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                  >
+                    <Card
+                      id={
+                        articles[
+                          (currentIndex - 1 + articles.length) % articles.length
+                          // @ts-ignore
+                        ].id
+                      }
+                      imageUrl={
+                        articles[
+                          (currentIndex - 1 + articles.length) % articles.length
+                          // @ts-ignore
+                        ].imageUrl
+                      }
+                      title={
+                        articles[
+                          (currentIndex - 1 + articles.length) % articles.length
+                          // @ts-ignore
+                        ].title
+                      }
+                      category={
+                        articles[
+                          (currentIndex - 1 + articles.length) % articles.length
+                          // @ts-ignore
+                        ].categoryTitle
+                      }
+                      blurhash={
+                        articles[
+                          (currentIndex - 1 + articles.length) % articles.length
+                          // @ts-ignore
+                        ].blurhash
+                      }
+                    />
+                  </motion.div>
 
-                <motion.div
-                  // @ts-ignore
+                  <motion.div
+                    // @ts-ignore
 
-                  key={articles[currentIndex].id}
-                  className="relative z-10 cursor-pointer"
-                  onClick={() => handleClick(articles[currentIndex])}
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  onDragEnd={(event, info) => {
-                    if (info.offset.x < -100) {
-                      handleSwipe("left");
-                    } else if (info.offset.x > 100) {
-                      handleSwipe("right");
-                    }
-                  }}
-                  initial={{ x: 0, y: -15, opacity: 0 }}
-                  animate={{ x: 0, y: -15, opacity: 1 }}
-                  exit={{ x: 0, y: 15, opacity: 0 }}
-                  dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
-                  transition={{ duration: 0.5 }}
-                  // @ts-ignore
-                  layoutId={`card-${articles[currentIndex].id}`}
-                >
-                  <Card
+                    key={articles[currentIndex].id}
+                    className="relative z-10 cursor-pointer"
+                    onClick={() => handleClick(articles[currentIndex])}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    onDragEnd={(event, info) => {
+                      if (info.offset.x < -100) {
+                        handleSwipe("left");
+                      } else if (info.offset.x > 100) {
+                        handleSwipe("right");
+                      }
+                    }}
+                    initial={{ x: 0, y: -15, opacity: 0 }}
+                    animate={{ x: 0, y: -15, opacity: 1 }}
+                    exit={{ x: 0, y: 15, opacity: 0 }}
+                    dragTransition={{ bounceStiffness: 200, bounceDamping: 20 }}
+                    transition={{ duration: 0.5 }}
                     // @ts-ignore
-                    id={articles[currentIndex].id}
-                    // @ts-ignore
-                    imageUrl={articles[currentIndex].imageUrl}
-                    // @ts-ignore
-                    title={articles[currentIndex].title}
-                    // @ts-ignore
-                    category={articles[currentIndex].categoryTitle}
-                    // @ts-ignore
-                    blurhash={articles[currentIndex].blurhash}
-                  />
-                </motion.div>
+                    layoutId={`card-${articles[currentIndex].id}`}
+                  >
+                    <Card
+                      // @ts-ignore
+                      id={articles[currentIndex].id}
+                      // @ts-ignore
+                      imageUrl={articles[currentIndex].imageUrl}
+                      // @ts-ignore
+                      title={articles[currentIndex].title}
+                      // @ts-ignore
+                      category={articles[currentIndex].categoryTitle}
+                      // @ts-ignore
+                      blurhash={articles[currentIndex].blurhash}
+                    />
+                  </motion.div>
 
-                <motion.div
-                  // @ts-ignore
-                  key={articles[(currentIndex + 1) % articles.length].id}
-                  className="absolute cursor-pointer"
-                  style={{ zIndex: 0 }}
-                  initial={{ x: 50, y: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -50, y: 20, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                  <Card
-                    id={
-                      // @ts-ignore
-                      articles[(currentIndex + 1) % articles.length].id
-                    }
-                    imageUrl={
-                      // @ts-ignore
-                      articles[(currentIndex + 1) % articles.length].imageUrl
-                    }
-                    title={
-                      // @ts-ignore
-                      articles[(currentIndex + 1) % articles.length].title
-                    }
-                    category={
-                      // @ts-ignore
-                      articles[(currentIndex + 1) % articles.length]
-                        .categoryTitle
-                    }
-                    blurhash={
-                      // @ts-ignore
-                      articles[(currentIndex + 1) % articles.length].blurhash
-                    }
-                  />
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
+                  <motion.div
+                    // @ts-ignore
+                    key={articles[(currentIndex + 1) % articles.length].id}
+                    className="absolute cursor-pointer"
+                    style={{ zIndex: 0 }}
+                    initial={{ x: 50, y: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -50, y: 20, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                  >
+                    <Card
+                      id={
+                        // @ts-ignore
+                        articles[(currentIndex + 1) % articles.length].id
+                      }
+                      imageUrl={
+                        // @ts-ignore
+                        articles[(currentIndex + 1) % articles.length].imageUrl
+                      }
+                      title={
+                        // @ts-ignore
+                        articles[(currentIndex + 1) % articles.length].title
+                      }
+                      category={
+                        // @ts-ignore
+                        articles[(currentIndex + 1) % articles.length]
+                          .categoryTitle
+                      }
+                      blurhash={
+                        // @ts-ignore
+                        articles[(currentIndex + 1) % articles.length].blurhash
+                      }
+                    />
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          )}
           <motion.div
             className="absolute cursor-pointer -right-2 lg:-right-4 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
             onClick={() => handleRightArrowClick()}
@@ -306,7 +321,6 @@ const Explore = () => {
           <LoginRegisterModal />
         </div>
       </div>
-
       <AnimatePresence>
         {selectedCard && (
           <motion.div

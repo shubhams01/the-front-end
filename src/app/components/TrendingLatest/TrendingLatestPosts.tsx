@@ -12,6 +12,7 @@ const TrendingLatestPosts = () => {
   const [posts, setPosts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchTrendingPosts = async () => {
     try {
@@ -35,6 +36,7 @@ const TrendingLatestPosts = () => {
         blurhash: article.blurhash,
       }));
       console.log("treningArticles", trendingArticles);
+      setLoading(false);
       setPosts(trendingArticles);
     } catch (error) {
       console.error("Error fetching trending posts:", error);
@@ -59,10 +61,11 @@ const TrendingLatestPosts = () => {
         categoryTitle: article.category.Title,
         categorySlug: article.category.Slug,
         imageUrl:
-          "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
+        "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
         blurhash: article.blurhash,
       }));
       console.log("latestArticles", latestArticles);
+      setLoading(false);
       setPosts(latestArticles);
     } catch (error) {
       console.error("Error fetching latest posts:", error);
@@ -140,6 +143,17 @@ const TrendingLatestPosts = () => {
         >
           <ChevronDoubleLeftIcon />
         </motion.div>
+        {loading ? (
+                    <div className="flex items-center justify-center bg-black bg-opacity-75 z-50">
+                      <motion.img
+                        src="/logo-white.svg"
+                        alt="Loading"
+                        className="h-20 md:h-24 lg:h-28"
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      />
+                    </div>
+                  ) : (
         <AnimatePresence initial={false}>
           {posts.length > 0 && (
             <motion.div
@@ -177,6 +191,7 @@ const TrendingLatestPosts = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        )}
         <motion.div
           className="absolute cursor-pointer right-1 lg:-right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"
           onClick={handleRightArrowClick}
