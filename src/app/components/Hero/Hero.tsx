@@ -39,7 +39,17 @@ const Hero = ({ scrollToExplore }) => {
           </div>
         </motion.h1>
       </div>
-      <div className="mt-10 lg:mt-16 flex items-center right-5 lg:right-6 relative">
+
+      <div className="mt-10 lg:mt-16 flex justify-center relative">
+        <span className="text-md md:text-xl lg:text-2xl font-bold text-center text-white">
+          <span className="text-gray-500">from</span>
+          <span className="text-white font-extrabold"> nothing </span>
+          <span className="text-gray-500">to</span>
+          <span className="text-white font-extrabold"> everything</span>
+        </span>
+      </div>
+
+      {/* <div className="mt-10 lg:mt-16 flex items-center right-5 lg:right-6 relative">
         <span className="text-md md:text-xl lg:text-2xl font-bold text-white">
           &quot;We know nothing&quot; about
         </span>
@@ -60,17 +70,17 @@ const Hero = ({ scrollToExplore }) => {
             </motion.span>
           </AnimatePresence>
         </span>
-      </div>
+      </div> */}
 
-        <div className="absolute bottom-10 w-full flex justify-center z-10">
-          <button
-            onClick={scrollToExplore}
-            className="text-white text-lg font-light animate-pulse"
-          >
-            ↓ Scroll to Explore ↓
-          </button>
-        </div>
+      <div className="absolute bottom-10 w-full flex justify-center z-10">
+        <button
+          onClick={scrollToExplore}
+          className="text-white text-lg font-light animate-pulse"
+        >
+          ↓ Scroll to Explore ↓
+        </button>
       </div>
+    </div>
   );
 };
 

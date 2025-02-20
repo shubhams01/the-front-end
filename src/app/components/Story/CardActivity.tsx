@@ -85,7 +85,7 @@ const CardActivity = ({
 
   useEffect(() => {
     console.log('alreadyLiked', isLiked);
-    if (handleDoubleClick) {
+    if (handleDoubleClick && !isLiked) {
       handleDoubleClick(handleBulbClick);
     }
   }, [handleDoubleClick]);
@@ -199,7 +199,7 @@ const CardActivity = ({
   return (
     <>
       <motion.div
-        className="absolute bottom-2 right-2 flex flex-col items-center z-20"
+        className="absolute bottom-2 right-0 flex flex-col items-center z-20"
         initial={false}
         animate={{ y: isExpanded ? -5 : 0 }}
         transition={{ type: "tween", duration: 0.5 }}

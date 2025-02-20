@@ -87,7 +87,7 @@ const CardDetails = () => {
 
   const handleLike = () => {
     setShowLike(true);
-    setTimeout(() => setShowLike(false), 1000);
+    // setTimeout(() => setShowLike(false), 1000);
   };
 
   useEffect(() => {
@@ -495,7 +495,7 @@ const CardDetails = () => {
                       ? "bottom-0 text-left pr-10"
                       : "top-10 lg:top-2 text-center px-14 mt-2"
                   }`}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: -15 }}
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 1, ease: "easeInOut" }}
@@ -507,7 +507,7 @@ const CardDetails = () => {
                     className={`${
                       currentPage == 0
                         ? "text-4xl"
-                        : "text-lg md:text-lg lg:text-xl"
+                        : "text-md md:text-lg lg:text-xl font-semibold"
                     }  font-black text-white`}
                   >
                     {
@@ -573,12 +573,12 @@ const CardDetails = () => {
 
                     {/* Description Below Image */}
                     <motion.div
-                      className="w-80 lg:w-96 text-center bg-black/50 rounded-b-2xl shadow-md"
+                      className="w-80 lg:w-96 text-center bg-black/70 rounded-b-2xl shadow-md"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.75, ease: "easeInOut" }}
                     >
-                      <motion.span className="text-sm lg:text-md font-bold text-white leading-relaxed">
+                      <motion.span className="text-sm lg:text-md font-light text-white leading-relaxed">
                         {details?.sections[currentPage].nestedSections[
                           currentNestedPage
                         ]?.description
