@@ -79,15 +79,15 @@ const CardDetails = () => {
 
   const bulbClickRef = useRef<(() => void) | null>(null);
 
+  const [showLike, setShowLike] = useState(false);
+
   const handleDoubleClick = (bulbClickFn) => {
     bulbClickRef.current = bulbClickFn;
   };
 
-  const [showLike, setShowLike] = useState(false);
-
   const handleLike = () => {
     setShowLike(true);
-    // setTimeout(() => setShowLike(false), 1000);
+    setTimeout(() => setShowLike(false), 1000);
   };
 
   useEffect(() => {
@@ -329,7 +329,6 @@ const CardDetails = () => {
 
   const handleArrowDownClick = () => {
     // @ts-ignore
-
     if (currentPage < details.sections.length - 1) {
       setCurrentPage(currentPage + 1);
       setCurrentNestedPage(0);
@@ -493,7 +492,7 @@ const CardDetails = () => {
                   className={`absolute w-full p-4 ${
                     currentPage == 0
                       ? "bottom-0 text-left pr-10"
-                      : "top-10 lg:top-2 text-center px-14 mt-2"
+                      : "top-10 text-center px-14 mt-2"
                   }`}
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: -15 }}
@@ -507,7 +506,7 @@ const CardDetails = () => {
                     className={`${
                       currentPage == 0
                         ? "text-4xl"
-                        : "text-md md:text-lg lg:text-xl font-semibold"
+                        : "text-md md:text-lg lg:text-xl font-bold"
                     }  font-black text-white`}
                   >
                     {

@@ -21,6 +21,8 @@ import {
   WhatsappIcon,
 } from "react-share";
 import { formatNumber } from "@/app/utils/numberFormatter";
+import Odometer from "react-odometerjs";
+import "odometer/themes/odometer-theme-default.css";
 
 const api = {
   like: async (userId, articleId, token) => {
@@ -44,13 +46,16 @@ const api = {
     }).then((res) => res.json());
   },
   fetchArticleActivities: async (articleId, token) => {
-    return fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/${articleId}/activities`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((res) => res.json());
+    return fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/${articleId}/activities`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((res) => res.json());
   },
 };
 
@@ -60,9 +65,9 @@ const CardActivity = ({
   initialComments,
   setIsCommentsOpenDragScroll,
   closeShareOpenOnDragOrScroll,
-  handleDoubleClick
+  handleDoubleClick,
 }) => {
-  const [likes, setLikes] = useState(initialLikes);
+  const [likes, setLikes] = useState(0);
   const [commentsCount, setCommentsCount] = useState(initialComments);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -79,13 +84,18 @@ const CardActivity = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsExpanded(true);
-    }, 2000);
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    console.log('alreadyLiked', isLiked);
-    if (handleDoubleClick && !isLiked) {
+    console.log(
+      "alreadyLiked",
+      isLiked,
+      "handleDoubleClick",
+      handleDoubleClick
+    );
+    if (handleDoubleClick) {
       handleDoubleClick(handleBulbClick);
     }
   }, [handleDoubleClick]);
@@ -106,7 +116,7 @@ const CardActivity = ({
 
       fetchArticleActivities();
     }
-  }, [isLoggedIn, postId, token]);
+  }, [isLoggedIn, postId, token, likes, commentsCount]);
 
   const handleBulbClick = async () => {
     if (isLoginOpen) {
@@ -123,9 +133,9 @@ const CardActivity = ({
       return;
     }
     try {
-      await api.like(userId, postId, token);
+      setIsLiked((prev) => !prev);
       setLikes((prev) => prev + (isLiked ? -1 : 1));
-      setIsLiked(!isLiked);
+      await api.like(userId, postId, token);
     } catch (error) {
       console.error("Error liking post:", error);
     }
@@ -218,15 +228,15 @@ const CardActivity = ({
         >
           <LightBulbIcon className="h-7 w-7 lg:h-8 lg:w-8" />
         </motion.button>
-        {likes > 0 && (
-          <span
-            className={`${
-              isLiked ? "text-yellow-400" : "text-white"
-            } text-xs lg:text-xl`}
-          >
-            {formatNumber(likes)}
-          </span>
-        )}
+        {/* {likes > 0 && ( */}
+        <motion.div
+          className={`${
+            isLiked ? "text-yellow-400" : "text-white"
+          } text-xs lg:text-xl`}
+        >
+          <Odometer value={likes} format="(,ddd)" />
+        </motion.div>
+        {/* )} */}
         {isExpanded && (
           <motion.div
             className="absolute bottom-full right-0 flex flex-col items-center rounded-lg p-1 space-y-2"
@@ -241,11 +251,11 @@ const CardActivity = ({
               >
                 <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 lg:h-8 lg:w-8" />
               </button>
-              {commentsCount > 0 && (
-                <span className="text-white text-xs lg:text-xl">
-                  {formatNumber(commentsCount)}
-                </span>
-              )}
+              {/* {commentsCount > 0 && ( */}
+                <motion.div className="text-white text-xs lg:text-xl">
+                  <Odometer value={commentsCount} format="(,ddd)" />
+                </motion.div>
+              {/* )} */}
             </div>
             <button
               className="flex items-center justify-center"
