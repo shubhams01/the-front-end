@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Card from "../Story/Card";
 import { getAuthToken } from "@/app/hooks/useLocalStorageAuth";
+import { set } from "react-hook-form";
 
 interface LikedSavedPostsProps {
   title: string;
@@ -20,8 +21,8 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
   const [dragDirection, setDragDirection] = useState<"x" | "y" | null>(null);
   const [direction, setDirection] = useState<1 | -1>(1);
   const token = getAuthToken();
-
   const router = useRouter();
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const panelVariants = {
     open: { y: 0 },
@@ -49,11 +50,13 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
         id: item.article.id,
         title: item.article.Title,
         slug: item.article.Slug,
-        category: item.article.category.Title,
+        categoryTitle: item.article.category.Title,
+        categorySlug: item.article.category.Slug,
         imageUrl:
           "https://api.gyaanhub.io" + item.article.Image[0].formats.large.url,
+        blurhash: item.article.blurhash,
       }));
-      console.log("likedOrSavedPosts ", likedOrSavedPosts, data);
+      console.log("likedOrSavedPosts ", likedOrSavedPosts);
       setPosts(likedOrSavedPosts);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -112,9 +115,12 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
 
   const handleClick = (card: any) => {
     console.log("cardLikedorSaved ", card);
+    setSelectedCard(card);
     setTimeout(() => {
       // @ts-ignore
-      router.push(`/${card.category}/${card.slug}-${card.id}?section=explore`);
+      router.push(
+        `/${card.categorySlug}/${card.slug}-${card.id}?section=explore`
+      );
     }, 1000);
   };
 
@@ -161,9 +167,31 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
                 id={posts[currentIndex]?.id}
                 imageUrl={posts[currentIndex]?.imageUrl}
                 title={posts[currentIndex]?.title}
-                category={posts[currentIndex]?.category}
-                blurhash={"LEHV6nWB2yk8pyo0adR*.7kCMdnj"}
+                category={posts[currentIndex]?.categoryTitle}
+                blurhash={posts[currentIndex]?.blurhash || "LEHV6nWB2yk8pyo0adR*.7kCMdnj"}
               />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {selectedCard && (
+            <motion.div
+              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1}}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            >
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+              >
+                <img
+                  className="h-20 md:h-24 lg:h-28"
+                  src="/logo-white.svg"
+                  alt="Logo"
+                />
+              </motion.span>
             </motion.div>
           )}
         </AnimatePresence>

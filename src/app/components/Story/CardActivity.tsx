@@ -23,6 +23,7 @@ import {
 import { formatNumber } from "@/app/utils/numberFormatter";
 import Odometer from "react-odometerjs";
 import "odometer/themes/odometer-theme-default.css";
+import { env } from "process";
 
 const api = {
   like: async (userId, articleId, token) => {
@@ -68,7 +69,7 @@ const CardActivity = ({
   handleDoubleClick,
 }) => {
   const [likes, setLikes] = useState(0);
-  const [commentsCount, setCommentsCount] = useState(initialComments);
+  const [commentsCount, setCommentsCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -78,7 +79,7 @@ const CardActivity = ({
   const { isLoggedIn } = useAuthStore();
   const { isLoginOpen, isRegisterOpen, toggleLoginModal, toggleRegisterModal } =
     useModal();
-  const token = getAuthToken();
+  const token = getAuthToken() || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
   const userId = useAuthStore.getState().getUserId();
 
   useEffect(() => {
@@ -89,34 +90,33 @@ const CardActivity = ({
   }, []);
 
   useEffect(() => {
-    console.log(
-      "alreadyLiked",
-      isLiked,
-      "handleDoubleClick",
-      handleDoubleClick
-    );
+    // console.log(
+    //   "alreadyLiked",
+    //   isLiked,
+    //   "handleDoubleClick",
+    //   handleDoubleClick
+    // );
     if (handleDoubleClick) {
       handleDoubleClick(handleBulbClick);
     }
   }, [handleDoubleClick]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      const fetchArticleActivities = async () => {
-        try {
-          const activities = await api.fetchArticleActivities(postId, token);
-          setIsLiked(activities.isLiked);
-          setIsBookmarked(activities.isSaved);
-          setLikes(activities.likesCount);
-          setCommentsCount(activities.commentsCount);
-        } catch (error) {
-          console.error("Error fetching article activities:", error);
-        }
-      };
-
-      fetchArticleActivities();
-    }
-  }, [isLoggedIn, postId, token, likes, commentsCount]);
+    console.log("activity effect out ", postId, token);
+    const fetchArticleActivities = async () => {
+      try {
+        const activities = await api.fetchArticleActivities(postId, token);
+        setIsLiked(activities.isLiked);
+        setIsBookmarked(activities.isSaved);
+        setLikes(activities.likesCount);
+        setCommentsCount(activities.commentsCount);
+        console.log("activity effect in ", postId, activities);
+      } catch (error) {
+        console.error("Error fetching article activities:", error);
+      }
+    };
+    fetchArticleActivities();
+  }, [postId, token, likes, commentsCount]);
 
   const handleBulbClick = async () => {
     if (isLoginOpen) {
@@ -209,7 +209,7 @@ const CardActivity = ({
   return (
     <>
       <motion.div
-        className="absolute bottom-2 right-0 flex flex-col items-center z-20"
+        className="absolute bottom-2 right-1 flex flex-col items-center z-20"
         initial={false}
         animate={{ y: isExpanded ? -5 : 0 }}
         transition={{ type: "tween", duration: 0.5 }}
@@ -252,9 +252,9 @@ const CardActivity = ({
                 <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 lg:h-8 lg:w-8" />
               </button>
               {/* {commentsCount > 0 && ( */}
-                <motion.div className="text-white text-xs lg:text-xl">
-                  <Odometer value={commentsCount} format="(,ddd)" />
-                </motion.div>
+              <motion.div className="text-white text-xs lg:text-xl">
+                <Odometer value={commentsCount} format="(,ddd)" />
+              </motion.div>
               {/* )} */}
             </div>
             <button

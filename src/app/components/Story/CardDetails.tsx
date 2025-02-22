@@ -581,14 +581,14 @@ const CardDetails = () => {
                         {details?.sections[currentPage].nestedSections[
                           currentNestedPage
                         ]?.description
-                          .split(" ")
+                          ?.split(/(\*[^*]+\*)/)
                           .map((word, index) =>
-                            word.length > 8 ? (
+                            word.startsWith("*") && word.endsWith("*") ? (
                               <span
                                 key={index}
-                                className="text-violet-700 font-bold break-words"
+                                className="text-violet-700 font-extrabold"
                               >
-                                {word}{" "}
+                                {word.slice(1, -1)}{" "}
                               </span>
                             ) : (
                               <span key={index}>{word} </span>

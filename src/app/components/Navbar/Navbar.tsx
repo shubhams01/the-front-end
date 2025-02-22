@@ -6,7 +6,6 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useModal } from "@/app/context/ModalContext";
-import { set } from "react-hook-form";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -131,41 +130,41 @@ const Navbar = () => {
 
       {/* Menu toggle button */}
       <button
-        onClick={toggleMenu}
-        className="h-10 fixed top-0 right-0 m-5 z-40 flex items-center justify-center focus:outline-none"
+      onClick={toggleMenu}
+      className="fixed top-2 right-0 m-4 z-40 flex items-center justify-center focus:outline-none"
+    >
+      <motion.div
+        animate={isOpen ? "open" : "closed"}
+        className="relative flex flex-col justify-between w-6 h-6"
       >
-        {isOpen ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 lg:h-10 lg:w-10 text-white transform transition-transform rotate-180"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-8 w-8 lg:h-10 lg:w-10 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        )}
-      </button>
+        <motion.div
+          variants={{
+            closed: { x: 8, y: -3, rotate: 0 },
+            open: { x: 0, y: 6, rotate: 45 },
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="w-7 h-1.5 bg-white rounded-md"
+        />
+        
+        <motion.div
+          variants={{
+            closed: { x: 0, y: 0, opacity: 1 },
+            open: { opacity: 0 },
+          }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="w-7 h-1.5 bg-white rounded-md"
+        />
+        
+        <motion.div
+          variants={{
+            closed: { x: -8, y: 3, rotate: 0 },
+            open: { x: 0, y: -12, rotate: -45 },
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="w-7 h-1.5 bg-white rounded-md"
+        />
+      </motion.div>
+    </button>
     </div>
   );
 };
