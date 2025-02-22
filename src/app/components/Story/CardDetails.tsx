@@ -298,11 +298,11 @@ const CardDetails = () => {
     if (nextSection) {
       // @ts-ignore
 
-      const categorySlug = nextSection.category.Slug;
+      const categorySlug = nextSection.category?.Slug;
       // @ts-ignore
-      const sectionSlug = nextSection.Slug;
+      const sectionSlug = nextSection?.Slug;
       // @ts-ignore
-      const sectionId = nextSection.id;
+      const sectionId = nextSection?.id;
 
       const newUrl = `/${categorySlug}/${sectionSlug}-${sectionId}`;
       window.history.pushState({ urlPath: `/${categorySlug}` }, "", newUrl);
@@ -549,8 +549,29 @@ const CardDetails = () => {
                   >
                     {/* Image Container */}
                     <motion.div className="w-80 h-56 md:w-72 md:h-72 lg:w-96 lg:h-80 rounded-2xl relative flex justify-center items-center shadow-lg">
+                      {!nestedSectionImageLoaded && (
+                        <div className="absolute inset-0 w-full h-full overflow-hidden rounded-t-2xl">
+                          <Blurhash
+                            hash={
+                              details?.sections[currentPage].nestedSections[
+                                currentNestedPage
+                              ]?.blurhash || "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+                            }
+                            width="100%"
+                            height="100%"
+                            resolutionX={32}
+                            resolutionY={32}
+                            punch={1}
+                            className="w-full h-full"
+                            style={{ borderRadius: "1rem" }} 
+                          />
+                        </div>
+                      )}
+
                       <motion.img
-                        className="w-full h-full object-cover rounded-t-2xl"
+                        className={`absolute inset-0 w-full h-full object-cover rounded-t-2xl transition-opacity duration-500 ${
+                          nestedSectionImageLoaded ? "opacity-100" : "opacity-0"
+                        }`}
                         src={
                           details?.sections[currentPage].nestedSections[
                             currentNestedPage
@@ -567,6 +588,7 @@ const CardDetails = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.75 }}
                         draggable={false}
+                        onLoad={() => setNestedSectionImageLoaded(true)}
                       />
                     </motion.div>
 

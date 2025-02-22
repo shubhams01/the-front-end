@@ -49,7 +49,7 @@ const Navbar = () => {
       {pathname !== "/" && (
         <button
           onClick={goBack}
-          className="fixed top-2 right-10 lg:right-12 m-5 z-40 flex items-center justify-center"
+          className="fixed top-1 right-10 lg:right-12 m-5 z-40 flex items-center justify-center"
         >
           <FontAwesomeIcon icon={faChevronCircleLeft} size="lg" color="" />
         </button>
@@ -143,7 +143,7 @@ const Navbar = () => {
             open: { x: 0, y: 6, rotate: 45 },
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="w-7 h-1.5 bg-white rounded-md"
+          className="w-6.5 h-1.5 bg-white rounded-md"
         />
         
         <motion.div
@@ -152,7 +152,7 @@ const Navbar = () => {
             open: { opacity: 0 },
           }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
-          className="w-7 h-1.5 bg-white rounded-md"
+          className="w-6.5 h-1.5 bg-white rounded-md"
         />
         
         <motion.div
@@ -161,7 +161,7 @@ const Navbar = () => {
             open: { x: 0, y: -12, rotate: -45 },
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="w-7 h-1.5 bg-white rounded-md"
+          className="w-6.5 h-1.5 bg-white rounded-md"
         />
       </motion.div>
     </button>

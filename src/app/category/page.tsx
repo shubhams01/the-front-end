@@ -110,7 +110,7 @@ const CategoryPageContent = () => {
         {category?.toLocaleUpperCase()}
       </div>
 
-      <div className="relative w-96 flex-1 flex items-center justify-center -mt-8">
+      <div className="relative w-96 flex-1 flex items-center justify-center mt-2">
         <motion.div
           className="absolute cursor-pointer left-2 lg:left-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-20"
           onClick={handleLeftArrowClick}
