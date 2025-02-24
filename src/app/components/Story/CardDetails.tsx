@@ -506,7 +506,7 @@ const CardDetails = () => {
                     className={`${
                       currentPage == 0
                         ? "text-4xl"
-                        : "text-md md:text-lg lg:text-xl font-bold"
+                        : "text-md md:text-lg lg:text-xl"
                     }  font-black text-white`}
                   >
                     {
@@ -599,7 +599,7 @@ const CardDetails = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.75, ease: "easeInOut" }}
                     >
-                      <motion.span className="text-sm lg:text-md font-light text-white leading-relaxed">
+                      <motion.span className="text-sm lg:text-md font-medium text-white leading-relaxed">
                         {details?.sections[currentPage].nestedSections[
                           currentNestedPage
                         ]?.description

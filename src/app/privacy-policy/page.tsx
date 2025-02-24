@@ -8,10 +8,10 @@ const page = () => {
           Privacy Policy
         </h2>
         <p className="text-gray-400">
-          Welcome to GyaanHub! Your privacy is important to us. This Privacy
+          Welcome to Gyaanhub! Your privacy is important to us. This Privacy
           Policy explains how we collect, use, and protect your personal
           information when you use our knowledge-sharing platform. By accessing
-          or using GyaanHub, you agree to the practices described in this
+          or using Gyaanhub, you agree to the practices described in this
           Privacy Policy.
         </p>
       </section>
@@ -43,7 +43,7 @@ const page = () => {
             type, and operating system.
           </li>
           <li>
-            <strong>Usage Data:</strong> Details about how you use GyaanHub,
+            <strong>Usage Data:</strong> Details about how you use Gyaanhub,
             such as pages viewed and actions taken.
           </li>
         </ul>
@@ -81,7 +81,7 @@ const page = () => {
         <ul className="list-disc pl-5 text-gray-400">
           <li>
             <strong>Service Providers:</strong> Third parties that help us
-            operate GyaanHub.
+            operate Gyaanhub.
           </li>
           <li>
             <strong>Legal Authorities:</strong> When required by law or to

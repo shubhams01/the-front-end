@@ -8,20 +8,20 @@ const TermsOfService = () => {
           Terms of Service
         </h2>
         <p className="text-gray-400">
-          Welcome to GyaanHub! By using our platform, you agree to the terms and
+          Welcome to Gyaanhub! By using our platform, you agree to the terms and
           conditions outlined below. Please read them carefully.
         </p>
       </section>
 
       <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">Using GyaanHub</h2>
+        <h2 className="text-2xl font-semibold text-gray-200 mb-2">Using Gyaanhub</h2>
         <ul className="list-disc pl-5 text-gray-400">
           <li>
-            GyaanHub provides a curated platform for sharing knowledge. Ensure
+            Gyaanhub provides a curated platform for sharing knowledge. Ensure
             you use the content responsibly and adhere to our guidelines.
           </li>
           <li>
-            Content is posted by GyaanHub administrators and is intended for
+            Content is posted by Gyaanhub administrators and is intended for
             educational and informational purposes only.
           </li>
         </ul>
@@ -32,7 +32,7 @@ const TermsOfService = () => {
           Content Ownership
         </h2>
         <p className="text-gray-400">
-          All content on GyaanHub is owned by GyaanHub and its licensors. You
+          All content on Gyaanhub is owned by Gyaanhub and its licensors. You
           may not copy, reproduce, or distribute content without prior
           permission.
         </p>
@@ -64,7 +64,7 @@ const TermsOfService = () => {
           Limitation of Liability
         </h2>
         <p className="text-gray-400">
-          GyaanHub is provided "as is" without warranties of any kind. We are
+          Gyaanhub is provided "as is" without warranties of any kind. We are
           not responsible for any damages arising from your use of the platform.
         </p>
       </section>

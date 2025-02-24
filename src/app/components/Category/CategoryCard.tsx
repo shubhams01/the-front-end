@@ -17,8 +17,9 @@ const CategoryCard = ({ category, imageUrl, blurhash }) => {
 
   return (
     <motion.div
-      className="rounded-xl relative overflow-hidden group w-72 h-96"
+      className="relative w-72 h-96 rounded-xl overflow-hidden group border-2 border-white shadow-xl shadow-gray-700"
       onClick={handleClick}
+      whileHover={{ scale: 1.05 }}
     >
       <div className="w-full h-full rounded-lg overflow-hidden relative">
         {!isLoaded && (
@@ -46,7 +47,7 @@ const CategoryCard = ({ category, imageUrl, blurhash }) => {
         animate={isClicked ? { opacity: 0 } : { opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <span className="text-white text-center text-4xl font-black uppercase border-4 border-white px-4 py-2">
+        <span className="text-white text-center text-4xl font-black uppercase border-4 border-white px-4 py-2 bg-black bg-opacity-30 rounded-lg">
           {category}
         </span>
       </motion.div>
