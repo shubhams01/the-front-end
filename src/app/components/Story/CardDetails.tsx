@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Key } from "react";
 import {
   motion,
   useAnimation,
@@ -24,6 +24,7 @@ import { Blurhash } from "react-blurhash";
 import { useAuthStore } from "@/app/store/authStore";
 
 interface Section {
+  description: Key | null | undefined;
   blurhash: string;
   nestedSections: Array<{
     imageUrl: string;
@@ -488,7 +489,7 @@ const CardDetails = () => {
                   draggable={false}
                   onLoad={() => setSectionImageLoaded(true)}
                 />
-                <motion.div
+                {/* <motion.div
                   className={`absolute w-full p-4 ${
                     currentPage == 0
                       ? "bottom-0 text-left pr-10"
@@ -514,7 +515,51 @@ const CardDetails = () => {
                       details?.sections[currentPage]?.description
                     }
                   </span>
+                </motion.div> */}
+
+                <motion.div
+                  className={`absolute w-full p-4 ${
+                    currentPage == 0
+                      ? "bottom-0 text-left pr-10"
+                      : "top-10 text-center px-14 mt-2"
+                  }`}
+                  initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -10, filter: "blur(10px)" }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  key={details?.sections[currentPage]?.description}
+                >
+                  <motion.span
+                    initial={{ y: 0, rotateX: 0, rotateY: 0 }}
+                    animate={{
+                      y: [-2, 2, -2],
+                      rotateX: [-5, 5, -5], // Subtle 3D tilt effect
+                      rotateY: [-5, 5, -5], // Makes text appear dynamic
+                      textShadow: [
+                        "2px 2px 5px rgba(255, 255, 255, 0.2)",
+                        "4px 4px 10px rgba(255, 255, 255, 0.3)",
+                        "2px 2px 5px rgba(255, 255, 255, 0.2)",
+                      ], // Glowing shadow effect
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      duration: 1.5,
+                      ease: "easeInOut",
+                    }}
+                    className={`${
+                      currentPage == 0
+                        ? "text-4xl"
+                        : "text-md md:text-lg lg:text-xl"
+                    } font-black text-white tracking-wide`}
+                  >
+                    {
+                      // @ts-ignore
+                      details?.sections[currentPage]?.description
+                    }
+                  </motion.span>
                 </motion.div>
+
                 {details?.sections[currentPage]?.nestedSections &&
                   details?.sections[currentPage]?.nestedSections.length > 1 && (
                     <motion.div className="absolute bottom-4 items-center w-full flex justify-center">
@@ -563,7 +608,7 @@ const CardDetails = () => {
                             resolutionY={32}
                             punch={1}
                             className="w-full h-full"
-                            style={{ borderRadius: "1rem" }} 
+                            style={{ borderRadius: "1rem" }}
                           />
                         </div>
                       )}
@@ -599,23 +644,24 @@ const CardDetails = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.75, ease: "easeInOut" }}
                     >
-                      <motion.span className="text-sm lg:text-md font-medium text-white leading-relaxed">
+                      <motion.span className="text-sm lg:text-md font-semibold text-white leading-relaxed">
                         {details?.sections[currentPage].nestedSections[
                           currentNestedPage
                         ]?.description
                           ?.split(/(\*[^*]+\*)/)
-                          .map((word, index) =>
-                            word.startsWith("*") && word.endsWith("*") ? (
-                              <span
-                                key={index}
-                                className="text-violet-700 font-extrabold"
-                              >
-                                {word.slice(1, -1)}{" "}
-                              </span>
-                            ) : (
-                              <span key={index}>{word} </span>
-                            )
-                          )}
+                          .map((word, index) => {
+                            if (word.startsWith("*") && word.endsWith("*")) {
+                              return (
+                                <span
+                                  key={index}
+                                  className="text-violet-700 font-extrabold"
+                                >
+                                  {word.slice(1, -1)}
+                                </span>
+                              );
+                            }
+                            return word; 
+                          })}
                       </motion.span>
                     </motion.div>
                   </motion.div>
