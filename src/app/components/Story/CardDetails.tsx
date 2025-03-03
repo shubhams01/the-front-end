@@ -583,7 +583,7 @@ const CardDetails = () => {
                   )}
                 {details?.sections[currentPage]?.nestedSections.length > 0 && (
                   <motion.div
-                    className="absolute inset-1 flex flex-col items-center justify-center mt-10 px-4"
+                    className="absolute inset-1 flex flex-col items-center justify-center mt-20 px-4"
                     drag="x"
                     dragDirectionLock
                     dragConstraints={{ left: 0, right: 0 }}
