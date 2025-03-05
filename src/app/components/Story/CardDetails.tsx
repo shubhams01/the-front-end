@@ -583,7 +583,7 @@ const CardDetails = () => {
                   )}
                 {details?.sections[currentPage]?.nestedSections.length > 0 && (
                   <motion.div
-                    className="absolute inset-1 flex flex-col items-center justify-center mt-20 px-4"
+                    className="absolute inset-1 flex flex-col items-center justify-center mt-20"
                     drag="x"
                     dragDirectionLock
                     dragConstraints={{ left: 0, right: 0 }}
@@ -591,6 +591,7 @@ const CardDetails = () => {
                     onDragEnd={(event, info) =>
                       handleDragEnd(event, info, currentPage)
                     }
+                    viewport={{ once: false }}
                   >
                     {/* Image Container */}
                     <motion.div className="w-80 h-56 md:w-72 md:h-72 lg:w-96 lg:h-80 rounded-2xl relative flex justify-center items-center shadow-lg">
@@ -629,8 +630,8 @@ const CardDetails = () => {
                         }
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        whileInView={{ scaleX: [0.9, 1] }}
-                        viewport={{ once: true }}
+                        // whileInView={{ scaleX: [0.9, 1] }}
+                        viewport={{ once: false }}
                         transition={{ duration: 0.75 }}
                         draggable={false}
                         onLoad={() => setNestedSectionImageLoaded(true)}
@@ -639,12 +640,13 @@ const CardDetails = () => {
 
                     {/* Description Below Image */}
                     <motion.div
-                      className="w-80 lg:w-96 text-center bg-black/70 rounded-b-2xl shadow-md"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      className="w-80 lg:w-96 bg-black/70 rounded-b-2xl shadow-md px-1"
+                      // initial={{ opacity: 0, y: 10 }}
+                      // animate={{ opacity: 1, y: 0 }}
+                      
                       transition={{ duration: 0.75, ease: "easeInOut" }}
                     >
-                      <motion.span className="text-sm lg:text-md font-semibold text-white leading-relaxed">
+                      <motion.span className="text-sm lg:text-md font-medium text-white leading-relaxed hyphens-auto">
                         {details?.sections[currentPage].nestedSections[
                           currentNestedPage
                         ]?.description
@@ -654,7 +656,7 @@ const CardDetails = () => {
                               return (
                                 <span
                                   key={index}
-                                  className="text-violet-700 font-extrabold"
+                                  className="text-violet-700 font-bold"
                                 >
                                   {word.slice(1, -1)}
                                 </span>
