@@ -41,17 +41,17 @@ const Explore = () => {
 
   const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
-  const handleClick = (card: any) => {
+  const handleClick = (card: any, index: number) => {
     console.log("card ", card);
+    sessionStorage.setItem("entryCardIndex", index.toString()); // Save index
     sessionStorage.setItem("jumpToExplore", "true");
+    
     setSelectedCard(card);
     setTimeout(() => {
-      // @ts-ignore
-      router.push(
-        `/${card.categorySlug}/${card.slug}-${card.id}?section=explore`
-      );
+      router.push(`/${card.categorySlug}/${card.slug}-${card.id}?section=explore`);
     }, 1000);
   };
+  
 
   const handleSwipe = (direction: string) => {
     if (direction === "left") {
@@ -138,6 +138,15 @@ const Explore = () => {
 
     fetchData();
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    const storedIndex = sessionStorage.getItem("entryCardIndex");
+    if (storedIndex !== null) {
+      setCurrentIndex(parseInt(storedIndex, 10)); 
+      sessionStorage.removeItem("entryCardIndex"); 
+    }
+  }, []);
+  
 
   const rightArrowAnimation = {
     x: [-5, 0, -5],
@@ -239,7 +248,7 @@ const Explore = () => {
 
                     key={articles[currentIndex].id}
                     className="relative z-10 cursor-pointer"
-                    onClick={() => handleClick(articles[currentIndex])}
+                    onClick={() => handleClick(articles[currentIndex], currentIndex)} 
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
                     onDragEnd={(event, info) => {

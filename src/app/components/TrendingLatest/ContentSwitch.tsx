@@ -32,8 +32,8 @@ const ContentSwitch = ({ onSwitch }) => {
         <motion.button
           className={`text-sm mx-1 px-1 py-1 font-bold rounded flex items-center gap-1 ${
             isTrending
-              ? "bg-gray-500 text-white ring-offset-1 ring-2 ring-stone-950"
-              : "bg-gray-200 text-stone-700"
+              ? "bg-gray-800 text-white ring-offset-1 ring-2 ring-stone-950"
+              : "bg-gray-200 text-stone-800"
           }`}
           onClick={handleTrendingClick}
           whileTap={{ scale: 0.9 }}
@@ -49,8 +49,8 @@ const ContentSwitch = ({ onSwitch }) => {
         <motion.button
           className={`text-sm mx-1 px-1 py-1 font-bold rounded flex items-center gap-1 ${
             !isTrending
-              ? "bg-gray-500 text-white ring-offset-1 ring-2 ring-stone-950"
-              : "bg-gray-200 text-stone-700"
+              ? "bg-gray-800 text-white ring-offset-1 ring-2 ring-stone-950"
+              : "bg-gray-200 text-stone-800"
           }`}
           onClick={handleLatestClick}
           whileTap={{ scale: 0.9 }}

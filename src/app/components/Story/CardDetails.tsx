@@ -640,7 +640,7 @@ const CardDetails = () => {
 
                     {/* Description Below Image */}
                     <motion.div
-                      className="w-80 lg:w-96 bg-black/70 rounded-b-2xl shadow-md px-1"
+                      className="w-80 lg:w-96 bg-black/70 rounded-b-2xl shadow-md pl-3"
                       // initial={{ opacity: 0, y: 10 }}
                       // animate={{ opacity: 1, y: 0 }}
                       

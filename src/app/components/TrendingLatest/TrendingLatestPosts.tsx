@@ -61,7 +61,7 @@ const TrendingLatestPosts = () => {
         categoryTitle: article.category.Title,
         categorySlug: article.category.Slug,
         imageUrl:
-        "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
+          "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
         blurhash: article.blurhash,
       }));
       console.log("latestArticles", latestArticles);
@@ -85,8 +85,9 @@ const TrendingLatestPosts = () => {
     setCurrentIndex(0);
   };
 
-  const handleClick = (card) => {
+  const handleClick = (card: any, index: number) => {
     sessionStorage.setItem("jumpToTrendingLatest", "true");
+    sessionStorage.setItem("entryCardIndex", index.toString());
     setSelectedCard(card);
     setTimeout(() => {
       router.push(
@@ -96,6 +97,14 @@ const TrendingLatestPosts = () => {
       );
     }, 500);
   };
+
+  useEffect(() => {
+    const storedIndex = sessionStorage.getItem("entryCardIndex");
+    if (storedIndex !== null) {
+      setCurrentIndex(parseInt(storedIndex, 10));
+      sessionStorage.removeItem("entryCardIndex");
+    }
+  }, []);
 
   const handleLeftArrowClick = () => {
     setCurrentIndex((prevIndex) =>
@@ -144,53 +153,53 @@ const TrendingLatestPosts = () => {
           <ChevronDoubleLeftIcon />
         </motion.div>
         {loading ? (
-                    <div className="flex items-center justify-center bg-black bg-opacity-75 z-50">
-                      <motion.img
-                        src="/logo-white.svg"
-                        alt="Loading"
-                        className="h-20 md:h-24 lg:h-28"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      />
-                    </div>
-                  ) : (
-        <AnimatePresence initial={false}>
-          {posts.length > 0 && (
-            <motion.div
-              // @ts-ignore
-              key={posts[currentIndex].id}
-              className="absolute inset-0 flex items-center justify-center"
-              style={{ zIndex: 10, opacity: 1, scale: 1 }}
-              onClick={() => handleClick(posts[currentIndex])}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={(event, info) => {
-                if (info.offset.x < -100) {
-                  handleLeftArrowClick();
-                } else if (info.offset.x > 100) {
-                  handleRightArrowClick();
-                }
-              }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card
+          <div className="flex items-center justify-center bg-black bg-opacity-75 z-50">
+            <motion.img
+              src="/logo-white.svg"
+              alt="Loading"
+              className="h-20 md:h-24 lg:h-28"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+        ) : (
+          <AnimatePresence initial={false}>
+            {posts.length > 0 && (
+              <motion.div
                 // @ts-ignore
-                id={posts[currentIndex].id}
-                // @ts-ignore
-                imageUrl={posts[currentIndex].imageUrl}
-                // @ts-ignore
-                title={posts[currentIndex].title}
-                // @ts-ignore
-                category={posts[currentIndex].categoryTitle}
-                // @ts-ignore
-                blurhash={posts[currentIndex].blurhash}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+                key={posts[currentIndex].id}
+                className="absolute inset-0 flex items-center justify-center"
+                style={{ zIndex: 10, opacity: 1, scale: 1 }}
+                onClick={() => handleClick(posts[currentIndex], currentIndex)}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={(event, info) => {
+                  if (info.offset.x < -100) {
+                    handleLeftArrowClick();
+                  } else if (info.offset.x > 100) {
+                    handleRightArrowClick();
+                  }
+                }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card
+                  // @ts-ignore
+                  id={posts[currentIndex].id}
+                  // @ts-ignore
+                  imageUrl={posts[currentIndex].imageUrl}
+                  // @ts-ignore
+                  title={posts[currentIndex].title}
+                  // @ts-ignore
+                  category={posts[currentIndex].categoryTitle}
+                  // @ts-ignore
+                  blurhash={posts[currentIndex].blurhash}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         )}
         <motion.div
           className="absolute cursor-pointer right-1 lg:-right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 z-10"

@@ -13,7 +13,7 @@ const Hero = ({ scrollToExplore }) => {
       setWordIndex((prevIndex) => (prevIndex + 1) % words.length);
     };
 
-    const timeout = setTimeout(changeWord, 3000);
+    const timeout = setTimeout(changeWord, 7000);
 
     return () => clearTimeout(timeout);
   }, [wordIndex]);
