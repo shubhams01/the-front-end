@@ -88,7 +88,7 @@ const CardDetails = () => {
 
   const handleLike = () => {
     setShowLike(true);
-    setTimeout(() => setShowLike(false), 1000);
+    setTimeout(() => setShowLike(false), 2500);
   };
 
   useEffect(() => {
@@ -432,12 +432,31 @@ const CardDetails = () => {
       {isLoggedIn && showLike && (
         <motion.div
           className="absolute flex items-center justify-center z-10"
-          initial={{ scale: 0, opacity: 0, rotate: 0, color: "#ffffff" }}
-          animate={{ scale: 1.5, opacity: 0.5, rotate: -35, color: "#FFD700" }}
-          exit={{ scale: 1.5, opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          initial={{ scale: 0, opacity: 0, rotate: -10 }}
+          animate={{
+            scale: [1, 1.2, 1.1],
+            opacity: [0, 0.8, 1],
+          }}
+          exit={{
+            scale: [1, 0.9, 0],
+            opacity: [1, 0.5, 1],
+          }}
+          transition={{ duration: 3, ease: "easeInOut" }}
         >
-          <LightBulbIcon className="w-24 h-24" />
+          <motion.img
+            className="w-24 h-24"
+            src="/glowing-bulb.gif"
+            alt="Glowing Bulb"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [1, 0.95, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
         </motion.div>
       )}
       <motion.div className="h-dvh w-screen snap-start overflow-y-hidden overflow-x-hidden">
@@ -643,7 +662,7 @@ const CardDetails = () => {
                       className="w-80 lg:w-96 bg-black/70 rounded-b-2xl shadow-md pl-3"
                       // initial={{ opacity: 0, y: 10 }}
                       // animate={{ opacity: 1, y: 0 }}
-                      
+
                       transition={{ duration: 0.75, ease: "easeInOut" }}
                     >
                       <motion.span className="text-sm lg:text-md font-medium text-white leading-relaxed hyphens-auto">
@@ -662,7 +681,7 @@ const CardDetails = () => {
                                 </span>
                               );
                             }
-                            return word; 
+                            return word;
                           })}
                       </motion.span>
                     </motion.div>

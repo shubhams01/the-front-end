@@ -14,11 +14,12 @@ const TermsOfService = () => {
       </section>
 
       <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">Using Gyaanhub</h2>
+        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
+          Using Gyaanhub
+        </h2>
         <ul className="list-disc pl-5 text-gray-400">
           <li>
-            Gyaanhub provides a curated platform for sharing knowledge. Ensure
-            you use the content responsibly and adhere to our guidelines.
+            Ensure you use the content responsibly and adhere to our guidelines.
           </li>
           <li>
             Content is posted by Gyaanhub administrators and is intended for
@@ -80,9 +81,11 @@ const TermsOfService = () => {
       </section>
 
       <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">Contact Us</h2>
+        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
+          Contact Us
+        </h2>
         <p className="text-gray-400">
-          If you have any questions, email us at: 
+          If you have any questions, email us at:
           <a
             href="mailto:admin@gyaanhub.io"
             className="text-blue-400 hover:underline"

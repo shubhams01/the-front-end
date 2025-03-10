@@ -1,7 +1,7 @@
 "use client";
 import { motion, useAnimation } from "framer-motion";
+import Image from "next/image";
 import React, { useEffect } from "react";
-
 
 const LoadingScreen = () => {
   const overlayControls = useAnimation();
@@ -25,7 +25,13 @@ const LoadingScreen = () => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <img className="h-20 md:h-24 lg:h-28" src="/logo-white.svg" alt="Logo" />
+          <Image
+            width={100}
+            height={100}
+            className="h-20 md:h-24 lg:h-28"
+            src="/logo-white.svg"
+            alt="Logo"
+          />
         </motion.span>
       </motion.div>
     </>
