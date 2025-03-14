@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
+    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=1&pageSize=50`,
     {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
