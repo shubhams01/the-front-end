@@ -102,7 +102,7 @@ const CardActivity = ({
   }, [handleDoubleClick]);
 
   useEffect(() => {
-    console.log("activity effect out ", postId, token);
+    // console.log("activity effect out ", postId, token);
     const fetchArticleActivities = async () => {
       try {
         const activities = await api.fetchArticleActivities(postId, token);
@@ -110,7 +110,7 @@ const CardActivity = ({
         setIsBookmarked(activities.isSaved);
         setLikes(activities.likesCount);
         setCommentsCount(activities.commentsCount);
-        console.log("activity effect in ", postId, activities);
+        // console.log("activity effect in ", postId, activities);
       } catch (error) {
         console.error("Error fetching article activities:", error);
       }

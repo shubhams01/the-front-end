@@ -82,6 +82,10 @@ const CardDetails = () => {
 
   const [showLike, setShowLike] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentSection, setCurrentSection] = useState(0);
+
   const handleDoubleClick = (bulbClickFn) => {
     bulbClickRef.current = bulbClickFn;
   };
@@ -92,19 +96,19 @@ const CardDetails = () => {
   };
 
   useEffect(() => {
-    console.log("cardDetails ", pathname, articleId, nextSection);
+    // console.log("cardDetails ", pathname, articleId, nextSection);
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("ScrollY ", latest);
+    // console.log("ScrollY ", latest);
   });
 
   const handleDragEnd = (event: any, info: any, sectionIndex: number) => {
-    console.log("dragend ", info.offset.x, currentNestedPage);
+    // console.log("dragend ", info.offset.x, currentNestedPage);
     if (info.offset.x > 100 && currentNestedPage > 0) {
       // Swiped right
       setCurrentNestedPage(currentNestedPage - 1);
-      console.log("dragRight ", info.offset.x, currentNestedPage);
+      // console.log("dragRight ", info.offset.x, currentNestedPage);
     } else if (
       info.offset.x < -100 &&
       currentNestedPage <
@@ -113,40 +117,83 @@ const CardDetails = () => {
     ) {
       // Swiped left
       setCurrentNestedPage(currentNestedPage + 1);
-      console.log("dragLeft ", info.offset.x, currentNestedPage);
+      // console.log("dragLeft ", info.offset.x, currentNestedPage);
     }
   };
 
   const handleDrag = async (event: any, info: { offset: { y: number } }) => {
-    if (isCommentsOpen) return; // Prevent scrolling/swiping if comments are open
+    if (isCommentsOpen) return;
     setCloseShare(true);
-    // @ts-ignore
-    if (info.offset.y < -100 && currentPage < details?.sections.length - 1) {
-      setCurrentPage(currentPage + 1);
+    console.log(
+      "drag ",
+      nextSections,
+      currentSection,
+      currentPage,
+      currentNestedPage
+    );
+    const direction = info.offset.y < 0 ? "up" : "down";
+
+    if (
+      direction === "up" &&
+      info.offset.y < -100 &&
+      details &&
+      currentPage < details.sections.length - 1
+    ) {
       setCurrentNestedPage(0);
-    } else if (info.offset.y > 100 && currentPage > 0) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === "down" && info.offset.y > 100 && currentPage > 0) {
       setCurrentPage(currentPage - 1);
       setCurrentNestedPage(0);
     } else if (
+      direction === "up" &&
       info.offset.y < -100 &&
       // @ts-ignore
-      currentPage === details?.sections.length - 1
+      currentPage === details?.sections?.length - 1
     ) {
-      await fetchNextSection();
+      console.log(
+        "Reached last section of current article",
+        nextSections.length,
+        currentSection,
+        currentNestedPage
+      );
+
+      if (
+        currentNestedPage <
+        // @ts-ignore
+        details.sections[currentPage]?.nestedSections.length - 1
+      ) {
+        setCurrentNestedPage(currentNestedPage + 1);
+      } else if (currentSection >= nextSections.length - 1) {
+        setPage(page + 1);
+        console.log("Fetching new sections, page:", page + 1);
+      } else {
+        console.log("Moving to next article section", currentSection + 1);
+        setCurrentSection(currentSection + 1);
+        await setNextSection();
+      }
     }
-    console.log(
-      `${info.offset.y < 0 ? "dragUp " : "dragDown"}`,
-      info.offset.y,
-      currentPage,
-      details?.sections.length,
-      // @ts-ignore
-      details?.sections.length - 1 < currentPage
-    );
+    // console.log(
+    //     `${direction === "up" ? "dragUp" : "dragDown"}`,
+    //     info.offset.y,
+    //     currentPage,
+    //     details?.sections.length,
+    //     details?.sections.length - 1 < currentPage
+    // );
+    // console.log("currentSection ", currentSection);
   };
 
   const handleScroll = async (event: { deltaY: number }) => {
-    if (isCommentsOpen) return; // Prevent scrolling/swiping if comments are open
+    console.log(
+      "scroll ",
+      nextSections,
+      currentSection,
+      currentPage,
+      currentNestedPage
+    );
+
+    if (isCommentsOpen) return;
     setCloseShare(true);
+
     const direction = event.deltaY > 0 ? "down" : "up";
     // @ts-ignore
     if (direction === "down" && currentPage < details.sections.length - 1) {
@@ -160,166 +207,140 @@ const CardDetails = () => {
       // @ts-ignore
       currentPage === details.sections.length - 1
     ) {
-      await fetchNextSection();
+      console.log(
+        "Reached last section of current article",
+        nextSections.length,
+        currentSection,
+        currentNestedPage
+      );
+
+      if (
+        currentNestedPage <
+        // @ts-ignore
+        details.sections[currentPage]?.nestedSections.length - 2
+      ) {
+        setCurrentNestedPage(currentNestedPage + 1);
+      } else if (currentSection >= nextSections.length - 1 && nextSection === "explore") {
+        setPage(page + 1);
+        console.log("Fetching new sections, page:", page + 1);
+      } else {
+        console.log("Moving to next article section", currentSection + 1);
+        setCurrentSection(currentSection + 1);
+        await setNextSection();
+      }
+    }
+  };
+
+  const fetchNextSectionData = async (newPage: number) => {
+    try {
+      let url;
+
+      switch (nextSection) {
+        case "explore":
+          url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=${newPage}&pageSize=25`;
+          break;
+        case "trending":
+          url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/trending`;
+          break;
+        case "latest":
+          url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/latest`;
+          break;
+        default:
+          url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`;
+          break;
+      }
+
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch next section");
+
+      const data = await response.json();
+      const responseData = nextSection === "explore" ? data.data : data;
+
+      if (responseData.length === 0) {
+        setHasMore(false);
+        return;
+      }
+
+      const filteredData = responseData?.filter(
+        (section: { id: any }) => section.id !== Number(articleId)
+      );
+      if (nextSection === "explore") {
+        // @ts-ignore
+        setNextSections((prevSections) => [...prevSections, ...filteredData]);
+      } else {
+        setNextSections(filteredData);
+      }
+      console.log("Next Sections:", filteredData, articleId);
+    } catch (error) {
+      console.error("Error fetching next section:", error);
     }
   };
 
   useEffect(() => {
-    const fetchNextSectionData = async () => {
-      try {
-        let response;
-        if (nextSection === "explore") {
-          response = await fetch(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
-            {
-              headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
-              },
-            }
-          );
-        } else if (nextSection === "trending" || nextSection === "latest") {
-          if (nextSection === "trending") {
-            response = await fetch(
-              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/trending`,
-              {
-                headers: {
-                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
-                },
-              }
-            );
-          } else {
-            response = await fetch(
-              `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/latest`,
-              {
-                headers: {
-                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
-                },
-              }
-            );
-          }
-        } else {
-          response = await fetch(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
-            {
-              headers: {
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
-              },
-            }
-          );
-        }
-        if (!response.ok) {
-          throw new Error("Failed to fetch next section");
-        }
-        const responseData = await response.json();
-        const filteredData = responseData.filter(
-          (section: { id: any }) => section.id !== Number(articleId)
-        );
-        setNextSections(filteredData);
-        console.log("Next Sections:", filteredData, articleId);
-      } catch (error) {
-        console.error("Error fetching next section:", error);
-      }
-    };
-    fetchNextSectionData();
-  }, []);
+    fetchNextSectionData(page);
+  }, [page]);
 
-  const fetchNextSection = async () => {
-    // setIsFetchingNextSection(true);
+  const setNextSection = async () => {
     await overlayControls.start({ y: 0 });
 
     setCurrentPage(0);
-    // @ts-ignore
-    const sections = nextSections[nextSectionIndex]?.sections?.map(
-      (section: {
-        SectionImage: { formats: { large: { url: any } } };
-        SectionDescription: any;
-        SectionImageBlurhash: any;
-        NestedSections: any[];
-      }) => {
-        const sectionObject = {
-          imageUrl:
-            "https://api.gyaanhub.io" +
-            section?.SectionImage?.formats?.large?.url,
-          description: section.SectionDescription,
-          blurhash: section?.SectionImageBlurhash,
-          nestedSections: section.NestedSections
-            ? section.NestedSections.map(
-                (nested: {
-                  NestedSectionImage: { formats: { large: { url: any } } };
-                  NestedSectionDescription: any;
-                  NestedSectionImageBlurhash: any;
-                }) => ({
-                  imageUrl:
-                    "https://api.gyaanhub.io" +
-                    nested?.NestedSectionImage?.formats?.large?.url,
-                  description: nested.NestedSectionDescription,
-                  blurhash: nested.NestedSectionImageBlurhash,
-                })
-              )
-            : [],
-        };
-        return sectionObject;
-      }
-    );
+    const nextSection = nextSections[nextSectionIndex];
 
-    setDetails((prevDetails) => {
-      const updatedDetails = {
-        // @ts-ignore
-        id: nextSections[nextSectionIndex]?.id,
-        // @ts-ignore
-        title: nextSections[nextSectionIndex]?.Title,
-        // @ts-ignore
-        slug: nextSections[nextSectionIndex]?.Slug,
-        // @ts-ignore
-        sections: sections,
-        // @ts-ignore
-        likes: nextSections[nextSectionIndex]?.likesCount,
-        // @ts-ignore
-        comments: nextSections[nextSectionIndex]?.commentsCount,
-      };
-      console.log(
-        "Updated Details inside state update function:",
-        updatedDetails
-      );
-      return updatedDetails;
-    });
+    if (!nextSection) {
+      console.error("No more sections available.");
+      return;
+    }
+    // @ts-ignore
+    const sections = nextSection.sections.map((section: any) => ({
+      imageUrl: `https://api.gyaanhub.io${section.SectionImage?.formats?.large?.url}`,
+      description: section.SectionDescription,
+      blurhash: section.SectionImageBlurhash,
+      nestedSections: section.NestedSections
+        ? section.NestedSections.map((nested: any) => ({
+            imageUrl: `https://api.gyaanhub.io${nested?.NestedSectionImage?.formats?.large?.url}`,
+            description: nested?.NestedSectionDescription,
+            blurhash: nested?.NestedSectionImageBlurhash,
+          }))
+        : [],
+    }));
+
+    setDetails((prevDetails) => ({
+      // @ts-ignore
+      id: nextSection.id,
+      // @ts-ignore
+      title: nextSection.Title,
+      // @ts-ignore
+      slug: nextSection.Slug,
+      // @ts-ignore
+      sections: sections,
+      // @ts-ignore
+      likes: nextSection.likesCount,
+      // @ts-ignore
+      comments: nextSection.commentsCount,
+    }));
 
     if (nextSectionIndex < nextSections.length - 1) {
       setNextSectionIndex(nextSectionIndex + 1);
-      console.log(
-        "nextSectionIndex ",
-        nextSectionIndex,
-        nextSections[nextSectionIndex],
-        pathname
-      );
     }
 
-    // Updating URL
-    const nextSection = nextSections[nextSectionIndex];
-    if (nextSection) {
-      // @ts-ignore
+    // @ts-ignore
+    const categorySlug = nextSection.category?.Slug;
+    // @ts-ignore
+    const sectionSlug = nextSection?.Slug;
+    // @ts-ignore
+    const sectionId = nextSection?.id;
+    const newUrl = `/${categorySlug}/${sectionSlug}-${sectionId}`;
+    window.history.pushState({ urlPath: `/${categorySlug}` }, "", newUrl);
 
-      const categorySlug = nextSection.category?.Slug;
-      // @ts-ignore
-      const sectionSlug = nextSection?.Slug;
-      // @ts-ignore
-      const sectionId = nextSection?.id;
-
-      const newUrl = `/${categorySlug}/${sectionSlug}-${sectionId}`;
-      window.history.pushState({ urlPath: `/${categorySlug}` }, "", newUrl);
-      console.log("updatedUrl ", nextSection);
-    } else {
-      console.error("Some properties are undefined:", nextSection);
-    }
+    // console.log("Updated URL:", newUrl);
 
     await overlayControls.start({ y: "-100%" });
-    // setIsFetchingNextSection(false);
   };
-
-  useEffect(() => {
-    setDetails(details);
-    console.log("Updated Details: ", details);
-  }, [details]);
 
   const handleArrowUpClick = () => {
     if (currentPage > 0) {
