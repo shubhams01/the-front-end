@@ -21,9 +21,8 @@ import {
   WhatsappIcon,
 } from "react-share";
 import { formatNumber } from "@/app/utils/numberFormatter";
-import Odometer from "react-odometerjs";
-import "odometer/themes/odometer-theme-default.css";
-import { env } from "process";
+// import Odometer from "react-odometerjs";
+// import "odometer/themes/odometer-theme-default.css";
 
 const api = {
   like: async (userId, articleId, token) => {
@@ -234,7 +233,8 @@ const CardActivity = ({
             isLiked ? "text-yellow-400" : "text-white"
           } text-xs lg:text-xl`}
         >
-          <Odometer value={likes} format="(,ddd)" />
+          {/* <Odometer value={likes} format="(,ddd)" /> */}
+          {likes}
         </motion.div>
         {/* )} */}
         {isExpanded && (
@@ -253,7 +253,8 @@ const CardActivity = ({
               </button>
               {/* {commentsCount > 0 && ( */}
               <motion.div className="text-white text-xs lg:text-xl">
-                <Odometer value={commentsCount} format="(,ddd)" />
+                {/* <Odometer value={commentsCount} format="(,ddd)" /> */}
+                {commentsCount}
               </motion.div>
               {/* )} */}
             </div>
