@@ -71,7 +71,7 @@ const Explore = () => {
 
       const response = await fetch(
         // `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`,
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=${newPage}&pageSize=5`,
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=${newPage}&pageSize=25`,
         {
           headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,

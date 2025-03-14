@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import {
   LightBulbIcon,
   ChatBubbleOvalLeftEllipsisIcon,
@@ -21,8 +21,9 @@ import {
   WhatsappIcon,
 } from "react-share";
 import { formatNumber } from "@/app/utils/numberFormatter";
-// import Odometer from "react-odometerjs";
-// import "odometer/themes/odometer-theme-default.css";
+import Counter from "./Counter";
+import Odometer from "react-odometerjs";
+import "odometer/themes/odometer-theme-default.css";
 
 const api = {
   like: async (userId, articleId, token) => {
@@ -81,6 +82,19 @@ const CardActivity = ({
   const token = getAuthToken() || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
   const userId = useAuthStore.getState().getUserId();
 
+  const count = useMotionValue(0);
+
+  const formattedLikes = useTransform(count, (latest) => {
+    return latest >= 1000
+      ? (latest / 1000).toFixed(1) + "k"
+      : Math.round(latest).toString();
+  });
+
+  useEffect(() => {
+    const controls = animate(count, likes, { duration: 1, ease: "easeOut" });
+    return controls.stop;
+  }, [likes, count]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsExpanded(true);
@@ -100,20 +114,21 @@ const CardActivity = ({
     }
   }, [handleDoubleClick]);
 
+  const fetchArticleActivities = async () => {
+    try {
+      const activities = await api.fetchArticleActivities(postId, token);
+      setIsLiked(activities.isLiked);
+      setIsBookmarked(activities.isSaved);
+      setLikes(activities.likesCount);
+      setCommentsCount(activities.commentsCount);
+      // console.log("activity effect in ", postId, activities);
+    } catch (error) {
+      console.error("Error fetching article activities:", error);
+    }
+  };
+
   useEffect(() => {
     // console.log("activity effect out ", postId, token);
-    const fetchArticleActivities = async () => {
-      try {
-        const activities = await api.fetchArticleActivities(postId, token);
-        setIsLiked(activities.isLiked);
-        setIsBookmarked(activities.isSaved);
-        setLikes(activities.likesCount);
-        setCommentsCount(activities.commentsCount);
-        // console.log("activity effect in ", postId, activities);
-      } catch (error) {
-        console.error("Error fetching article activities:", error);
-      }
-    };
     fetchArticleActivities();
   }, [postId, token, likes, commentsCount]);
 
@@ -205,6 +220,7 @@ const CardActivity = ({
 
   const shareUrl = window.location.href;
 
+
   return (
     <>
       <motion.div
@@ -227,16 +243,14 @@ const CardActivity = ({
         >
           <LightBulbIcon className="h-7 w-7 lg:h-8 lg:w-8" />
         </motion.button>
-        {/* {likes > 0 && ( */}
         <motion.div
           className={`${
             isLiked ? "text-yellow-400" : "text-white"
-          } text-xs lg:text-xl`}
+          } text-[10px] lg:text-md`}
         >
-          {/* <Odometer value={likes} format="(,ddd)" /> */}
-          {likes}
+          {/* <Counter value={likes} /> */}
+          <Odometer value={likes} format="d" />
         </motion.div>
-        {/* )} */}
         {isExpanded && (
           <motion.div
             className="absolute bottom-full right-0 flex flex-col items-center rounded-lg p-1 space-y-2"
@@ -251,12 +265,10 @@ const CardActivity = ({
               >
                 <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 lg:h-8 lg:w-8" />
               </button>
-              {/* {commentsCount > 0 && ( */}
-              <motion.div className="text-white text-xs lg:text-xl">
-                {/* <Odometer value={commentsCount} format="(,ddd)" /> */}
-                {commentsCount}
+              <motion.div className="text-white text-[10px] lg:text-md">
+                {/* <Counter value={commentsCount} /> */}
+                <Odometer value={commentsCount} format="d" />
               </motion.div>
-              {/* )} */}
             </div>
             <button
               className="flex items-center justify-center"
@@ -313,10 +325,11 @@ const CardActivity = ({
           userId={userId}
           postId={postId}
           isOpen={isCommentsOpen}
-          onClose={() =>
-            // @ts-ignore
-            setIsCommentsOpen(false) || setIsCommentsOpenDragScroll(false)
-          }
+          onClose={async () => {
+            setIsCommentsOpen(false);
+            setIsCommentsOpenDragScroll(false);
+            await fetchArticleActivities();
+          }}
         />
       )}
     </>

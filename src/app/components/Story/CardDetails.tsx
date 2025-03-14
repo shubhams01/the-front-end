@@ -220,7 +220,10 @@ const CardDetails = () => {
         details.sections[currentPage]?.nestedSections.length - 2
       ) {
         setCurrentNestedPage(currentNestedPage + 1);
-      } else if (currentSection >= nextSections.length - 1 && nextSection === "explore") {
+      } else if (
+        currentSection >= nextSections.length - 1 &&
+        nextSection === "explore"
+      ) {
         setPage(page + 1);
         console.log("Fetching new sections, page:", page + 1);
       } else {
@@ -246,10 +249,10 @@ const CardDetails = () => {
           url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/latest`;
           break;
         default:
-          url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore`;
+          url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=${newPage}&pageSize=25`;
           break;
       }
-
+      console.log("url ", nextSection, url);
       const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
@@ -259,7 +262,8 @@ const CardDetails = () => {
       if (!response.ok) throw new Error("Failed to fetch next section");
 
       const data = await response.json();
-      const responseData = nextSection === "explore" ? data.data : data;
+      const responseData =
+        nextSection === "explore" || !nextSection ? data.data : data;
 
       if (responseData.length === 0) {
         setHasMore(false);
@@ -269,7 +273,7 @@ const CardDetails = () => {
       const filteredData = responseData?.filter(
         (section: { id: any }) => section.id !== Number(articleId)
       );
-      if (nextSection === "explore") {
+      if (nextSection === "explore" || !nextSection) {
         // @ts-ignore
         setNextSections((prevSections) => [...prevSections, ...filteredData]);
       } else {
