@@ -237,6 +237,7 @@ const CardDetails = () => {
   const fetchNextSectionData = async (newPage: number) => {
     try {
       let url;
+      const categorySections = ["sanatan", "sevens", "stem", "history", "bts", "internals", "goats"];
 
       switch (nextSection) {
         case "explore":
@@ -248,9 +249,12 @@ const CardDetails = () => {
         case "latest":
           url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/latest`;
           break;
-        default:
-          url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=${newPage}&pageSize=25`;
-          break;
+          default:
+            if (typeof nextSection === "string" && categorySections.includes(nextSection)) {
+              url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/articles/category/${nextSection}`;
+            } else {
+              url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=${newPage}&pageSize=25`;
+            }
       }
       console.log("url ", nextSection, url);
       const response = await fetch(url, {

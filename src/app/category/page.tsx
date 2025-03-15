@@ -54,11 +54,12 @@ const CategoryPageContent = () => {
         const data = await response.json();
         const extractedArticles = data.map((article) => ({
           id: article.id,
-          title: article.title,
-          slug: article?.slug,
-          categoryTitle: article.categoryTitle,
-          categorySlug: article.categorySlug,
-          imageUrl: "https://api.gyaanhub.io" + article.imageUrl,
+          title: article.Title,
+          slug: article.Slug,
+          categoryTitle: article.category.Title,
+          categorySlug: article.category.Slug,
+          imageUrl:
+            "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
           blurhash: article.blurhash,
         }));
         console.log("Articles by Category", category, extractedArticles, data);
