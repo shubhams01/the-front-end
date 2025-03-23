@@ -1,6 +1,5 @@
 "use client";
 import { motion, useAnimation } from "framer-motion";
-import Image from "next/image";
 import React, { useEffect } from "react";
 
 const LoadingScreen = () => {
@@ -25,9 +24,7 @@ const LoadingScreen = () => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <Image
-            width={100}
-            height={100}
+          <img
             className="h-20 md:h-24 lg:h-28"
             src="/logo-white.svg"
             alt="Logo"

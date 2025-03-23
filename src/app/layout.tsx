@@ -4,7 +4,7 @@ import { ModalProvider } from "./context/ModalContext";
 import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar";
 import Head from "next/head";
-import { Viewport } from "next"
+import { Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import AdSense from "./components/Ads/Adsense";
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
-}
+};
 
 export default function RootLayout({
   children,
@@ -84,7 +84,7 @@ export default function RootLayout({
         {/* <AdSense pId="ca-pub-8954233353863168"/> */}
 
         {/* Google tag (gtag.js)  */}
-        <script
+        {/* <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-05GW6CSNL3"
         ></script>
@@ -96,7 +96,13 @@ export default function RootLayout({
 
           gtag('config', 'G-05GW6CSNL3');
             `}
-        </script>
+        </script> */}
+        <link
+          rel="preload"
+          as="image"
+          href="/logo-white.svg"
+          type="image/svg+xml"
+        />
       </Head>
       <body className={montserrat.className}>
         <ModalProvider>
