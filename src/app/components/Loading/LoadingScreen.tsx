@@ -1,5 +1,6 @@
 "use client";
 import { motion, useAnimation } from "framer-motion";
+import Image from "next/image";
 import React, { useEffect } from "react";
 
 const LoadingScreen = () => {
@@ -24,10 +25,13 @@ const LoadingScreen = () => {
           animate={{ rotate: 360 }}
           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
         >
-          <img
+          <Image
+            width={100}
+            height={100}
             className="h-20 md:h-24 lg:h-28"
-            src="/logo-white.svg"
+            src="https://api.gyaanhub.io/uploads/logo_white_31cbe3cc0d.svg"
             alt="Logo"
+            priority
           />
         </motion.span>
       </motion.div>

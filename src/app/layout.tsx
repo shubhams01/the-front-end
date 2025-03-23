@@ -1,13 +1,45 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ModalProvider } from "./context/ModalContext";
-import Script from "next/script";
-import Navbar from "./components/Navbar/Navbar";
 import Head from "next/head";
 import { Viewport } from "next";
 import { Montserrat } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import AdSense from "./components/Ads/Adsense";
+import dynamic from "next/dynamic";
+// import Navbar from "./components/Navbar/Navbar";
+// import { ModalProvider } from "./context/ModalContext";
+// import { GoogleAnalytics } from "@next/third-parties/google";
+// import AdSense from "./components/Ads/Adsense";
+
+const Navbar = dynamic(
+  // @ts-ignore
+  () => import("./components/Navbar/Navbar.tsx").then((mod) => mod.default),
+  {
+    // ssr: false,
+  }
+);
+
+const ModalProvider = dynamic(
+  // @ts-ignore
+  () => import("./context/ModalContext.tsx").then((mod) => mod.ModalProvider),
+  {
+    // ssr: false,
+  }
+);
+
+const AdSense = dynamic(
+  // @ts-ignore
+  () => import("./components/Google/Adsense.tsx").then((mod) => mod.default),
+  {
+    // ssr: false,
+  }
+);
+
+const GoogleAnalytics = dynamic(
+  // @ts-ignore
+  () => import("./components/Google/Analytics.tsx").then((mod) => mod.default),
+  {
+    // ssr: false,
+  }
+);
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -100,7 +132,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/logo-white.svg"
+          href="https://api.gyaanhub.io/uploads/logo_white_31cbe3cc0d.svg"
           type="image/svg+xml"
         />
       </Head>
@@ -110,7 +142,8 @@ export default function RootLayout({
           {children}
         </ModalProvider>
       </body>
-      <GoogleAnalytics gaId="G-05GW6CSNL3" />
+      {/* <GoogleAnalytics gaId="G-05GW6CSNL3" /> */}
+      <GoogleAnalytics />
     </html>
   );
 }
