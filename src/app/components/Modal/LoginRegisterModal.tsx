@@ -21,7 +21,7 @@ const LoginRegisterModal: React.FC<LoginRegisterModalProps> = ({
       const pathname = usePathname();
       
       const handleClickOutside = (event) => {
-        console.log('handleOutsideclick ', event.target.id, pathname.split('/')[1]);
+        // console.log('handleOutsideclick ', event.target.id, pathname.split('/')[1]);
         if (popupRef.current && event.target.id == 'popup' && pathname.split('/')[1] != 'profile') {
           toggleLoginModal();
         }

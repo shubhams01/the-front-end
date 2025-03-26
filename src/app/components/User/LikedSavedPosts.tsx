@@ -44,7 +44,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
         throw new Error("Failed to fetch posts");
       }
       const data = await response.json();
-      console.log("likedOrSavedData ", data);
+      // console.log("likedOrSavedData ", data);
 
       const likedOrSavedPosts = data.map((item: any) => ({
         id: item.article.id,
@@ -56,7 +56,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
           "https://api.gyaanhub.io" + item.article.Image[0].formats.large.url,
         blurhash: item.article.blurhash,
       }));
-      console.log("likedOrSavedPosts ", likedOrSavedPosts);
+      // console.log("likedOrSavedPosts ", likedOrSavedPosts);
       setPosts(likedOrSavedPosts);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -114,7 +114,7 @@ const LikedSavedPosts: React.FC<LikedSavedPostsProps> = ({
   };
 
   const handleClick = (card: any) => {
-    console.log("cardLikedorSaved ", card);
+    // console.log("cardLikedorSaved ", card);
     setSelectedCard(card);
     setTimeout(() => {
       // @ts-ignore

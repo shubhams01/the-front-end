@@ -1,143 +1,90 @@
 import React from "react";
 
-const page = () => {
+const PrivacyPolicy = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <section className="mb-6">
-        <h2 className="text-2xl text-center font-semibold text-gray-200 mb-4">
-          Privacy Policy
-        </h2>
-        <p className="text-gray-400">
-          Welcome to Gyaanhub! Your privacy is important to us. This Privacy
-          Policy explains how we collect, use, and protect your personal
-          information when you use our knowledge-sharing platform. By accessing
-          or using Gyaanhub, you agree to the practices described in this
-          Privacy Policy.
-        </p>
-      </section>
+    <div className="min-h- w-dvw bg-gray-900 text-gray-300 flex flex-col items-center px-4 py-12">
+      <h1 className="text-3xl font-bold text-center text-white mt-2 mb-8">
+        Privacy Policy
+      </h1>
+      <div className="max-w-3xl w-full bg-gray-800 shadow-lg rounded-2xl p-8 md:p-12">
+        <section className="mb-8">
+          <p className="text-gray-400 text-lg leading-relaxed">
+            Welcome to Gyaanhub! Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your personal information when you use our platform. By accessing or using Gyaanhub, you agree to the practices described in this Privacy Policy.
+          </p>
+        </section>
 
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
-          Information We Collect
-        </h2>
-        <h3 className="text-xl font-medium text-gray-200 mt-4">
-          1. Information You Provide to Us
-        </h3>
-        <ul className="list-disc pl-5 text-gray-400">
-          <li>
-            <strong>Account Information:</strong> When you sign up, we collect
-            your name, email address, and other details you provide.
-          </li>
-          <li>
-            <strong>Content Submissions:</strong> Any articles, comments, or
-            other content you share.
-          </li>
-        </ul>
+        {sections.map((section, index) => (
+          <section key={index} className="mb-8">
+            <h2 className="text-2xl font-semibold text-white mb-4">
+              {section.title}
+            </h2>
+            {section.content.map((text, i) => (
+              <p key={i} className="text-gray-400 mb-4 text-lg leading-relaxed hyphens-auto">
+                {text}
+              </p>
+            ))}
+          </section>
+        ))}
 
-        <h3 className="text-xl font-medium text-gray-200 mt-4">
-          2. Information We Collect Automatically
-        </h3>
-        <ul className="list-disc pl-5 text-gray-400">
-          <li>
-            <strong>Device Information:</strong> Includes IP address, browser
-            type, and operating system.
-          </li>
-          <li>
-            <strong>Usage Data:</strong> Details about how you use Gyaanhub,
-            such as pages viewed and actions taken.
-          </li>
-        </ul>
-
-        <h3 className="text-xl font-medium text-gray-200 mt-4">
-          3. Cookies and Tracking Technologies
-        </h3>
-        <p className="text-gray-400">
-          We use cookies to improve your experience and analyze usage patterns.
-          You can control cookies through your browser settings.
-        </p>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
-          How We Use Your Information
-        </h2>
-        <ul className="list-disc pl-5 text-gray-400">
-          <li>To provide and improve our platform.</li>
-          <li>
-            To communicate with you about updates, features, and promotions.
-          </li>
-          <li>To ensure the security of our platform.</li>
-        </ul>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
-          Sharing Your Information
-        </h2>
-        <p className="text-gray-400">
-          We do not sell your personal information. We may share your
-          information with:
-        </p>
-        <ul className="list-disc pl-5 text-gray-400">
-          <li>
-            <strong>Service Providers:</strong> Third parties that help us
-            operate Gyaanhub.
-          </li>
-          <li>
-            <strong>Legal Authorities:</strong> When required by law or to
-            protect our platform.
-          </li>
-        </ul>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
-          Your Rights
-        </h2>
-        <ul className="list-disc pl-5 text-gray-400">
-          <li>Access, correct, or delete your personal information.</li>
-          <li>Opt-out of marketing communications.</li>
-          <li>Request data portability where applicable.</li>
-        </ul>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
-          Data Security
-        </h2>
-        <p className="text-gray-400">
-          We implement robust security measures to protect your data. However,
-          no system is completely secure, and we cannot guarantee absolute
-          security.
-        </p>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
-          Changes to This Policy
-        </h2>
-        <p className="text-gray-400">
-          We may update this Privacy Policy from time to time. Changes will be
-          notified through our platform or email.
-        </p>
-      </section>
-
-      <section className="mb-6">
-        <h2 className="text-2xl font-semibold text-gray-200 mb-2">
-          Contact Us
-        </h2>
-        <p className="text-gray-400">
-          If you have any questions, email us at:{" "}
-          <a
-            href="mailto:admin@gyaanhub.io"
-            className="text-blue-400 hover:underline"
-          >
-            admin@gyaanhub.io
-          </a>
-        </p>
-      </section>
+        <section>
+          <h2 className="text-xl font-semibold text-white mb-4">Contact Us</h2>
+          <p className="text-gray-400 text-lg">
+            If you have any questions, email us at:
+            <a href="mailto:admin@gyaanhub.io" className="text-blue-400 hover:underline ml-1">
+              admin@gyaanhub.io
+            </a>
+          </p>
+        </section>
+      </div>
     </div>
   );
 };
 
-export default page;
+const sections = [
+  {
+    title: "Information We Collect",
+    content: [
+      "We collect information you provide to us, such as name, email, and account details.",
+      "We also collect data automatically, including device information, IP address, and usage analytics."
+    ]
+  },
+  {
+    title: "How We Use Your Information",
+    content: [
+      "To provide and improve our platform.",
+      "To communicate with you about updates, features, and promotions.",
+      "To ensure the security of our platform."
+    ]
+  },
+  {
+    title: "Sharing Your Information",
+    content: [
+      "We do not sell your personal information.",
+      "We may share your information with service providers and legal authorities when required."
+    ]
+  },
+  {
+    title: "Your Rights",
+    content: [
+      "You can access, correct, or delete your personal information.",
+      "You may opt-out of marketing communications.",
+      "You can request data portability where applicable."
+    ]
+  },
+  {
+    title: "Data Security",
+    content: [
+      "We implement robust security measures to protect your data.",
+      "However, no system is completely secure, and we cannot guarantee absolute security."
+    ]
+  },
+  {
+    title: "Changes to This Policy",
+    content: [
+      "We may update this Privacy Policy from time to time.",
+      "Changes will be notified through our platform or email."
+    ]
+  }
+];
+
+export default PrivacyPolicy;

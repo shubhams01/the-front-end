@@ -49,7 +49,7 @@ const Page = () => {
             ? `${API_URL}${userData.profilePhoto}`
             : "https://cdn1.iconfinder.com/data/icons/essential-21/128/User-512.png";
           setUserData(userData);
-          console.log("user ", userData);
+          // console.log("user ", userData);
         } else {
           console.error("Failed to fetch user data");
         }

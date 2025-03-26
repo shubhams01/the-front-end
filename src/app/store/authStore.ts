@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       const data = await registerUser(username, email, password);
       //setAuthToken(data.jwt);
       //set({ isLoggedIn: true, user: data.user, error: null });
-      console.log('authStore register data', data);
+      // console.log('authStore register data', data);
       return data;
     } catch (error) {
       // @ts-ignore

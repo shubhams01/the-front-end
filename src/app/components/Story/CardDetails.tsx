@@ -124,13 +124,13 @@ const CardDetails = () => {
   const handleDrag = async (event: any, info: { offset: { y: number } }) => {
     if (isCommentsOpen) return;
     setCloseShare(true);
-    console.log(
-      "drag ",
-      nextSections,
-      currentSection,
-      currentPage,
-      currentNestedPage
-    );
+    // console.log(
+    //   "drag ",
+    //   nextSections,
+    //   currentSection,
+    //   currentPage,
+    //   currentNestedPage
+    // );
     const direction = info.offset.y < 0 ? "up" : "down";
 
     if (
@@ -150,12 +150,12 @@ const CardDetails = () => {
       // @ts-ignore
       currentPage === details?.sections?.length - 1
     ) {
-      console.log(
-        "Reached last section of current article",
-        nextSections.length,
-        currentSection,
-        currentNestedPage
-      );
+      // console.log(
+      //   "Reached last section of current article",
+      //   nextSections.length,
+      //   currentSection,
+      //   currentNestedPage
+      // );
 
       if (
         currentNestedPage <
@@ -165,9 +165,9 @@ const CardDetails = () => {
         setCurrentNestedPage(currentNestedPage + 1);
       } else if (currentSection >= nextSections.length - 1) {
         setPage(page + 1);
-        console.log("Fetching new sections, page:", page + 1);
+        // console.log("Fetching new sections, page:", page + 1);
       } else {
-        console.log("Moving to next article section", currentSection + 1);
+        // console.log("Moving to next article section", currentSection + 1);
         setCurrentSection(currentSection + 1);
         await setNextSection();
       }
@@ -183,13 +183,13 @@ const CardDetails = () => {
   };
 
   const handleScroll = async (event: { deltaY: number }) => {
-    console.log(
-      "scroll ",
-      nextSections,
-      currentSection,
-      currentPage,
-      currentNestedPage
-    );
+    // console.log(
+    //   "scroll ",
+    //   nextSections,
+    //   currentSection,
+    //   currentPage,
+    //   currentNestedPage
+    // );
 
     if (isCommentsOpen) return;
     setCloseShare(true);
@@ -207,12 +207,12 @@ const CardDetails = () => {
       // @ts-ignore
       currentPage === details.sections.length - 1
     ) {
-      console.log(
-        "Reached last section of current article",
-        nextSections.length,
-        currentSection,
-        currentNestedPage
-      );
+      // console.log(
+      //   "Reached last section of current article",
+      //   nextSections.length,
+      //   currentSection,
+      //   currentNestedPage
+      // );
 
       if (
         currentNestedPage <
@@ -225,9 +225,9 @@ const CardDetails = () => {
         nextSection === "explore"
       ) {
         setPage(page + 1);
-        console.log("Fetching new sections, page:", page + 1);
+        // console.log("Fetching new sections, page:", page + 1);
       } else {
-        console.log("Moving to next article section", currentSection + 1);
+        // console.log("Moving to next article section", currentSection + 1);
         setCurrentSection(currentSection + 1);
         await setNextSection();
       }
@@ -256,7 +256,7 @@ const CardDetails = () => {
               url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/explore?page=${newPage}&pageSize=25`;
             }
       }
-      console.log("url ", nextSection, url);
+      // console.log("url ", nextSection, url);
       const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
@@ -283,7 +283,7 @@ const CardDetails = () => {
       } else {
         setNextSections(filteredData);
       }
-      console.log("Next Sections:", filteredData, articleId);
+      // console.log("Next Sections:", filteredData, articleId);
     } catch (error) {
       console.error("Error fetching next section:", error);
     }
@@ -380,7 +380,7 @@ const CardDetails = () => {
           throw new Error("Failed to fetch Articles");
         }
         const data = await response.json();
-        console.log("articleDetails ", data);
+        // console.log("articleDetails ", data);
 
         const sections = data?.sections.map(
           (section: {
@@ -424,7 +424,7 @@ const CardDetails = () => {
         };
 
         setDetails(article);
-        console.log("article ", article);
+        // console.log("article ", article);
       } catch (error) {
         console.error("Error fetching Articles:", error);
       }

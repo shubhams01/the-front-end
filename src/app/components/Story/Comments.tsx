@@ -131,7 +131,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
 
         const newCommentObject = await response.json();
         setNewComment("");
-        console.log("addComment ", newCommentObject);
+        // console.log("addComment ", newCommentObject);
         setComments([newCommentObject, ...comments]);
       } catch (error) {
         console.error("Error adding comment:", error);
@@ -201,7 +201,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
 
   const handleReportComment = (id: number) => {
     // Implement report functionality here
-    console.log(`Report comment with id: ${id}`);
+    // console.log(`Report comment with id: ${id}`);
     setMenuVisible(null); // Close options menu
   };
 

@@ -27,7 +27,7 @@ const CategoryPageContent = () => {
   const overlayControls = useAnimation();
 
   const handleClick = (card) => {
-    console.log("card ", card);
+    // console.log("card ", card);
     setSelectedCard(card);
     setTimeout(() => {
       router.push(
@@ -62,7 +62,7 @@ const CategoryPageContent = () => {
             "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
           blurhash: article.blurhash,
         }));
-        console.log("Articles by Category", category, extractedArticles, data);
+        // console.log("Articles by Category", category, extractedArticles, data);
         setArticles(extractedArticles);
         await overlayControls.start({ y: "-100%" });
       } catch (error) {

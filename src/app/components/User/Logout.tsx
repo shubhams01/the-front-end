@@ -31,7 +31,7 @@ const Logout: React.FC = () => {
   };
 
   const confirmLogout = () => {
-    console.log("User logged out");
+    // console.log("User logged out");
     logout();
     router.push("/");
   };

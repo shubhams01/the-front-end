@@ -30,7 +30,7 @@ const Categories = () => {
           imageUrl: 'https://api.gyaanhub.io' + category.Image,
           blurhash: category.blurhash,
         }));
-        console.log("categories ", extractedCategories);
+        // console.log("categories ", extractedCategories);
         setLoading(false);
         setCategories(extractedCategories);
       } catch (error) {
@@ -42,7 +42,7 @@ const Categories = () => {
   }, []);
 
   const handleClick = (category) => {
-    console.log("category clicked: ", category);
+    // console.log("category clicked: ", category);
     sessionStorage.setItem("jumpToCategories", "true");
     setTimeout(() => {
       router.push(`/category?type=${category.slug}`);

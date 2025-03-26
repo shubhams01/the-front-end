@@ -45,7 +45,7 @@ const Explore = () => {
   const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL;
 
   const handleClick = (card: any, index: number) => {
-    console.log("card ", card);
+    // console.log("card ", card);
     sessionStorage.setItem("entryCardIndex", index.toString()); // Save index
     sessionStorage.setItem("jumpToExplore", "true");
 
@@ -88,7 +88,7 @@ const Explore = () => {
         return;
       }
       const { data: articlesData } = data;
-      console.log("ExploreData ", articlesData);
+      // console.log("ExploreData ", articlesData);
       const extractedArticles = articlesData.map((article: any) => ({
         id: article.id,
         title: article.Title,
@@ -99,10 +99,10 @@ const Explore = () => {
           "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
         blurhash: article?.blurhash,
       }));
-      console.log(
-        `Articles ${isLoggedIn ? "recommended" : "explore"}`,
-        extractedArticles
-      );
+      // console.log(
+      //   `Articles ${isLoggedIn ? "recommended" : "explore"}`,
+      //   extractedArticles
+      // );
       setLoading(false);
       // setArticles(extractedArticles);
       setArticles((prev) => [...prev, ...extractedArticles]);
@@ -117,7 +117,7 @@ const Explore = () => {
 
   const handleSwipe = (direction) => {
     if (direction === "left") {
-      console.log("currentIndex", currentIndex, articles.length);
+      // console.log("currentIndex", currentIndex, articles.length);
       if (currentIndex < articles.length - 1) {
         setCurrentIndex(currentIndex + 1);
       }

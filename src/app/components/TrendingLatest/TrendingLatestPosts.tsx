@@ -35,7 +35,7 @@ const TrendingLatestPosts = () => {
           "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
         blurhash: article.blurhash,
       }));
-      console.log("treningArticles", trendingArticles);
+      // console.log("treningArticles", trendingArticles);
       setLoading(false);
       setPosts(trendingArticles);
     } catch (error) {
@@ -64,7 +64,7 @@ const TrendingLatestPosts = () => {
           "https://api.gyaanhub.io" + article?.Image[0]?.formats?.large?.url,
         blurhash: article.blurhash,
       }));
-      console.log("latestArticles", latestArticles);
+      // console.log("latestArticles", latestArticles);
       setLoading(false);
       setPosts(latestArticles);
     } catch (error) {

@@ -25,7 +25,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const toggleRegisterModal = () => setIsRegisterOpen((prev) => !prev);
 
   useEffect(() => {
-    console.log('modalContext ', isLoginOpen);
+    // console.log('modalContext ', isLoginOpen);
   });
 
   useEffect(() => {

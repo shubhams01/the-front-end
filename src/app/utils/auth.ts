@@ -9,7 +9,7 @@ interface AuthResponse {
 }
 
 export const registerUser = async (username: string, email: string, password: string): Promise<AuthResponse> => {
-  console.log('register ', username, email, password)
+  // console.log('register ', username, email, password)
   const response = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth/local/register`, {
     method: 'POST',
     headers: {
@@ -22,16 +22,16 @@ export const registerUser = async (username: string, email: string, password: st
     }),
   });
 
-  console.log("Raw response: ", response);
+  // console.log("Raw response: ", response);
 
   if (!response.ok) {
     const data = await response.json();
-    console.log("auth register response", data);
+    // console.log("auth register response", data);
     throw new Error(`${data.error.message}`);
   }
 
   const jsonResponse = await response.json();
-  console.log("Parsed response: ", jsonResponse);
+  // console.log("Parsed response: ", jsonResponse);
   return jsonResponse;
 };
 
@@ -49,7 +49,7 @@ export const loginUser = async (identifier: string, password: string): Promise<A
 
   if (!response.ok) {
     const data = await response.json();
-    console.log('auth login response', data);
+    // console.log('auth login response', data);
     throw new Error(`${data.error.message}`);
   }
 

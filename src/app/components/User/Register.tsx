@@ -70,7 +70,7 @@ const Register: React.FC = () => {
         data.email,
         data.password
       );
-      console.log("register response ", response);
+      // console.log("register response ", response);
       if (response) {
         setIsRegisterSuccess(true);
         setTimeout(() => {

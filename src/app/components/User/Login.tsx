@@ -67,7 +67,7 @@ const Login: React.FC = () => {
           }
         );
         const result = await response.json();
-        console.log("Forgot password response:", result);
+        // console.log("Forgot password response:", result);
 
         if (response.ok) {
           setResetLinkSent(true);
@@ -88,7 +88,7 @@ const Login: React.FC = () => {
         if ("password" in data) {
           const response = await login(data.email, data.password);
           if (response) {
-            console.log("Login response:", response);
+            // console.log("Login response:", response);
             setLoginSuccess(true);
             toggleLoginModal();
           }

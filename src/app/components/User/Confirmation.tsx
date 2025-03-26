@@ -15,7 +15,7 @@ const ConfirmationPage = () => {
   const confirmationCode = searchParams.get("code");
 
   useEffect(() => {
-    console.log("confirmationCode ", confirmationCode);
+    // console.log("confirmationCode ", confirmationCode);
     const confirmEmail = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/auth/email-confirmation?confirmation=${confirmationCode}`,
