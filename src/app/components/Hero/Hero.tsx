@@ -23,11 +23,11 @@ const Hero = ({ scrollToExplore }) => {
   }, [wordIndex]);
 
   return (
-    <div className="relative h-dvh flex flex-col items-center justify-center bg-gradient-to-br from-black via-slate-500 to-slate-200 p-4">
+    <div className="relative h-dvh flex flex-col items-center justify-center bg-black p-4">
       <HeroEffect />
       <div className="relative z-10 text-center">
         <motion.h1
-          initial={{ y: -50, opacity: 0 }}
+          initial={{ y: -15, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="text-6xl md:text-6xl lg:text-8xl font-sans text-white relative"

@@ -384,7 +384,7 @@ const Explore = () => {
         )}
       </AnimatePresence>
 
-      <LoadingScreen />
+      {/* <LoadingScreen /> */}
     </>
   );
 };
