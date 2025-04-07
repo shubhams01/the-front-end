@@ -113,7 +113,7 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         {/* Google Adsense */}
-        <AdSense pId="ca-pub-8954233353863168"/>
+        <AdSense pId="ca-pub-8954233353863168" />
 
         {/* Google tag (gtag.js)  */}
         {/* <script
@@ -135,6 +135,7 @@ export default function RootLayout({
           href="https://api.gyaanhub.io/uploads/logo_white_31cbe3cc0d.svg"
           type="image/svg+xml"
         />
+        <meta name="google-adsense-account" content="ca-pub-8954233353863168" />
       </Head>
       <body className={montserrat.className}>
         <ModalProvider>
