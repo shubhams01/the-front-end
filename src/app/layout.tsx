@@ -113,7 +113,7 @@ export default function RootLayout({
     <html lang="en">
       <Head>
         {/* Google Adsense */}
-        {/* <AdSense pId="ca-pub-8954233353863168"/> */}
+        <AdSense pId="ca-pub-8954233353863168"/>
 
         {/* Google tag (gtag.js)  */}
         {/* <script
